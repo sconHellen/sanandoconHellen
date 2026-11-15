@@ -2,6 +2,8 @@
 
 > Lee este documento completo antes de escribir una sola línea de código.
 > Es la fuente de verdad del proyecto. Si algo aquí choca con lo que ves en los archivos, pregunta antes de decidir.
+>
+> **Decisiones confirmadas posteriores:** ver [`docs/DECISIONS.md`](docs/DECISIONS.md). Donde difieran de este brief, prevalecen esas.
 
 ---
 

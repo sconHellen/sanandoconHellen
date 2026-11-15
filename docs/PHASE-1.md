@@ -62,15 +62,6 @@ Las capturas de referencia están en `tests/visual/__screenshots__/`. Se generan
 - [ ] `sitemap.xml`, Open Graph y datos estructurados → Fase 2.
 - [ ] Todo lo de la sección 14 del brief (textos legales, precios, ids de Hotmart, videos, dominio, redes).
 
-## Diferencias entre las maquetas y el brief (necesitan decisión antes de la Fase 2)
+## Diferencias entre las maquetas y el brief
 
-| # | Tema | Qué dice cada fuente | Pregunta |
-|---|---|---|---|
-| 1 | Precios | El landing muestra Básico 7,90 USD/mes o 49/año, Premium 14,90/mes o 99/año, meditación personalizada 22 USD y sesión 1 a 1 55 USD. El brief (§14) dice que los precios están pendientes. | ¿Son definitivos o se dejan como `[PENDIENTE]`? |
-| 2 | Reserva de sesiones 1 a 1 | La app trae una reserva propia en 3 pasos (horario de Costa Rica, GMT-6). Las FAQ del landing dicen que se agenda con **Calendly** y se hace por **Zoom**. | ¿Reserva propia o Calendly? (Calendly es menos trabajo y ya maneja zonas horarias.) |
-| 3 | Zona horaria | La app usa Costa Rica (GMT-6); el brief dice que el negocio opera desde Malta (RGPD). | ¿Qué zona horaria y qué país figuran como responsable legal? |
-| 4 | Biografía de Hellen | Hay dos textos distintos: en el landing, la historia de la enfermedad; en la app, el inicio en pandemia (2020) y la línea de tiempo de formación. | Se propone: landing = texto del landing, app = texto de la app. ¿De acuerdo? |
-| 5 | Garantía | Las FAQ prometen "7 días de garantía" con devolución. | Confirmar que coincide con la configuración de Hotmart y los términos. |
-| 6 | Tipos de sesión | La app tiene "Sesión individual", "Programa de 4 sesiones" y "Primera conversación (gratis)"; el landing tiene "Meditación creada para ti", "Sesión 1 a 1" y "Acompañamiento personalizado". | ¿Cuál es la lista final de servicios sueltos? |
-| 7 | Testimonios | La app trae 2 testimonios reales (Enoc y Andrea) y 1 marcador. | ¿Hay permiso por escrito para publicarlos (RGPD)? |
-| 8 | Aviso de la app móvil | La app trae una sección "Muy pronto: la app de Sanando con Hellen" con formulario de correo. | ¿Se mantiene? Requiere consentimiento y almacenamiento de correos. |
+Resueltas el 2026-11-15: precios, Calendly, Malta, servicios del landing y testimonios. Ver [`DECISIONS.md`](DECISIONS.md), que también lista las que siguen abiertas.

@@ -5,6 +5,7 @@ Landing público + app de miembros de meditaciones. Next.js 16 · React 19 · Ty
 - Brief y fuente de verdad: [`CLAUDE.md`](CLAUDE.md)
 - Estado de la fase actual: [`docs/PHASE-1.md`](docs/PHASE-1.md)
 - Dependencias justificadas: [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)
+- Decisiones confirmadas: [`docs/DECISIONS.md`](docs/DECISIONS.md)
 
 ## Desarrollo
 
