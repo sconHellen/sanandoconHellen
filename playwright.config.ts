@@ -12,7 +12,8 @@ export default defineConfig({
   webServer: {
     command: `npx next start -p ${PORT}`,
     url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
+    // Always start a fresh server: a stale one (other env vars) would give misleading results.
+    reuseExistingServer: false,
     timeout: 60_000,
   },
 });

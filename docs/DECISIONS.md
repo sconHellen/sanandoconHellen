@@ -10,9 +10,9 @@ Registro de decisiones tomadas por la dueña del proyecto. Donde difieran del br
 | 2026-11-15 | Biografía de Hellen | Por ahora se mantienen **ambas versiones**: landing = texto del landing (historia de la enfermedad); app = texto de la app (2020 + línea de tiempo). Pendiente confirmación final. | Sin cambios hasta la confirmación. |
 | 2026-11-15 | Servicios sueltos | Los del **landing**: Meditación creada para ti, Sesión 1 a 1 y Acompañamiento personalizado (por WhatsApp, sin precio fijo). | Se descartan "Programa de 4 sesiones" y "Primera conversación gratis" de la maqueta de la app. |
 | 2026-11-15 | Testimonios | Enoc y Andrea **dieron su permiso**. | Se pueden publicar. El tercer testimonio sigue como marcador hasta tener uno real con permiso. |
+| 2026-11-15 | Garantía | **7 días** con devolución, como dicen las FAQ del landing. | Se configurará en el producto de Hotmart más adelante. |
+| 2026-11-15 | Sección "Muy pronto: la app" | **Se mantiene.** La app móvil la desarrollará otra persona del equipo. | El formulario de aviso pedirá consentimiento explícito (RGPD) y guardará el correo. |
 
 ## Abiertas
 
-- Garantía de 7 días (FAQ del landing): confirmar que coincide con la configuración del producto en Hotmart.
-- Sección "Muy pronto: la app de Sanando con Hellen" con formulario de correo: ¿se mantiene? (Requiere consentimiento RGPD y guardar correos.)
 - Confirmación final de la biografía.

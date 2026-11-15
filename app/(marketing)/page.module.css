@@ -1,3 +1,78 @@
+/* ---------- Shared section layout ---------- */
+.section {
+  padding-block: var(--section-y);
+  scroll-margin-top: 5rem;
+}
+
+.band,
+.bandSoft,
+.bandWarm {
+  padding-block: var(--section-y);
+  scroll-margin-top: 5rem;
+}
+
+.band { background: var(--lavender-50); }
+.bandSoft { background: var(--surface-soft); }
+.bandWarm { background: var(--cream-warm-3); }
+
+.narrow {
+  max-width: calc(60rem + 2 * var(--gutter));
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 44rem;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.centerTitle {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.centerCta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: 40px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 28px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-card-lg);
+}
+
+.card p {
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.cardCta {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---------- Hero ---------- */
 .hero {
   display: flex;
   flex-wrap: wrap;
@@ -26,29 +101,19 @@
   max-width: 520px;
 }
 
-.ctas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-2);
-}
-
-/* Breathing visual reused from the "Respiraciones" design. */
 .breath {
-  flex: 1 1 320px;
-  position: relative;
+  flex: 1 1 280px;
   display: grid;
   place-items: center;
   width: min(100%, 400px);
+  max-width: 400px;
   aspect-ratio: 1;
   margin-inline: auto;
   border-radius: var(--radius-round);
   background: var(--lavender-50);
 }
 
-.breath > * {
-  grid-area: 1 / 1;
-}
+.breath > * { grid-area: 1 / 1; }
 
 .breathRing {
   width: 86%;
@@ -72,94 +137,244 @@
   color: var(--text-strong);
 }
 
-.band {
-  background: var(--lavender-50);
+/* ---------- About ---------- */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
   padding-block: var(--section-y);
-  scroll-margin-top: 5rem;
 }
 
-.sectionHead {
+.portrait {
+  flex: 1 1 300px;
+  max-width: 380px;
+  margin-inline: auto;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-arch);
+  background: var(--lavender-100);
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.aboutText {
+  flex: 999 1 420px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 44px;
+  gap: 20px;
+  font-size: var(--fs-body);
+  line-height: var(--leading-loose);
+  color: var(--text-muted);
 }
 
-.grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.role {
+  margin-top: -8px;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--link);
+}
+
+/* ---------- Catalogue ---------- */
+.groups {
   display: grid;
-  gap: 22px;
+  gap: 20px;
   grid-template-columns: 1fr;
 }
 
-.card {
+.group {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: var(--space-3);
+  padding: 28px;
   background: var(--surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-card-lg);
 }
 
-.art {
-  height: 150px;
-  display: grid;
-  place-items: center;
+.group h3 {
+  margin-bottom: 4px;
+  font-size: 1.875rem;
+  font-weight: 500;
 }
 
-.artDisc {
-  width: 120px;
-  height: 120px;
-  border-radius: var(--radius-round);
-  background: var(--bg);
-  opacity: 0.55;
+.group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.tone1 { background: var(--lavender-100); }
-.tone2 { background: var(--cream-warm); }
-.tone3 { background: var(--lavender-200); }
-.tone4 { background: var(--cream-warm-2); }
-.tone5 { background: var(--lavender-250); }
-.tone6 { background: var(--tone-6); }
-
-.cardBody {
-  padding: 20px 22px 22px;
+.group li {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.cardBody p {
-  font-size: var(--fs-small);
-  line-height: 1.55;
-  color: var(--text-muted);
-}
-
-.section {
-  padding-block: var(--section-y) 0;
-  scroll-margin-top: 5rem;
-}
-
-.placeholder {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   gap: var(--space-3);
-  padding: clamp(22px, 4vw, 44px);
-  border-radius: var(--radius-panel-sm);
-  background: var(--surface);
-  border: var(--border-width) dashed var(--lavender-200);
-}
-
-.placeholder p {
+  min-height: var(--tap-min);
+  padding-block: 10px;
+  border-top: var(--border-width) solid var(--border);
   color: var(--text-muted);
 }
 
+.itemFree {
+  color: var(--text-strong) !important;
+  font-weight: 600;
+}
+
+.free {
+  flex: none;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--lavender-100);
+  color: var(--text-strong);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.soon {
+  flex: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.lock {
+  flex: none;
+  display: flex;
+  color: var(--text-soft);
+}
+
+/* ---------- Breathing ---------- */
+.breaths {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+.breathItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 16px 20px;
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-card-sm);
+}
+
+.breathText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.itemTitleFree {
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.purpose {
+  font-size: var(--fs-meta);
+  color: var(--text-soft);
+}
+
+/* ---------- Premium & services ---------- */
+.twoCards,
+.services {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.card h3 {
+  font-size: 1.875rem;
+  font-weight: 500;
+}
+
+.servicePrice {
+  font-family: var(--font-serif);
+  font-size: 2rem !important;
+  font-weight: 600;
+  line-height: 1.1 !important;
+  color: var(--text-strong) !important;
+  font-variant-numeric: lining-nums;
+}
+
+/* ---------- FAQ ---------- */
+.faqWrap {
+  max-width: calc(47.5rem + 2 * var(--gutter));
+}
+
+.faq {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq > div {
+  padding-bottom: 20px;
+  border-bottom: var(--border-width) solid var(--lavender-200);
+}
+
+.faq > div:last-child {
+  border-bottom: 0;
+}
+
+.faq dt {
+  margin-bottom: var(--space-2);
+  font-size: 1.1875rem;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.faq dd {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* ---------- Closing ---------- */
+.closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: clamp(32px, 5vw, 64px);
+  border-radius: var(--radius-panel);
+  background: var(--lavender-100);
+  text-align: center;
+}
+
+.closing .ctas {
+  justify-content: center;
+}
+
+/* ---------- Breakpoints ---------- */
 @media (min-width: 768px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+  .groups,
+  .breaths {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 1024px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
+  .groups { grid-template-columns: repeat(3, 1fr); }
+  .breaths { grid-template-columns: repeat(3, 1fr); }
 }

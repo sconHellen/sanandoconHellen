@@ -39,6 +39,7 @@ export const deviceStatusEnum = pgEnum("device_status", ["active", "revoked", "p
 export const legalKindEnum = pgEnum("legal_kind", ["terms", "privacy", "cookies"]);
 export const availabilityEnum = pgEnum("availability", ["free", "locked", "soon"]);
 export const mediaStatusEnum = pgEnum("media_status", ["uploading", "processing", "ready", "error"]);
+export const signupListEnum = pgEnum("signup_list", ["gift", "app_launch"]);
 
 // ---------- Users & billing ----------
 export const users = pgTable("users", {
@@ -183,6 +184,19 @@ export const playbackProgress = pgTable("playback_progress", {
   completedAt: timestamp("completed_at", { withTimezone: true }),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [primaryKey({ columns: [t.userId, t.meditationId] })]);
+
+// ---------- Lead capture (landing gift, app launch notice) ----------
+export const emailSignups = pgTable("email_signups", {
+  id: id(),
+  list: signupListEnum("list").notNull(),
+  email: text("email").notNull(),
+  name: text("name"),
+  // GDPR: explicit consent timestamp and the privacy-policy version shown at that moment.
+  consentAt: timestamp("consent_at", { withTimezone: true }).notNull(),
+  privacyVersion: text("privacy_version").notNull(),
+  createdAt: createdAt(),
+  unsubscribedAt: timestamp("unsubscribed_at", { withTimezone: true }),
+}, (t) => [uniqueIndex("email_signups_list_email_uq").on(t.list, t.email)]);
 
 // ---------- Audit ----------
 export const auditLog = pgTable("audit_log", {

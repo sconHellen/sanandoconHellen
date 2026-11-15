@@ -45,6 +45,8 @@ h4 {
   color: var(--text-strong);
   margin: 0;
   text-wrap: balance;
+  /* Cormorant defaults to old-style figures: "1 a 1" would read like "I a I". */
+  font-variant-numeric: lining-nums;
 }
 
 h1 { font-size: var(--fs-page-title); line-height: 1.05; }

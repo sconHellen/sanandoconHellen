@@ -66,6 +66,10 @@ const PAIRS: Pair[] = [
   ["--inverse-text", "--inverse-card", 4.5],
   ["--inverse-text-muted", "--inverse-card", 4.5],
   ["--inverse-eyebrow", "--inverse-bg", 4.5],
+  ["--inverse-text-muted", "--inverse-bg", 4.5],
+  ["--inverse-bg", "--inverse-eyebrow", 4.5], // "Más completo" badge
+  ["--inverse-bg", "--inverse-text", 4.5], // CTA inside the featured plan
+  ["--inverse-bg", "--inverse-text-muted", 4.5], // its hover state
   ["--footer-text", "--footer-bg", 4.5],
   ["--footer-heading", "--footer-bg", 4.5],
   ["--footer-small", "--footer-bg", 4.5],

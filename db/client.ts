@@ -11,7 +11,9 @@ export function getDb() {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL is not set");
   // Serverless-friendly: small pool; prepare:false keeps compatibility with poolers (e.g. Neon/PgBouncer).
-  const client = postgres(url, { max: 5, prepare: false, ssl: "require" });
+  // TLS is mandatory except when the URL explicitly opts out (local throwaway databases only).
+  const ssl = /[?&]sslmode=disable\b/.test(url) ? false : "require";
+  const client = postgres(url, { max: 5, prepare: false, ssl });
   cached = drizzle(client, { schema });
   return cached;
 }
