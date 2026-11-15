@@ -65,6 +65,17 @@ Guía paso a paso para dejar el sitio funcionando en Vercel con dos entornos:
 
 > Así un formulario o un webhook de pruebas **nunca** puede escribir en la base real (brief §4.3).
 
+### Comprobar que cada entorno usa su base (obligatorio)
+
+Ya nos pasó que Production escribía en `sch-pruebas` porque al conectar esa base quedó marcado *Production*. Para comprobarlo:
+
+1. **Settings → Environment Variables → `DATABASE_URL` (Production)** → icono del ojo. **No copies el valor**: mira solo el trozo que empieza con `ep-` (p. ej. `ep-cool-name-123456`).
+2. En Neon → **sch-produccion → Branches → main** → *compute endpoint*. Debe ser **el mismo `ep-`**.
+3. Repite con la `DATABASE_URL` de *Preview, Development* contra **sch-pruebas**.
+4. Prueba rápida: envía el formulario y busca en Vercel **Logs** la línea `[signup] saved … db=ep-… env=…`; el `ep-` dice a qué base fue (no muestra correos ni contraseñas).
+
+> Para **ver datos**, usa la consola de Neon (**Storage → la base → Open in Neon → Tables**). El *Data Editor* de Vercel puede mostrar otra rama o una vista sin actualizar.
+
 ## Paso 5 · Crear las tablas (una vez por base)
 
 Las tablas se crean con las migraciones del repositorio. Se hace desde la computadora donde tienes el proyecto (VS Code), con Node.js 22 instalado:
