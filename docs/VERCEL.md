@@ -54,6 +54,7 @@ Guía paso a paso para dejar el sitio funcionando en Vercel con dos entornos:
 3. Nombre: **`sch-pruebas`**. Plan gratuito.
 4. Al conectarla al proyecto, en **Environments** marca **solo Preview y Development** (desmarca Production).
 5. Vercel crea sola la variable **`DATABASE_URL`** (y otras como `DATABASE_URL_UNPOOLED`) para esos entornos.
+6. **Desactiva las ramas por Preview** (recomendado por ahora): la integración de Neon puede crear una *rama de base de datos* nueva para cada Preview (`preview/<rama>`). Así los datos de una Preview no aparecen en la rama principal de `sch-pruebas` y cada rama nueva necesita sus propias migraciones. En **Storage → sch-pruebas → Settings** (o en la configuración de la integración de Neon) desactiva la opción tipo *"Create a database branch for each preview deployment"* y vuelve a desplegar la Preview.
 
 ## Paso 4 · Base de datos de **producción**
 

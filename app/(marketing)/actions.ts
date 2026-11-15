@@ -9,6 +9,8 @@ import { validateGiftSignup, type SignupErrors } from "@/lib/signups/validate";
 export interface GiftState {
   status: "idle" | "error" | "success";
   name?: string;
+  /** True only when the gift email was actually sent. */
+  emailSent?: boolean;
   errors?: SignupErrors;
 }
 
@@ -44,5 +46,5 @@ export async function requestGift(_prev: GiftState, formData: FormData): Promise
     return { status: "error", errors: { form: "Algo salió mal. Inténtalo de nuevo en un momento." } };
   }
   // [PENDIENTE: enviar el correo con el regalo cuando esté configurado el proveedor de correo]
-  return { status: "success", name: result.data.name };
+  return { status: "success", name: result.data.name, emailSent: false };
 }

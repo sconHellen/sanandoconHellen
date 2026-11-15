@@ -52,8 +52,9 @@ export function GiftSection() {
 
       {unlocked ? (
         <p className={styles.success} role="status">
-          {state.name ? `¡Listo, ${state.name}!` : "¡Listo!"} Ya puedes escuchar tus dos regalos, y también te los enviamos a tu
-          correo.
+          {state.name ? `¡Listo, ${state.name}!` : "¡Listo!"} Ya puedes escuchar tus dos regalos.
+          {/* Only promise the email once sending is implemented (needs EMAIL_API_KEY / EMAIL_FROM). */}
+          {state.emailSent ? " También te los enviamos a tu correo." : null}
         </p>
       ) : (
         <form action={formAction} className={styles.form} noValidate>
