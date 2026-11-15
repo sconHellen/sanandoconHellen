@@ -1,0 +1,248 @@
+/*
+ * Design tokens — single source of truth for colour, type, radius, border and motion.
+ * Components must only reference these custom properties, never raw values.
+ *
+ * Light values are extracted from design/SanandoConHellen/Main.dc.html (every colour
+ * used there is mapped below). The design uses NO drop shadows: depth comes from
+ * 1px borders and tonal backgrounds.
+ *
+ * Dark theme is defined twice on purpose:
+ *   1. :root[data-theme="dark"]        → explicit user choice (cookie, painted by the server)
+ *   2. prefers-color-scheme: dark      → system default when no choice is stored
+ * tests/unit/tokens.test.ts verifies both blocks stay identical and AA contrast holds.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Base palette (light) ---- */
+  --bg: #f8f3ea;
+  --surface: #fffcf7;
+  --surface-soft: #fbf7f0;
+  --lavender-50: #eee6f6;   /* soft section bg, soft buttons, chips */
+  --lavender-100: #e5daf2;  /* active tab, icon discs, highlight panels */
+  --lavender-200: #d9cbee;  /* input borders, dividers */
+  --lavender-250: #cdbbe6;  /* image frames */
+  --lavender-300: #b9a3d6;  /* breathing circle, timeline line */
+  --lavender-400: #9c86c4;  /* timeline dots, quote marks */
+  --accent: #7a63a6;        /* logo stroke, italic hero accent, progress bar */
+  --cream-warm: #efe4d3;
+  --cream-warm-2: #f2e9dc;
+  --cream-warm-3: #efe6d8;  /* testimonials section */
+  --tone-6: #e8def3;        /* card art tone (placeholder variety) */
+
+  --text-strong: #3a2c55;   /* headings and base text */
+  --text: #4b3b6b;          /* primary button, stat numbers */
+  --text-muted: #54466e;    /* paragraphs */
+  --text-soft: #6e5c8c;     /* eyebrows, captions, meta */
+  --text-disabled: #b7abc9; /* disabled calendar days (exempt from contrast) */
+  --link: #5b4880;
+  --link-hover: #3a2c55;
+  --border: #e6dcef;        /* card and header borders */
+
+  /* ---- Inverse sections ("Explora" band) ---- */
+  --inverse-bg: #4b3b6b;
+  --inverse-card: #5b4880;
+  --inverse-text: #fbf7f0;
+  --inverse-text-muted: #e8def3;
+  --inverse-eyebrow: #d9cbee;
+
+  /* ---- Footer ---- */
+  --footer-bg: #3a2c55;
+  --footer-text: #e8def3;
+  --footer-heading: #fbf7f0;
+  --footer-small: #c9b8e3;
+  --footer-border: #54466e;
+
+  /* ---- Semantic roles ---- */
+  --btn-primary-bg: #4b3b6b;
+  --btn-primary-fg: #fbf7f0;
+  --btn-primary-bg-hover: #3a2c55;
+  --btn-outline: #4b3b6b;
+  --btn-soft-bg: #eee6f6;
+  --btn-soft-fg: #3a2c55;
+  --tab-active-bg: #e5daf2;
+  --tab-fg: #54466e;
+  --chip-border: #d9cbee;
+  --input-bg: #f8f3ea;
+  --input-border: #d9cbee;
+  --focus-ring: #5b4880; /* --lavender-400 only reaches 2.87:1 on --bg */
+  --overlay-shadow: 0 18px 40px rgb(58 44 85 / 0.14); /* only for floating menus, not in the mockup */
+
+  /* ---- Typography ---- */
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+
+  --fs-display: clamp(2.875rem, 1.6rem + 4vw, 4.875rem); /* hero h1: 46 → 78px */
+  --fs-page-title: clamp(2.625rem, 1.7rem + 3vw, 4rem); /* tab page h1: 42 → 64px */
+  --fs-h2: clamp(2.25rem, 1.6rem + 2vw, 3.25rem);        /* 36 → 52px */
+  --fs-h2-sm: clamp(1.875rem, 1.5rem + 1.2vw, 2.5rem);   /* 30 → 40px */
+  --fs-h3: 1.5625rem;      /* 25px */
+  --fs-quote: 1.4375rem;   /* 23px serif italic */
+  --fs-lead: 1.1875rem;    /* 19px */
+  --fs-body: 1.125rem;     /* 18px */
+  --fs-base: 1rem;         /* 16px */
+  --fs-small: 0.9375rem;   /* 15px */
+  --fs-meta: 0.875rem;     /* 14px */
+  --fs-eyebrow: 0.75rem;   /* 12px uppercase */
+  --fs-tagline: 0.6875rem; /* 11px uppercase */
+
+  --leading-display: 1.02;
+  --leading-tight: 1.1;
+  --leading: 1.65;
+  --leading-loose: 1.7;
+  --tracking-eyebrow: 3px;
+  --tracking-tagline: 2.4px;
+  --tracking-meta: 1.6px;
+
+  /* ---- Radius ---- */
+  --radius-pill: 999px;
+  --radius-panel: 36px;   /* app/newsletter banner */
+  --radius-panel-sm: 32px;/* booking panel */
+  --radius-card-lg: 24px;
+  --radius-card: 22px;
+  --radius-card-sm: 20px;
+  --radius-tile: 18px;
+  --radius-input: 14px;
+  --radius-arch: 200px 200px 24px 24px; /* arched photo frame */
+  --radius-round: 50%;
+
+  /* ---- Borders ---- */
+  --border-width: 1px;
+  --border-strong-width: 1.5px;
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 3.5rem;   /* 56px column gap */
+  --section-y: clamp(3.5rem, 2.5rem + 4vw, 6rem); /* 88–96px on desktop */
+  --gutter: 1.5rem;    /* 24px */
+  --container-max: 75rem; /* 1200px */
+
+  /* ---- Interaction ---- */
+  --tap-min: 44px;
+  --btn-height: 52px;
+  --focus-width: 3px;
+
+  /* ---- Motion ---- */
+  --ease-soft: ease-in-out;
+  --dur-fast: 150ms;
+  --dur: 300ms;
+  --dur-breath: 12s;
+  --dur-float: 7s;
+}
+
+/* ---------- Dark theme: explicit choice ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1b1526;
+  --surface: #251d33;
+  --surface-soft: #2d2340;
+  --lavender-50: #2a2140;
+  --lavender-100: #3a2c55;
+  --lavender-200: #4a3a6a;
+  --lavender-250: #4f3f70;
+  --lavender-300: #8a75b3;
+  --lavender-400: #b9a3d6;
+  --accent: #c9b8e3;
+  --cream-warm: #2e2535;
+  --cream-warm-2: #332a3b;
+  --cream-warm-3: #2b2232;
+  --tone-6: #3a2f45;
+  --text-strong: #f6f0fa;
+  --text: #e6dcef;
+  --text-muted: #c7bbd8;
+  --text-soft: #b7abc9;
+  --text-disabled: #6b5e80;
+  --link: #c9b8e3;
+  --link-hover: #f6f0fa;
+  --border: #3e3155;
+  --inverse-bg: #2d2340;
+  --inverse-card: #3a2c55;
+  --inverse-text: #f6f0fa;
+  --inverse-text-muted: #d9cee8;
+  --inverse-eyebrow: #c9b8e3;
+  --footer-bg: #140f1d;
+  --footer-text: #d9cee8;
+  --footer-heading: #f6f0fa;
+  --footer-small: #b7abc9;
+  --footer-border: #2d2340;
+  --btn-primary-bg: #d9cbee;
+  --btn-primary-fg: #2a1f3d;
+  --btn-primary-bg-hover: #e9def6;
+  --btn-outline: #d9cbee;
+  --btn-soft-bg: #3a2c55;
+  --btn-soft-fg: #f6f0fa;
+  --tab-active-bg: #3a2c55;
+  --tab-fg: #c7bbd8;
+  --chip-border: #4a3a6a;
+  --input-bg: #1b1526;
+  --input-border: #4a3a6a;
+  --focus-ring: #d9cbee;
+  --overlay-shadow: 0 18px 40px rgb(8 5 14 / 0.5);
+}
+
+/* ---------- Dark theme: system default (no stored choice) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1b1526;
+    --surface: #251d33;
+    --surface-soft: #2d2340;
+    --lavender-50: #2a2140;
+    --lavender-100: #3a2c55;
+    --lavender-200: #4a3a6a;
+    --lavender-250: #4f3f70;
+    --lavender-300: #8a75b3;
+    --lavender-400: #b9a3d6;
+    --accent: #c9b8e3;
+    --cream-warm: #2e2535;
+    --cream-warm-2: #332a3b;
+    --cream-warm-3: #2b2232;
+    --tone-6: #3a2f45;
+    --text-strong: #f6f0fa;
+    --text: #e6dcef;
+    --text-muted: #c7bbd8;
+    --text-soft: #b7abc9;
+    --text-disabled: #6b5e80;
+    --link: #c9b8e3;
+    --link-hover: #f6f0fa;
+    --border: #3e3155;
+    --inverse-bg: #2d2340;
+    --inverse-card: #3a2c55;
+    --inverse-text: #f6f0fa;
+    --inverse-text-muted: #d9cee8;
+    --inverse-eyebrow: #c9b8e3;
+    --footer-bg: #140f1d;
+    --footer-text: #d9cee8;
+    --footer-heading: #f6f0fa;
+    --footer-small: #b7abc9;
+    --footer-border: #2d2340;
+    --btn-primary-bg: #d9cbee;
+    --btn-primary-fg: #2a1f3d;
+    --btn-primary-bg-hover: #e9def6;
+    --btn-outline: #d9cbee;
+    --btn-soft-bg: #3a2c55;
+    --btn-soft-fg: #f6f0fa;
+    --tab-active-bg: #3a2c55;
+    --tab-fg: #c7bbd8;
+    --chip-border: #4a3a6a;
+    --input-bg: #1b1526;
+    --input-border: #4a3a6a;
+    --focus-ring: #d9cbee;
+    --overlay-shadow: 0 18px 40px rgb(8 5 14 / 0.5);
+  }
+}
+
+/* ---------- Large screens / TV ("3-metre UI") ---------- */
+@media (min-width: 1920px) {
+  :root {
+    --container-max: 100rem;
+    --focus-width: 5px;
+  }
+}

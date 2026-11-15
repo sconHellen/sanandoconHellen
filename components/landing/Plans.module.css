@@ -1,0 +1,166 @@
+.plans {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* ---- Segmented switch ---- */
+.switch {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 4px;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.switch label {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 24px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  color: var(--tab-fg);
+  cursor: pointer;
+}
+
+.switch input:checked + label {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+}
+
+.switch input:focus-visible + label {
+  outline: var(--focus-width) solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Show only the selected period. Default (no :has support) shows yearly. */
+.monthly { display: none; }
+.plans:has(input[value="monthly"]:checked) .monthly { display: block; }
+.plans:has(input[value="monthly"]:checked) .yearly { display: none; }
+.plans:has(input[value="monthly"]:checked) .cta.monthly { display: inline-flex; }
+
+/* ---- Cards ---- */
+.grid {
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(24px, 4vw, 36px);
+  background: var(--surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-card-lg);
+}
+
+.featured {
+  background: var(--inverse-bg);
+  border-color: var(--inverse-bg);
+  color: var(--inverse-text);
+}
+
+.featured .name,
+.featured .amount {
+  color: var(--inverse-text);
+}
+
+.featured .note,
+.featured .price span:last-child,
+.featured .features {
+  color: var(--inverse-text-muted);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.name {
+  font-size: 2.25rem; /* 36px */
+  font-weight: 500;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--inverse-eyebrow);
+  color: var(--inverse-bg);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  color: var(--text-muted);
+}
+
+.amount {
+  font-family: var(--font-serif);
+  font-size: 3.25rem; /* 52px */
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-strong);
+  font-variant-numeric: lining-nums;
+}
+
+.note {
+  margin-top: var(--space-1);
+  font-size: var(--fs-small);
+  color: var(--text-soft);
+}
+
+.features {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--text-muted);
+}
+
+.cta {
+  margin-top: auto;
+}
+
+.cta.yearly {
+  display: inline-flex;
+}
+
+/* Inverted primary button inside the featured card. */
+.ctaFeatured {
+  background: var(--inverse-text);
+  color: var(--inverse-bg);
+}
+
+.ctaFeatured:hover {
+  background: var(--inverse-text-muted);
+  color: var(--inverse-bg);
+}
+
+.footnote {
+  max-width: 40rem;
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--text-soft);
+}

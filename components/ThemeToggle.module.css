@@ -1,0 +1,38 @@
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  padding: 0;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-soft);
+}
+
+.toggle:hover {
+  background: var(--lavender-50);
+}
+
+.toggle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Light theme shows the moon (switch to dark); dark theme shows the sun. */
+.sun { display: none; }
+
+:global(:root[data-theme="dark"]) .sun { display: block; }
+:global(:root[data-theme="dark"]) .moon { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .sun { display: block; }
+  :global(:root:not([data-theme="light"])) .moon { display: none; }
+}

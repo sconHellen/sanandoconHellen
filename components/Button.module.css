@@ -1,0 +1,58 @@
+/* Buttons from the design: pill shape, Nunito Sans 700. */
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--btn-height);
+  padding: 0 30px;
+  border: var(--border-strong-width) solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-soft), color var(--dur-fast) var(--ease-soft);
+}
+
+.primary {
+  composes: base;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg);
+}
+
+.primary:hover {
+  background: var(--btn-primary-bg-hover);
+  color: var(--btn-primary-fg);
+}
+
+.outline {
+  composes: base;
+  background: transparent;
+  border-color: var(--btn-outline);
+  color: var(--btn-outline);
+}
+
+.outline:hover {
+  background: var(--lavender-50);
+  color: var(--btn-outline);
+}
+
+.soft {
+  composes: base;
+  background: var(--btn-soft-bg);
+  color: var(--btn-soft-fg);
+}
+
+.soft:hover {
+  background: var(--lavender-100);
+  color: var(--btn-soft-fg);
+}
+
+/* Compact size used inside cards (44px, 14px label). */
+.small {
+  min-height: var(--tap-min);
+  padding: 0 20px;
+  font-size: var(--fs-meta);
+}

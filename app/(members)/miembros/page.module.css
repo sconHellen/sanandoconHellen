@@ -1,0 +1,86 @@
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.text {
+  flex: 1 1 440px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.display {
+  font-size: var(--fs-display);
+  line-height: var(--leading-display);
+}
+
+.display em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--leading);
+  color: var(--text-muted);
+  max-width: 520px;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.visual {
+  flex: 1 1 320px;
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1.08;
+  margin-inline: auto;
+}
+
+.blob {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: var(--radius-round);
+}
+
+.blobA {
+  top: 4%;
+  right: 2%;
+  width: 78%;
+  background: var(--lavender-100);
+}
+
+.blobB {
+  left: 0;
+  bottom: 6%;
+  width: 46%;
+  background: var(--cream-warm);
+}
+
+.photo {
+  position: absolute;
+  left: 12%;
+  top: 6%;
+  width: 76%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-arch);
+  background: var(--lavender-250);
+  animation: flota var(--dur-float) var(--ease-soft) infinite;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 28%;
+}
