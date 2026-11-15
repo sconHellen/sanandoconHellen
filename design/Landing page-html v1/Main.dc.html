@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sanando con Hellen</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Figtree:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#120c26}
+a{color:#f2c46d}a:hover{color:#ffe0a3}
+</style>
+</helmet>
+<div style="background: #120c26; color: #f4eee6; font-family: Figtree, system-ui, sans-serif; font-size: 18px; line-height: 1.6">
+
+<header style="padding: 20px 24px; border-bottom: 1px solid rgba(242,196,109,.15)">
+<div style="max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between">
+<div style="font-family: 'Instrument Serif', serif; font-size: 28px; color: #f2c46d">Sanando con Hellen</div>
+<nav style="display: flex; flex-wrap: wrap; gap: 24px; font-size: 16px">
+<a href="#contenido" style="color: #d8cfe6; text-decoration: none">Qué incluye</a>
+<a href="#premium" style="color: #d8cfe6; text-decoration: none">Premium</a>
+<a href="#planes" style="color: #d8cfe6; text-decoration: none">Planes</a>
+<a href="#sesiones" style="color: #d8cfe6; text-decoration: none">1 a 1</a>
+</nav>
+</div>
+</header>
+
+<section style="padding: 96px 24px 104px; background: radial-gradient(ellipse at 50% 0%, #3a2766 0%, #120c26 70%)">
+<div style="max-width: 820px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; gap: 28px; align-items: center">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Meditaciones guiadas en español</p>
+<h1 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(44px, 7vw, 76px); line-height: 1.05">Un lugar para volver a ti, cada vez que lo necesites</h1>
+<p style="margin: 0; max-width: 640px; font-size: 20px; color: #d8cfe6">Meditaciones para sanar heridas, encontrar tu propósito, bajar el estrés y dormir mejor. Con mi voz, con música y con una meditación nueva cada mes.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center">
+<a href="#regalo" style="background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 16px 32px; border-radius: 999px">Recibir mi regalo gratis</a>
+<a href="#planes" style="border: 1px solid #f2c46d; color: #f2c46d; font-weight: 600; text-decoration: none; padding: 16px 32px; border-radius: 999px">Ver los planes</a>
+</div>
+</div>
+</section>
+
+<section id="regalo" style="padding: 88px 24px; background: #180f33">
+<div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Un regalo para ti</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Empieza gratis: una respiración y una meditación</h2>
+<p style="margin: 0; color: #d8cfe6">Déjame tu correo y te abro las dos ahora mismo.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: #c9bfd9">Respiración</p>
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 32px; color: #f2c46d">Respiración cuadrada</h3>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Inhala, sostén, exhala y descansa en cuatro tiempos iguales. Trae orden y calma cuando hay presión.</p>
+<sc-if value="{{ unlocked }}" hint-placeholder-val="{{ false }}"><a href="#" style="margin-top: 8px; align-self: flex-start; background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 12px 24px; border-radius: 999px">Respirar ahora</a></sc-if>
+<sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}"><p style="margin: 8px 0 0; display: flex; gap: 8px; align-items: center; font-size: 15px; color: #c9bfd9"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Se abre con tu correo</p></sc-if>
+</div>
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: #c9bfd9">Meditación</p>
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 32px; color: #f2c46d">Gratitud antes de abrir los ojos</h3>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Una meditación corta para empezar el día agradeciendo, antes de levantarte de la cama.</p>
+<sc-if value="{{ unlocked }}" hint-placeholder-val="{{ false }}"><a href="#" style="margin-top: 8px; align-self: flex-start; background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 12px 24px; border-radius: 999px">Escuchar ahora</a></sc-if>
+<sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}"><p style="margin: 8px 0 0; display: flex; gap: 8px; align-items: center; font-size: 15px; color: #c9bfd9"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Se abre con tu correo</p></sc-if>
+</div>
+</div>
+<sc-if value="{{ locked }}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{ submit }}" style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end">
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px"><label for="nombre" style="font-size: 15px; color: #d8cfe6">Tu nombre</label><input id="nombre" type="text" value="{{ name }}" onChange="{{ onName }}" style="font: inherit; font-size: 16px; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(242,196,109,.35); background: #120c26; color: #f4eee6; min-height: 44px; box-sizing: border-box"></div>
+<div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px"><label for="correo" style="font-size: 15px; color: #d8cfe6">Tu correo</label><input id="correo" type="email" value="{{ email }}" onChange="{{ onEmail }}" style="font: inherit; font-size: 16px; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(242,196,109,.35); background: #120c26; color: #f4eee6; min-height: 44px; box-sizing: border-box"></div>
+<button type="submit" style="flex: 0 0 auto; border: 0; font: inherit; font-weight: 600; font-size: 16px; background: #f2c46d; color: #1a1030; padding: 14px 28px; border-radius: 999px; cursor: pointer; min-height: 44px">Quiero mi regalo</button>
+<sc-if value="{{ showError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="margin: 0; width: 100%; font-size: 15px; color: #ffb4a8">Escribe un correo válido para abrir tu regalo.</p></sc-if>
+</form>
+</sc-if>
+<sc-if value="{{ unlocked }}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; text-align: center; color: #f4eee6">{{ greet }} Ya puedes escuchar tus dos regalos, y también te los enviamos a tu correo.</p>
+</sc-if>
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center">
+<p style="margin: 0; color: #d8cfe6">¿Ya quieres todas las meditaciones y respiraciones?</p>
+<a href="#planes" style="border: 1px solid #f2c46d; color: #f2c46d; font-weight: 600; text-decoration: none; padding: 14px 28px; border-radius: 999px">Ver los planes</a>
+</div>
+</div>
+</section>
+
+<section style="padding: 88px 24px">
+<div style="max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div style="flex: 1 1 320px; aspect-ratio: 4 / 5; max-width: 420px; border-radius: 24px; background: #2a1d4d; border: 1px dashed rgba(242,196,109,.5); display: flex; align-items: center; justify-content: center; color: #c9bfd9; font-size: 16px; text-align: center; padding: 24px; box-sizing: border-box">[Tu foto aquí]</div>
+<div style="flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Quién soy</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Hola, soy Hellen</h2>
+<p style="margin: -8px 0 0; font-size: 19px; font-style: italic; color: #f2c46d">Profesora de yoga y sonoterapeuta</p>
+<p style="margin: 0; color: #d8cfe6">Hubo una época en la que me enfermé muchísimo. Por más que lo intentaba, no lograba sentirme bien, ni en el cuerpo ni en el alma.</p>
+<p style="margin: 0; color: #d8cfe6">En ese camino empecé a crear mis propias meditaciones: para liberar las emociones que llevaba guardadas, para calmar mi sistema nervioso y para volver a vivir en coherencia, con lo que siento, lo que pienso y lo que hago caminando en la misma dirección.</p>
+<p style="margin: 0; color: #d8cfe6">Lo que nació de una necesidad se convirtió en mi camino de crecimiento. Hoy las comparto contigo, para que tú también tengas un lugar al que volver cada vez que lo necesites.</p>
+</div>
+</div>
+</section>
+
+<section id="contenido" style="padding: 88px 24px">
+<div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Todo lo que te espera</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Las meditaciones</h2>
+<p style="margin: 0; color: #d8cfe6">Las que tienen candado se abren con cualquiera de los planes.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px">
+<sc-for list="{{ meds }}" as="grp" hint-placeholder-count="6">
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0 0 4px; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px; color: #f2c46d">{{ grp.title }}</h3>
+<sc-for list="{{ grp.items }}" as="it" hint-placeholder-count="3">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: center; border-top: 1px solid rgba(242,196,109,.15); padding-top: 10px; font-size: 16px">
+<span style="{{ it.textStyle }}">{{ it.name }}</span>
+<sc-if value="{{ it.free }}" hint-placeholder-val="{{ false }}"><span style="flex: 0 0 auto; background: #f2c46d; color: #1a1030; font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px">Gratis</span></sc-if>
+<sc-if value="{{ it.soon }}" hint-placeholder-val="{{ false }}"><span style="flex: 0 0 auto; color: #c9bfd9; font-size: 13px; font-weight: 600">Próximamente</span></sc-if>
+<sc-if value="{{ it.locked }}" hint-placeholder-val="{{ true }}"><span role="img" aria-label="Bloqueada" style="flex: 0 0 auto; color: #c9bfd9; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section style="padding: 88px 24px; background: #180f33">
+<div style="max-width: 1120px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Espacio para respirar</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">22 respiraciones guiadas</h2>
+<p style="margin: 0; color: #d8cfe6">De 3, 5 o 10 minutos, con un círculo que respira contigo y mi voz guiándote.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px">
+<sc-for list="{{ breaths }}" as="b" hint-placeholder-count="22">
+<div style="background: #221846; border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; gap: 12px; align-items: center">
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="{{ b.textStyle }}">{{ b.name }}</span><span style="font-size: 14px; color: #c9bfd9">{{ b.purpose }}</span></div>
+<sc-if value="{{ b.free }}" hint-placeholder-val="{{ false }}"><span style="flex: 0 0 auto; background: #f2c46d; color: #1a1030; font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px">Gratis</span></sc-if>
+<sc-if value="{{ b.locked }}" hint-placeholder-val="{{ true }}"><span role="img" aria-label="Bloqueada" style="flex: 0 0 auto; color: #c9bfd9; display: flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="text-align: center"><a href="#planes" style="display: inline-block; background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 16px 32px; border-radius: 999px">Abrir todo con un plan</a></div>
+</div>
+</section>
+
+<section id="premium" style="padding: 88px 24px">
+<div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Solo en Premium</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Una meditación hecha para ti, y una comunidad que te acompaña</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px; color: #f2c46d">Tu meditación personalizada</h3>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Después de unirte te llega un formulario: me cuentas qué estás viviendo y cómo te quieres sentir. Con tu historia creo una meditación de 15 a 20 minutos con tu nombre, y te llega a tu correo entre 8 y 10 días después de unirte.</p>
+</div>
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px; color: #f2c46d">Comunidad de WhatsApp</h3>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Tips de bienestar varias veces por semana: respiraciones cortas, ideas para dormir mejor, pequeños hábitos y el aviso de cada meditación nueva.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="planes" style="padding: 88px 24px; background: #180f33">
+<div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; align-items: center">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Planes</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Elige cómo quieres acompañarte</h2>
+</div>
+<div role="group" aria-label="Forma de pago" style="display: flex; gap: 4px; background: #221846; border-radius: 999px; padding: 4px">
+<button type="button" onClick="{{ pickMonthly }}" style="{{ monthlyStyle }}">Pago mensual</button>
+<button type="button" onClick="{{ pickAnnual }}" style="{{ annualStyle }}">Pago anual</button>
+</div>
+<div style="width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px">
+<div style="background: #221846; border-radius: 24px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 36px">Básico</h3>
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 52px; font-weight: 700; color: #f2c46d">{{ basicPrice }}</span><span style="color: #d8cfe6">{{ period }}</span></div>
+<p style="margin: 0; font-size: 15px; color: #c9bfd9; min-height: 24px">{{ basicNote }}</p>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; color: #d8cfe6">
+<li>Todas las meditaciones</li>
+<li>Una meditación nueva cada mes</li>
+<li>Espacio para respirar</li>
+<li>Escúchalas cuando quieras, desde el celular o la computadora</li>
+</ul>
+<a href="#" style="margin-top: auto; text-align: center; border: 1px solid #f2c46d; color: #f2c46d; font-weight: 600; text-decoration: none; padding: 14px 24px; border-radius: 999px">Quiero el Básico</a>
+</div>
+<div style="background: #2c1f5a; border: 2px solid #f2c46d; border-radius: 24px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap"><h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 36px">Premium</h3><span style="background: #f2c46d; color: #1a1030; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px">Más completo</span></div>
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 52px; font-weight: 700; color: #f2c46d">{{ premPrice }}</span><span style="color: #d8cfe6">{{ period }}</span></div>
+<p style="margin: 0; font-size: 15px; color: #c9bfd9; min-height: 24px">{{ premNote }}</p>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; color: #d8cfe6">
+<li>Todo lo del plan Básico</li>
+<li>Una meditación creada para ti</li>
+<li>Comunidad de WhatsApp con tips de bienestar</li>
+<li>15% de descuento en las sesiones 1 a 1</li>
+</ul>
+<a href="#" style="margin-top: auto; text-align: center; background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 14px 24px; border-radius: 999px">Quiero el Premium</a>
+</div>
+</div>
+<p style="margin: 0; font-size: 15px; color: #c9bfd9; text-align: center">Precios en dólares. Hotmart te cobra en la moneda de tu país. Puedes cancelar cuando quieras.</p>
+</div>
+</section>
+
+<section id="sesiones" style="padding: 88px 24px">
+<div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: #f2c46d">Solo para ti</p>
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Solo una meditación, una sesión o un acompañamiento</h2>
+<p style="margin: 0; color: #d8cfe6">Para ti, aunque no tengas un plan. Cupos limitados cada mes.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px">
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px">Meditación creada para ti</h3>
+<p style="margin: 0; font-size: 32px; font-weight: 700; color: #f2c46d">22 USD</p>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Me cuentas en un formulario qué estás viviendo y cómo te quieres sentir. Te llega tu meditación de 15 a 20 minutos, con tu nombre, entre 8 y 10 días después de tu compra.</p>
+<a href="#" style="margin-top: auto; align-self: flex-start; background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 12px 24px; border-radius: 999px">Pedir mi meditación</a>
+</div>
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px">Sesión 1 a 1</h3>
+<p style="margin: 0; font-size: 32px; font-weight: 700; color: #f2c46d">55 USD</p>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Una hora por Zoom para conversar, respirar y meditar juntos. Te quedas con la grabación. Con Premium pagas 15% menos.</p>
+<a href="#" style="margin-top: auto; align-self: flex-start; background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 12px 24px; border-radius: 999px">Agendar mi sesión</a>
+</div>
+<div style="background: #221846; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 12px">
+<h3 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 30px">Acompañamiento personalizado</h3>
+<p style="margin: 0; font-size: 16px; color: #d8cfe6">Un proceso personal, a tu medida y a tu ritmo. Escríbeme y conversamos qué necesitas.</p>
+<a href="#" style="margin-top: auto; align-self: flex-start; display: inline-flex; gap: 8px; align-items: center; border: 1px solid #f2c46d; color: #f2c46d; font-weight: 600; text-decoration: none; padding: 12px 24px; border-radius: 999px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"></path></svg>Escríbeme por WhatsApp</a>
+</div>
+</div>
+</div>
+</section>
+
+<section style="padding: 88px 24px; background: #180f33">
+<div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; text-align: center; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 48px; line-height: 1.1">Preguntas frecuentes</h2>
+<div style="border-bottom: 1px solid rgba(242,196,109,.2); padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Y si no me gusta?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">Tienes 7 días de garantía. Si no te sirve, te devuelvo tu dinero.</p></div>
+<div style="border-bottom: 1px solid rgba(242,196,109,.2); padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Necesito experiencia meditando?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">No. Te guío paso a paso, y hay meditaciones cortas de 8 a 10 minutos para empezar.</p></div>
+<div style="border-bottom: 1px solid rgba(242,196,109,.2); padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Cómo las escucho?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">Desde el celular o la computadora, entrando a tu área de miembros. Están disponibles mientras tu plan esté activo.</p></div>
+<div style="border-bottom: 1px solid rgba(242,196,109,.2); padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Cómo funciona la sesión 1 a 1?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">Después de pagar te llega un enlace de Calendly para elegir el día y la hora que mejor te queden, ya en la hora de tu país. Recibes una notificación con la confirmación y el enlace de Zoom, y otra para recordarte la sesión.</p></div>
+<div style="border-bottom: 1px solid rgba(242,196,109,.2); padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Y si no puedo llegar a mi sesión?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">Puedes cancelarla hasta 24 horas antes desde la misma notificación de Calendly, y eliges una nueva fecha para reagendar.</p></div>
+<div style="border-bottom: 1px solid rgba(242,196,109,.2); padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Puedo cancelar mi plan?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">Sí, cuando quieras, desde tu cuenta de Hotmart.</p></div>
+<div style="padding-bottom: 20px"><h3 style="margin: 0 0 8px; font-size: 19px; font-weight: 600">¿Cuándo recibo mi meditación personalizada?</h3><p style="margin: 0; font-size: 16px; color: #d8cfe6">Con Premium anual, apenas te unes. Con Premium mensual, a partir de tu tercer mes. Te llega el formulario apenas compras, para que me cuentes tu historia ese mismo día. Tu meditación llega entre el día 8 y el 10.</p></div>
+</div>
+</section>
+
+<section style="padding: 96px 24px; text-align: center; background: radial-gradient(ellipse at 50% 100%, #3a2766 0%, #120c26 70%)">
+<div style="max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; align-items: center">
+<h2 style="margin: 0; font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 52px; line-height: 1.1">Empieza hoy, con tu regalo gratis</h2>
+<p style="margin: 0; color: #d8cfe6">Un ratito al día para ti. Lo demás llega solo.</p>
+<a href="#planes" style="background: #f2c46d; color: #1a1030; font-weight: 600; text-decoration: none; padding: 16px 36px; border-radius: 999px">Ver los planes</a>
+</div>
+</section>
+
+<footer style="padding: 32px 24px; border-top: 1px solid rgba(242,196,109,.15); text-align: center; font-size: 14px; color: #c9bfd9">Sanando con Hellen · Pagos seguros con Hotmart · [Tu Instagram] · [Tu correo]</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":7600}}'>
+class Component extends DCLogic {
+  constructor(p){ super(p); this.state = { annual: true, unlocked: false, name: '', email: '', error: false }; }
+  renderVals() {
+    const a = this.state.annual;
+    const u = this.state.unlocked;
+    const on1 = 'color: #f4eee6';
+    const off1 = 'color: #b3a8c7';
+    const mk = (name, extra) => {
+      const free = !!(extra && extra.free), soon = !!(extra && extra.soon);
+      return { name, free, soon, locked: !free && !soon, textStyle: free ? on1 : off1 };
+    };
+    const meds = [
+      { title: 'Sanar heridas', items: [mk('Sanando a mamá'), mk('Sanando a papá'), mk('Herida de traición'), mk('El perdón'), mk('Sanando la herida de abandono', { soon: true })] },
+      { title: 'Propósito y nueva vida', items: [mk('Encontrando tu propósito'), mk('Quién elijo ser hoy'), mk('Migrar: empezar desde cero'), mk('El trabajo de tus sueños'), mk('La vida de tus sueños'), mk('El cuerpo de tus sueños'), mk('Un salto cuántico')] },
+      { title: 'Amor', items: [mk('La pareja de tus sueños', { soon: true })] },
+      { title: 'Mañanas cortas', items: [mk('Gratitud antes de abrir los ojos', { free: true }), mk('Inicia tu día con alegría')] },
+      { title: 'Calma y estrés', items: [mk('Calmar la ansiedad'), mk('Volver al cuerpo')] },
+      { title: 'Dormir', items: [mk('Soltar el día y dormir')] }
+    ];
+    const bl = [
+      ['Respiración cuadrada', 'Orden y calma bajo presión', true], ['Respiración 4-7-8', 'Para dormir y apagar la mente'], ['Espacio vacío', 'Para mirar hacia adentro'],
+      ['La vela', 'Bajar el estrés del momento'], ['Tres inhalaciones', 'Soltar la tensión'], ['El zumbido', 'Calmar el sistema nervioso'],
+      ['Suspiro que abre el pecho', 'Alegría y ligereza'], ['Respiración completa', 'Energía y presencia'], ['Respiración coherente', 'Equilibrio'],
+      ['Respiración alterna', 'Claridad mental'], ['Suspiro cíclico', 'Bajar la ansiedad rápido'], ['Respiración abdominal', 'Volver al cuerpo'],
+      ['Respiración igual', 'Para empezar a practicar'], ['Exhalación doble', 'Relajación profunda'], ['Triángulo', 'Enfoque rápido'],
+      ['Contar del 1 al 10', 'Concentración'], ['Cinco dedos', 'Para niños y momentos de ansiedad'], ['Respiración del océano', 'Concentración y calor interno'],
+      ['Respiración del león', 'Soltar el enojo y la tensión de la cara'], ['Respiración refrescante', 'Calor, enojo y sofocos'], ['Buteyko', 'Respirar por la nariz con calma'],
+      ['El fuelle', 'Activarte y despertar']
+    ];
+    const breaths = bl.map(x => ({ name: x[0], purpose: x[1], free: !!x[2], locked: !x[2], textStyle: x[2] ? on1 : off1 }));
+    const on = 'border: 0; border-radius: 999px; padding: 12px 24px; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; background: #f2c46d; color: #1a1030; min-height: 44px';
+    const off = 'border: 0; border-radius: 999px; padding: 12px 24px; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; background: transparent; color: #d8cfe6; min-height: 44px';
+    return {
+      meds, breaths,
+      unlocked: u, locked: !u, showError: this.state.error,
+      name: this.state.name, email: this.state.email,
+      greet: this.state.name.trim() ? '¡Listo, ' + this.state.name.trim() + '!' : '¡Listo!',
+      onName: (e) => this.setState({ name: e.target.value }),
+      onEmail: (e) => this.setState({ email: e.target.value, error: false }),
+      submit: (e) => { if (e && e.preventDefault) e.preventDefault(); const ok = /.+@.+\..+/.test(this.state.email); this.setState(ok ? { unlocked: true, error: false } : { error: true }); },
+      pickMonthly: () => this.setState({ annual: false }),
+      pickAnnual: () => this.setState({ annual: true }),
+      monthlyStyle: a ? off : on,
+      annualStyle: a ? on : off,
+      basicPrice: a ? '49' : '7,90',
+      premPrice: a ? '99' : '14,90',
+      period: a ? 'USD al año' : 'USD al mes',
+      basicNote: a ? 'Como pagar 4,08 al mes' : 'Cancela cuando quieras',
+      premNote: a ? 'Como pagar 8,25 al mes' : 'Cancela cuando quieras'
+    };
+  }
+}
+</script>
+</body>
+</html>

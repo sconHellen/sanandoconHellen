@@ -1,50 +1,88 @@
 .hero {
-  padding-block: var(--space-7) var(--space-8);
-  background: linear-gradient(180deg, var(--lavender-50), var(--bg));
-}
-
-.heroInner {
-  display: grid;
-  gap: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  gap: var(--space-8);
+  padding-block: 72px 64px;
 }
 
 .heroText {
-  max-width: 38rem;
+  flex: 1 1 440px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
-.lead {
-  font-size: var(--step-1);
+.display {
+  font-size: var(--fs-display);
+  line-height: var(--leading-display);
+}
+
+.heroLead {
+  font-size: var(--fs-lead);
+  line-height: var(--leading);
   color: var(--text-muted);
+  max-width: 520px;
 }
 
 .ctas {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-top: var(--space-5);
+  margin-top: var(--space-2);
 }
 
+/* Breathing visual reused from the "Respiraciones" design. */
 .breath {
+  flex: 1 1 320px;
+  position: relative;
   display: grid;
   place-items: center;
+  width: min(100%, 400px);
   aspect-ratio: 1;
-  width: min(70vw, 20rem);
   margin-inline: auto;
+  border-radius: var(--radius-round);
+  background: var(--lavender-50);
+}
+
+.breath > * {
+  grid-area: 1 / 1;
+}
+
+.breathRing {
+  width: 86%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-round);
+  border: var(--border-strong-width) dashed var(--lavender-300);
 }
 
 .breathCircle {
-  width: 100%;
-  height: 100%;
+  width: 76%;
+  aspect-ratio: 1;
   border-radius: var(--radius-round);
-  background: radial-gradient(circle at 35% 35%, var(--lavender-100), var(--lavender-300));
-  box-shadow: var(--shadow-lift);
+  background: var(--lavender-300);
   animation: respira var(--dur-breath) var(--ease-soft) infinite;
 }
 
-.section {
-  padding-block: var(--space-7);
+.breathWord {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  font-style: italic;
+  color: var(--text-strong);
+}
+
+.band {
+  background: var(--lavender-50);
+  padding-block: var(--section-y);
   scroll-margin-top: 5rem;
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 44px;
 }
 
 .grid {
@@ -52,43 +90,70 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--space-4);
+  gap: 22px;
   grid-template-columns: 1fr;
 }
 
-.card,
-.cardWarm {
-  padding: var(--space-5);
-  border-radius: var(--radius-card-lg);
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: var(--surface);
-  box-shadow: var(--shadow-soft);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-card-lg);
 }
 
-.cardWarm {
-  background: var(--cream-warm-2);
+.art {
+  height: 150px;
+  display: grid;
+  place-items: center;
 }
 
-.card h3,
-.cardWarm h3 {
-  font-size: var(--step-2);
+.artDisc {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-round);
+  background: var(--bg);
+  opacity: 0.55;
 }
 
-.card p,
-.cardWarm p {
+.tone1 { background: var(--lavender-100); }
+.tone2 { background: var(--cream-warm); }
+.tone3 { background: var(--lavender-200); }
+.tone4 { background: var(--cream-warm-2); }
+.tone5 { background: var(--lavender-250); }
+.tone6 { background: var(--tone-6); }
+
+.cardBody {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cardBody p {
+  font-size: var(--fs-small);
+  line-height: 1.55;
   color: var(--text-muted);
-  margin: 0;
+}
+
+.section {
+  padding-block: var(--section-y) 0;
+  scroll-margin-top: 5rem;
 }
 
 .placeholder {
-  padding: var(--space-6);
-  border-radius: var(--radius-card);
-  background: var(--surface-soft);
-  border: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: clamp(22px, 4vw, 44px);
+  border-radius: var(--radius-panel-sm);
+  background: var(--surface);
+  border: var(--border-width) dashed var(--lavender-200);
 }
 
 .placeholder p {
   color: var(--text-muted);
-  margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -96,6 +161,5 @@
 }
 
 @media (min-width: 1024px) {
-  .heroInner { grid-template-columns: 1.2fr 1fr; }
   .grid { grid-template-columns: repeat(3, 1fr); }
 }

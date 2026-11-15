@@ -2,18 +2,18 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: color-mix(in srgb, var(--bg) 90%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  background: var(--bg);
+  border-bottom: var(--border-width) solid var(--border);
 }
 
 .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 4rem;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
 }
 
 .main {
-  padding-block: var(--space-7);
+  padding-block: 64px 96px;
 }

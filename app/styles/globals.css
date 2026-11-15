@@ -27,9 +27,9 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  color: var(--text);
+  color: var(--text-strong);
   font-family: var(--font-sans);
-  font-size: var(--step-0);
+  font-size: var(--fs-base);
   line-height: var(--leading);
   -webkit-font-smoothing: antialiased;
   transition: background-color var(--dur) var(--ease-soft), color var(--dur) var(--ease-soft);
@@ -43,20 +43,36 @@ h4 {
   font-weight: 500;
   line-height: var(--leading-tight);
   color: var(--text-strong);
-  margin: 0 0 var(--space-4);
+  margin: 0;
   text-wrap: balance;
 }
 
-h1 { font-size: var(--step-4); }
-h2 { font-size: var(--step-3); }
-h3 { font-size: var(--step-2); }
+h1 { font-size: var(--fs-page-title); line-height: 1.05; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); font-weight: 600; line-height: 1.15; }
+
+/* Small uppercase label above titles. */
+.eyebrow {
+  display: block;
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.lead {
+  font-size: var(--fs-body);
+  line-height: var(--leading);
+  color: var(--text-muted);
+}
 
 main {
   flex: 1;
 }
 
 p {
-  margin: 0 0 var(--space-4);
+  margin: 0;
   text-wrap: pretty;
 }
 
@@ -127,8 +143,10 @@ textarea {
 
 /* ---- Motion from the design ---- */
 @keyframes respira {
-  0%, 100% { transform: scale(0.62); }
-  50% { transform: scale(1); }
+  0% { transform: scale(0.62); }
+  40% { transform: scale(1); }
+  55% { transform: scale(1); }
+  100% { transform: scale(0.62); }
 }
 
 @keyframes flota {
@@ -145,4 +163,12 @@ textarea {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Intro block at the top of each members tab. */
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
 }

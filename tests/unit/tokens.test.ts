@@ -46,18 +46,32 @@ export function contrast(a: string, b: string): number {
   return (l1! + 0.05) / (l2! + 0.05);
 }
 
-const BACKGROUNDS = ["--bg", "--surface", "--surface-soft", "--lavender-50", "--lavender-100", "--cream-warm", "--cream-warm-2", "--tab-active-bg"];
+const BACKGROUNDS = ["--bg", "--surface", "--surface-soft", "--lavender-50", "--lavender-100", "--cream-warm", "--cream-warm-2", "--cream-warm-3", "--tab-active-bg"];
 const BODY_TEXT = ["--text", "--text-strong", "--text-muted", "--link", "--link-hover"];
-// --text-soft is restricted to neutral backgrounds (usage rule documented in tokens.css).
-const NEUTRAL_BACKGROUNDS = ["--bg", "--surface", "--surface-soft", "--cream-warm", "--cream-warm-2"];
+// --text-soft (eyebrows/meta) is used on these backgrounds in the mockup; not on --lavender-100.
+const SOFT_BACKGROUNDS = ["--bg", "--surface", "--surface-soft", "--lavender-50", "--cream-warm", "--cream-warm-2", "--cream-warm-3"];
 
-const PAIRS: Array<[fg: string, bg: string, min: number]> = [
-  ...BODY_TEXT.flatMap((fg) => BACKGROUNDS.map((bg) => [fg, bg, 4.5] as [string, string, number])),
-  ...NEUTRAL_BACKGROUNDS.map((bg) => ["--text-soft", bg, 4.5] as [string, string, number]),
+type Pair = [fg: string, bg: string, min: number];
+const PAIRS: Pair[] = [
+  ...BODY_TEXT.flatMap((fg) => BACKGROUNDS.map((bg): Pair => [fg, bg, 4.5])),
+  ...SOFT_BACKGROUNDS.map((bg): Pair => ["--text-soft", bg, 4.5]),
+  ["--tab-fg", "--bg", 4.5],
   ["--btn-primary-fg", "--btn-primary-bg", 4.5],
   ["--btn-primary-fg", "--btn-primary-bg-hover", 4.5],
-  ["--btn-secondary-fg", "--btn-secondary-bg", 4.5],
-  // Non-text UI: focus indicator must reach 3:1 against the page (WCAG 1.4.11).
+  ["--btn-soft-fg", "--btn-soft-bg", 4.5],
+  ["--btn-outline", "--bg", 4.5], // outline button label
+  ["--btn-outline", "--surface", 4.5],
+  // Inverse band and footer.
+  ["--inverse-text", "--inverse-bg", 4.5],
+  ["--inverse-text", "--inverse-card", 4.5],
+  ["--inverse-text-muted", "--inverse-card", 4.5],
+  ["--inverse-eyebrow", "--inverse-bg", 4.5],
+  ["--footer-text", "--footer-bg", 4.5],
+  ["--footer-heading", "--footer-bg", 4.5],
+  ["--footer-small", "--footer-bg", 4.5],
+  // Large text (>= 24px): the italic accent in the hero title.
+  ["--accent", "--bg", 3],
+  // Non-text UI (WCAG 1.4.11): focus indicator and input borders' text.
   ["--focus-ring", "--bg", 3],
 ];
 
