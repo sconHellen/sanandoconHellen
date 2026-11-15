@@ -2,7 +2,7 @@ import "server-only";
 
 /**
  * Fixed-window rate limiter. Uses Upstash Redis over its REST API (plain fetch, no SDK)
- * when RATE_LIMIT_URL/RATE_LIMIT_TOKEN are set; otherwise an in-memory map that is only
+ * when a backend URL/token is configured; otherwise an in-memory map that is only
  * acceptable for local development and tests (it is per-instance on serverless).
  */
 export interface RateLimitResult {
@@ -12,10 +12,15 @@ export interface RateLimitResult {
 
 const memory = new Map<string, { count: number; resetAt: number }>();
 
+// Accept our own names or the ones the Vercel Marketplace Upstash integration creates.
+const backendUrl = () => process.env.RATE_LIMIT_URL ?? process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
+const backendToken = () =>
+  process.env.RATE_LIMIT_TOKEN ?? process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+
 async function hitUpstash(key: string, windowSec: number): Promise<number> {
-  const res = await fetch(`${process.env.RATE_LIMIT_URL}/pipeline`, {
+  const res = await fetch(`${backendUrl()}/pipeline`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${process.env.RATE_LIMIT_TOKEN}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${backendToken()}`, "Content-Type": "application/json" },
     body: JSON.stringify([
       ["INCR", key],
       ["EXPIRE", key, String(windowSec), "NX"],
@@ -39,9 +44,9 @@ function hitMemory(key: string, windowSec: number): number {
 }
 
 export async function rateLimit(key: string, limit: number, windowSec: number): Promise<RateLimitResult> {
-  const useUpstash = Boolean(process.env.RATE_LIMIT_URL && process.env.RATE_LIMIT_TOKEN);
+  const useUpstash = Boolean(backendUrl() && backendToken());
   if (!useUpstash && process.env.VERCEL_ENV === "production") {
-    throw new Error("RATE_LIMIT_URL/RATE_LIMIT_TOKEN must be set in production");
+    throw new Error("Rate limit backend (RATE_LIMIT_URL/TOKEN or Upstash integration) must be set in production");
   }
   const count = useUpstash ? await hitUpstash(`rl:${key}`, windowSec) : hitMemory(key, windowSec);
   return { allowed: count <= limit, remaining: Math.max(0, limit - count) };

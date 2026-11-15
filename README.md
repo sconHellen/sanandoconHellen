@@ -6,6 +6,7 @@ Landing público + app de miembros de meditaciones. Next.js 16 · React 19 · Ty
 - Fases: [`docs/PHASE-1.md`](docs/PHASE-1.md) · [`docs/PHASE-2.md`](docs/PHASE-2.md)
 - Dependencias justificadas: [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)
 - Decisiones confirmadas: [`docs/DECISIONS.md`](docs/DECISIONS.md)
+- Puesta en marcha en Vercel: [`docs/VERCEL.md`](docs/VERCEL.md)
 
 ## Desarrollo
 
