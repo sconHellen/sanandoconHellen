@@ -86,6 +86,8 @@ Las tablas se crean con las migraciones del repositorio. Se hace desde la comput
    ```
 
 3. Debe terminar con **migrations applied successfully**.
+   - Si la cadena termina en `&channel_binding=require`, **quita ese trozo** y deja solo `?sslmode=require`: el conector postgres.js no lo admite y `drizzle-kit` puede quedarse esperando o cerrarse sin mostrar error.
+   - Para confirmar: Vercel → **Storage → la base → Browse data** debe mostrar las tablas (`users`, `email_signups`, `audit_log`…).
 4. Repite con la cadena de **`sch-produccion`**.
 5. Cierra la terminal (para que la cadena no quede en memoria) y no la pegues en ningún archivo.
 
