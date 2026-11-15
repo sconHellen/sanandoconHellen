@@ -46,13 +46,9 @@ Resultado actual: 4/4 unitarias y 28/28 Playwright. La migración se aplicó con
 
 Las capturas de referencia están en `tests/visual/__screenshots__/`. Se generan en Linux/Chromium; para regenerarlas: `npm run test:visual -- --update-snapshots`.
 
-## Cómo conectar Vercel (requiere tu cuenta; no se puede hacer desde aquí)
+## Cómo conectar Vercel
 
-1. En vercel.com → **Add New → Project** → importa `sconHellen/sanandoconHellen`. Framework: Next.js (se detecta solo).
-2. **Storage → Marketplace → Neon (Postgres)**. Crea dos bases: una para Production y otra para Preview/Development. Vercel inyecta `DATABASE_URL` en cada entorno.
-3. En **Settings → Environment Variables** añade el resto de nombres de `.env.example` por entorno. `HOTMART_ENV=sandbox` en Preview y Development.
-4. Aplica la migración a cada base: `DATABASE_URL=... npm run db:migrate`.
-5. Cada rama genera una Preview automática.
+Ver la guía paso a paso en [`VERCEL.md`](VERCEL.md).
 
 ## Pendiente
 

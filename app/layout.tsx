@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Nunito_Sans } from "next/font/google";
 import { cookies } from "next/headers";
+import { SITE_URL } from "@/lib/site";
 import { THEME_COOKIE, parseTheme } from "@/lib/theme";
 import "./styles/globals.css";
 
@@ -20,7 +21,7 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(SITE_URL),
   title: { default: "Sanando con Hellen", template: "%s · Sanando con Hellen" },
 };
 
