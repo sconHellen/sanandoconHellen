@@ -1,0 +1,164 @@
+/*
+ * Design tokens — single source of truth for colour, type, radius, shadow and motion.
+ * Components must only reference these custom properties, never raw values.
+ *
+ * Light values come from the SanandoConHellen design (brief §5.2).
+ * [PENDIENTE: completar con todos los valores de ambos Main.dc.html cuando lleguen las carpetas de diseño]
+ *
+ * Dark theme is defined twice on purpose:
+ *   1. [data-theme="dark"]            → explicit user choice (cookie, painted by the server)
+ *   2. prefers-color-scheme: dark     → system default when no choice is stored
+ * tests/unit/tokens.test.ts verifies both blocks stay identical.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Palette (light) ---- */
+  --bg: #f8f3ea;
+  --surface: #fffcf7;
+  --surface-soft: #fbf7f0;
+  --lavender-50: #eee6f6;
+  --lavender-100: #e5daf2;
+  --lavender-200: #d9cbee;
+  --lavender-300: #b9a3d6;
+  --lavender-400: #9c86c4;
+  --cream-warm: #efe4d3;
+  --cream-warm-2: #f2e9dc;
+  --text-strong: #3a2c55;
+  --text: #4b3b6b;
+  --text-muted: #54466e;
+  --text-soft: #6e5c8c; /* only on --bg / --surface* / --cream-*: 4.38:1 on --lavender-100 fails AA */
+  --link: #5b4880;
+  --link-hover: #3a2c55;
+
+  /* ---- Semantic roles ---- */
+  --btn-primary-bg: var(--text);
+  --btn-primary-fg: var(--surface);
+  --btn-primary-bg-hover: var(--text-strong);
+  --btn-secondary-bg: var(--lavender-100);
+  --btn-secondary-fg: var(--text-strong);
+  --tab-active-bg: var(--lavender-100);
+  --border: var(--lavender-200);
+  --focus-ring: var(--link); /* --lavender-400 only reaches 2.87:1 on --bg */
+  --shadow-color: 58 44 85; /* rgb triplet of --text-strong */
+
+  /* ---- Typography ---- */
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+
+  /* Fluid scale (mobile → laptop). The TV range scales the root font size. */
+  --step--1: clamp(0.875rem, 0.84rem + 0.15vw, 0.95rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
+  --step-2: clamp(1.5rem, 1.35rem + 0.75vw, 2rem);
+  --step-3: clamp(1.9rem, 1.6rem + 1.4vw, 2.85rem);
+  --step-4: clamp(2.4rem, 1.9rem + 2.4vw, 4rem);
+
+  --leading-tight: 1.15;
+  --leading: 1.6;
+
+  /* ---- Radius ---- */
+  --radius-pill: 999px;
+  --radius-card-lg: 24px;
+  --radius-card: 22px;
+  --radius-card-sm: 14px;
+  --radius-round: 50%;
+
+  /* ---- Shadow ---- [PENDIENTE: confirmar valores exactos de la maqueta] */
+  --shadow-soft: 0 10px 30px rgb(var(--shadow-color) / 0.08);
+  --shadow-lift: 0 18px 40px rgb(var(--shadow-color) / 0.14);
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --container-max: 72rem;
+
+  /* ---- Interaction ---- */
+  --tap-min: 44px;
+  --focus-width: 3px;
+
+  /* ---- Motion ---- */
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur: 300ms;
+  --dur-breath: 8s;
+  --dur-float: 6s;
+}
+
+/* ---------- Dark theme: explicit choice ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1b1526;
+  --surface: #251d33;
+  --surface-soft: #2d2340;
+  --lavender-50: #2a2140;
+  --lavender-100: #3a2c55;
+  --lavender-200: #4a3a6a;
+  --lavender-300: #8a75b3;
+  --lavender-400: #b9a3d6;
+  --cream-warm: #2e2535;
+  --cream-warm-2: #332a3b;
+  --text-strong: #f6f0fa;
+  --text: #e6dcef;
+  --text-muted: #c7bbd8;
+  --text-soft: #b7abc9;
+  --link: #c9b8e3;
+  --link-hover: #f6f0fa;
+  --btn-primary-bg: #d9cbee;
+  --btn-primary-fg: #2a1f3d;
+  --btn-primary-bg-hover: #e9def6;
+  --btn-secondary-bg: #3a2c55;
+  --btn-secondary-fg: #f6f0fa;
+  --tab-active-bg: #3a2c55;
+  --border: #3e3155;
+  --focus-ring: #d9cbee;
+  --shadow-color: 8 5 14;
+}
+
+/* ---------- Dark theme: system default (no stored choice) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1b1526;
+    --surface: #251d33;
+    --surface-soft: #2d2340;
+    --lavender-50: #2a2140;
+    --lavender-100: #3a2c55;
+    --lavender-200: #4a3a6a;
+    --lavender-300: #8a75b3;
+    --lavender-400: #b9a3d6;
+    --cream-warm: #2e2535;
+    --cream-warm-2: #332a3b;
+    --text-strong: #f6f0fa;
+    --text: #e6dcef;
+    --text-muted: #c7bbd8;
+    --text-soft: #b7abc9;
+    --link: #c9b8e3;
+    --link-hover: #f6f0fa;
+    --btn-primary-bg: #d9cbee;
+    --btn-primary-fg: #2a1f3d;
+    --btn-primary-bg-hover: #e9def6;
+    --btn-secondary-bg: #3a2c55;
+    --btn-secondary-fg: #f6f0fa;
+    --tab-active-bg: #3a2c55;
+    --border: #3e3155;
+    --focus-ring: #d9cbee;
+    --shadow-color: 8 5 14;
+  }
+}
+
+/* ---------- Large screens / TV ("3-metre UI"): ~1.5× type ---------- */
+@media (min-width: 1920px) {
+  :root {
+    --container-max: 96rem;
+    --focus-width: 5px;
+  }
+}
