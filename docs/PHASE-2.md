@@ -1,4 +1,6 @@
-# Fase 2 · Landing
+# Fase 2 · Landing  ✅ cerrada
+
+Publicada en Production: https://sanandoconhellen.vercel.app (Neon `sch-produccion`, Upstash `sch-limites`). Previews con Neon `sch-pruebas`. Guía: [`VERCEL.md`](VERCEL.md).
 
 ## Qué se hizo
 
@@ -48,7 +50,7 @@ Medición propia con Playwright, en un Pixel 7 emulado, CPU 4× más lenta y red
 
 El selector de planes y el menú móvil no usan JavaScript; el único componente de cliente del landing es el formulario de regalo (y el interruptor de tema).
 
-**Lighthouse oficial: pendiente.** No se pudo ejecutar en este entorno (la descarga de la herramienta quedó bloqueada). Hay que correrlo en la Preview de Vercel con PageSpeed Insights (pagespeed.web.dev) en modo móvil. El criterio de cierre de la fase es ≥ 90 en las cuatro categorías.
+**Lighthouse oficial (PageSpeed Insights, móvil, Production `sanandoconhellen.vercel.app`, 2026-11-15): 100** en Rendimiento, Accesibilidad, Prácticas recomendadas y SEO. ✅ Criterio de cierre cumplido (≥ 90).
 
 ## Pruebas
 
@@ -67,11 +69,10 @@ npm run test:visual    # 36 Playwright: 24 visuales + orden de secciones, formul
 
 ## Pendiente
 
-- [ ] Correr Lighthouse en la Preview de Vercel (criterio de cierre ≥ 90).
 - [ ] Enviar el correo con el regalo: falta el proveedor de correo y el dominio remitente.
 - [ ] Videos del regalo (respiración cuadrada y Gratitud antes de abrir los ojos): los botones muestran `[PENDIENTE: video]`.
 - [ ] Enlaces de checkout de Hotmart (`config/plans.ts`): los botones apuntan a `#planes` mientras tanto.
 - [ ] Enlace de WhatsApp para "Acompañamiento personalizado".
 - [ ] Redes sociales del pie.
-- [ ] Dominio definitivo (`APP_URL`): hoy las URL canónicas y del sitemap usan `localhost`.
+- [ ] Dominio definitivo: mientras tanto el sitio usa `https://sanandoconhellen.vercel.app` automáticamente (sin `APP_URL`).
 - [ ] Textos legales.
