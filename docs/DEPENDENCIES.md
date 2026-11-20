@@ -6,7 +6,7 @@ Regla del proyecto: cada dependencia se justifica aquí. Versiones fijadas exact
 
 | Paquete | Versión | Para qué | Alternativa descartada | Licencia |
 |---|---|---|---|---|
-| `next` | 16.4.3 | Framework (App Router, Route Handlers, Proxy, `next/font`, `next/image`) | Remix / Astro: el brief pide Next.js en Vercel | MIT |
+| `next` | 16.4.5 | Framework (App Router, Route Handlers, Proxy, `next/font`, `next/image`) | Remix / Astro: el brief pide Next.js en Vercel | MIT |
 | `react`, `react-dom` | 19.3.1 | UI | — (requerido por Next) | MIT |
 | `drizzle-orm` | 0.45.4 | ORM tipado + consultas parametrizadas | **Prisma**: motor binario aparte, cliente generado más pesado y arranque en frío más lento en serverless. Drizzle es SQL-first, sin binario, y las migraciones son SQL legible y revisable en cada PR | Apache-2.0 |
 | `postgres` (postgres.js) | 3.4.9 | Driver PostgreSQL | `@neondatabase/serverless`: nos ataría a Neon. postgres.js funciona con cualquier Postgres gestionado (Neon incluido vía URL con pooler). Se usa la 3.4.x estable en lugar de la 4.x (publicada hace < 3 semanas) | Unlicense |
@@ -25,3 +25,9 @@ Las pruebas unitarias usan el ejecutor nativo `node:test`: **cero dependencias**
 ## Auditoría (`npm audit`)
 
 - 4 avisos *moderate* en `esbuild` ≤ 0.24.2, arrastrado por `drizzle-kit` (vía `@esbuild-kit/*`). Afecta solo al **servidor de desarrollo de esbuild**, que no usamos; `drizzle-kit` es dependencia de desarrollo y no llega a producción. `npm audit fix --force` bajaría `drizzle-kit` a 0.18 (rompe). Se revisa en cada actualización de `drizzle-kit`.
+
+## Historial de actualizaciones de seguridad
+
+| Fecha | Paquete | De → a | Motivo |
+|---|---|---|---|
+| 2026-11-20 | `next` | 16.4.3 → 16.4.5 | 7 avisos *moderate* (GHSA-mfr8-8qww-v76h, GHSA-vc7v-qv4w-wrv8, GHSA-7qx7-33qx-rqx2, GHSA-f3mh-rxg3-f5g2, GHSA-pc58-hwjq-p385, GHSA-rhh4-g77r-r9qj, GHSA-vvgp-ww4w-46vf) en 16.0.0–16.4.4. Se elige la primera versión corregida con más de dos semanas publicada. `npm audit --omit=dev`: 0 vulnerabilidades. |
