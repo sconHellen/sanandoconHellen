@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { GIFT_EVENT, SELECT_EVENT } from "@/components/breathing/BreathingPlayer";
+import { GIFT_EVENT, OPEN_ITEM_EVENT, type OpenItemDetail } from "@/lib/landing-events";
 import { requestGift, type GiftState } from "@/app/(marketing)/actions";
 import buttons from "@/components/Button.module.css";
 import { LockIcon, PlayIcon } from "@/components/icons";
@@ -46,13 +46,18 @@ export function GiftSection({ initialUnlocked = false }: { initialUnlocked?: boo
             <h3>{g.title}</h3>
             <p>{g.text}</p>
             {unlocked && g.breathingId ? (
-              <a
+              <button
+                type="button"
                 className={`${buttons.primary} ${buttons.small} ${styles.cta}`}
-                href="#respirar"
-                onClick={() => window.dispatchEvent(new CustomEvent(SELECT_EVENT, { detail: g.breathingId }))}
+                aria-haspopup="dialog"
+                onClick={() =>
+                  window.dispatchEvent(
+                    new CustomEvent<OpenItemDetail>(OPEN_ITEM_EVENT, { detail: { kind: "breathing", id: g.breathingId! } }),
+                  )
+                }
               >
                 <PlayIcon /> {g.cta}
-              </a>
+              </button>
             ) : unlocked ? (
               <span className={`${buttons.primary} ${buttons.small} ${styles.cta}`} aria-disabled="true">
                 <PlayIcon /> {g.cta} <span className={styles.pending}>[PENDIENTE: video]</span>

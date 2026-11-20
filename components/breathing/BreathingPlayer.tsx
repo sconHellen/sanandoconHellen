@@ -13,10 +13,8 @@ import {
 } from "@/content/breathing";
 import { canPractise, type ViewerAccess } from "@/lib/media/breathing-assets";
 import { BreathingEngine, fmt, type Guide, type RunState } from "@/lib/breathing/engine";
+import { GIFT_EVENT } from "@/lib/landing-events";
 import styles from "./BreathingPlayer.module.css";
-
-export const GIFT_EVENT = "sch:gift-unlocked";
-export const SELECT_EVENT = "sch:select-breathing";
 
 const store = {
   get(k: string) {
@@ -39,16 +37,26 @@ const byId = (id: string | null): Breathing => BREATHINGS.find((b) => b.id === i
 
 /**
  * "Espacio para respirar": Hellen's breathing player, same layout and behaviour as the
- * reference (stage, info, controls, library), rendered with the project's identity.
+ * reference (stage, info, controls), rendered with the project's identity. It opens one
+ * technique inside the catalogue dialog; `onLeave` closes the dialog when the visitor
+ * follows a "gift" or "plan" link.
  */
-export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess }) {
+export function BreathingPlayer({
+  initialAccess,
+  breathingId,
+  onLeave,
+}: {
+  initialAccess: ViewerAccess;
+  breathingId: string;
+  onLeave?: () => void;
+}) {
   const [access, setAccess] = useState(initialAccess);
-  const [cur, setCur] = useState<Breathing>(BREATHINGS[0]!);
+  const [cur, setCur] = useState<Breathing>(byId(breathingId));
   const [mins, setMins] = useState(5);
   const [guide, setGuide] = useState<Guide>("voz");
   const [introOn, setIntroOn] = useState(true);
   const [countAloud, setCountAloud] = useState(false);
-  const [bgChoice, setBgChoice] = useState(SUGGESTED[BREATHINGS[0]!.id]!);
+  const [bgChoice, setBgChoice] = useState(SUGGESTED[byId(breathingId).id]!);
   const [volume, setVolume] = useState(0.5);
   const [runState, setRunState] = useState<RunState>("idle");
   const [skippable, setSkippable] = useState(false);
@@ -65,17 +73,6 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
   settings.current = { mins, guide, introOn, countAloud, bgChoice, volume };
 
   const songAllowed = useCallback((id: string) => access.breathing || (access.gift && id === FREE_SONG_ID), [access]);
-
-  const select = useCallback(
-    (b: Breathing) => {
-      setCur(b);
-      store.set("resp", b.id);
-      const sug = SUGGESTED[b.id] ?? "rio";
-      setBgChoice(songAllowed(sug) ? sug : "off");
-      engineRef.current?.select(b);
-    },
-    [songAllowed],
-  );
 
   // Engine lifecycle + stored preferences.
   useEffect(() => {
@@ -94,12 +91,12 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
     engineRef.current = engine;
     if (store.get("num") === "on") setCountAloud(true);
     if (store.get("intro") === "off") setIntroOn(false);
-    const initial = byId(store.get("resp"));
+    const initial = byId(breathingId);
     setCur(initial);
     engine.select(initial);
     engine.ambient();
     return () => engine.destroy();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Keep the suggested song valid when access changes (e.g. after the gift form).
   useEffect(() => {
@@ -108,21 +105,12 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
     if (songAllowed(sug)) setBgChoice((c) => (c === "off" ? sug : c));
   }, [songAllowed, cur.id]);
 
-  // Gift unlocked elsewhere on the page; "practise this one" requests from the gift card.
+  // Gift unlocked elsewhere on the page.
   useEffect(() => {
     const onGift = () => setAccess((a) => ({ ...a, gift: true }));
-    const onSelect = (e: Event) => {
-      const b = byId((e as CustomEvent<string>).detail);
-      select(b);
-      playerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
     window.addEventListener(GIFT_EVENT, onGift);
-    window.addEventListener(SELECT_EVENT, onSelect);
-    return () => {
-      window.removeEventListener(GIFT_EVENT, onGift);
-      window.removeEventListener(SELECT_EVENT, onSelect);
-    };
-  }, [select]);
+    return () => window.removeEventListener(GIFT_EVENT, onGift);
+  }, []);
 
   // Live background changes while a session runs.
   useEffect(() => {
@@ -153,7 +141,7 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
 
   return (
     <div className={styles.wrap} style={{ ["--sage" as string]: palette.a }}>
-      <section ref={playerRef} className={styles.player} aria-label="Reproductor de respiraciones" id="respirar">
+      <section ref={playerRef} className={styles.player} aria-label="Reproductor de respiraciones">
         <div className={styles.stage}>
           <canvas ref={canvasRef} aria-hidden="true" />
           <div className={styles.meta}>
@@ -182,11 +170,11 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
                 {runState === "loading" ? "Cargando…" : runState === "running" ? "Pausar" : runState === "paused" ? "Continuar" : "Empezar"}
               </button>
             ) : cur.id === FREE_BREATHING_ID ? (
-              <a className={styles.go} href="#regalo">
+              <a className={styles.go} href="#regalo" onClick={onLeave}>
                 Ábrela con tu regalo gratis
               </a>
             ) : (
-              <a className={styles.go} href="#planes">
+              <a className={styles.go} href="#planes" onClick={onLeave}>
                 Ábrela con un plan
               </a>
             )}
@@ -201,7 +189,9 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
         <div className={styles.panel}>
           <div className={styles.info}>
             <div className={styles.eyebrow}>{cur.p}</div>
-            <h3 className={styles.name}>{cur.n}</h3>
+            <h2 className={styles.name} id="dialog-title">
+              {cur.n}
+            </h2>
             <div className={styles.rhythm}>{cur.r}</div>
             <p>{cur.how}</p>
             <div className={styles.fact}>
@@ -261,40 +251,6 @@ export function BreathingPlayer({ initialAccess }: { initialAccess: ViewerAccess
         </div>
       </section>
 
-      <section className={styles.lib} aria-label="Respiraciones">
-        <h3>Las respiraciones</h3>
-        <p className={styles.sub}>
-          Veintidós técnicas, de las más calmantes a las más activadoras. Cada una empieza con una explicación hablada.
-        </p>
-        <div className={styles.grid}>
-          {BREATHINGS.map((b) => {
-            const p = paletteOf(b);
-            const open = canPractise(b.id, access);
-            return (
-              <button
-                key={b.id}
-                type="button"
-                className={styles.card}
-                style={{ ["--c" as string]: p.a, ["--t" as string]: p.t }}
-                aria-current={b.id === cur.id ? "true" : "false"}
-                onClick={() => {
-                  select(b);
-                  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-                  playerRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-                }}
-              >
-                <span className={styles.top}>
-                  <span className={styles.dot} />
-                  <span className={styles.n}>{b.n}</span>
-                  {b.id === FREE_BREATHING_ID ? <span className={styles.tag}>Gratis</span> : !open ? <span className={styles.tag}>Con un plan</span> : null}
-                </span>
-                <span className={styles.r}>{b.r}</span>
-                <span className={styles.p}>{b.p}</span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
     </div>
   );
 }

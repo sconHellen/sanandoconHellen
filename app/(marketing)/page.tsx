@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import buttons from "@/components/Button.module.css";
-import { ChatIcon, LockIcon } from "@/components/icons";
+import { ChatIcon } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
 import { GiftSection } from "@/components/landing/GiftSection";
 import { Plans } from "@/components/landing/Plans";
 import { SERVICES, formatUsd } from "@/config/plans";
-import { BreathingPlayer } from "@/components/breathing/BreathingPlayer";
-import { BREATHINGS } from "@/content/breathing";
-import { MEDITATION_GROUPS, type Availability } from "@/content/catalog";
+import { Catalog } from "@/components/landing/Catalog";
 import { getViewerAccess } from "@/lib/media/viewer";
 import { FAQ } from "@/content/faq";
 import { landingStructuredData } from "@/content/structured-data";
@@ -38,16 +36,6 @@ export const metadata: Metadata = {
     images: ["/images/hellen-cuencos.jpg"],
   },
 };
-
-function Status({ availability }: { availability: Availability }) {
-  if (availability === "free") return <span className={styles.free}>Gratis</span>;
-  if (availability === "soon") return <span className={styles.soon}>Próximamente</span>;
-  return (
-    <span className={styles.lock} role="img" aria-label="Bloqueada">
-      <LockIcon />
-    </span>
-  );
-}
 
 function SectionHead({ eyebrow, title, id, text }: { eyebrow: string; title: string; id: string; text?: string }) {
   return (
@@ -141,41 +129,9 @@ export default async function HomePage() {
             eyebrow="Todo lo que te espera"
             id="catalogo-titulo"
             title="Las meditaciones"
-            text="Las que tienen candado se abren con cualquiera de los planes."
+            text="Toca cualquiera para conocerla. Las que tienen candado se abren con tu regalo o con cualquiera de los planes."
           />
-          <div className={styles.groups}>
-            {MEDITATION_GROUPS.map((group) => (
-              <article key={group.slug} className={styles.group}>
-                <h3>{group.title}</h3>
-                <ul>
-                  {group.items.map((it) => (
-                    <li key={it.slug} className={it.availability === "free" ? styles.itemFree : undefined}>
-                      <span>{it.title}</span>
-                      <Status availability={it.availability} />
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Breathing */}
-      <section className={styles.band} aria-labelledby="respiraciones-titulo">
-        <div className="container">
-          <SectionHead
-            eyebrow="Espacio para respirar"
-            id="respiraciones-titulo"
-            title={`${BREATHINGS.length} respiraciones guiadas`}
-            text="De 3, 5 o 10 minutos, con un círculo que respira contigo y mi voz guiándote."
-          />
-          <BreathingPlayer initialAccess={access} />
-          <div className={styles.centerCta}>
-            <a className={buttons.primary} href="#planes">
-              Abrir todo con un plan
-            </a>
-          </div>
+          <Catalog initialAccess={access} />
         </div>
       </section>
 

@@ -12,8 +12,7 @@ Todas las secciones del landing, en el orden del brief, con la identidad de Sana
 | 2 | Héroe | "Un lugar para volver a ti, cada vez que lo necesites", con el círculo `respira` |
 | 3 | Regalo gratis | Respiración cuadrada + Gratitud antes de abrir los ojos; formulario nombre + correo + consentimiento |
 | 4 | Hola, soy Hellen | Texto del landing y foto real de Hellen en marco de arco |
-| 5 | Las meditaciones | 6 grupos con estado Gratis / candado / Próximamente (`content/catalog.ts`) |
-| 6 | 22 respiraciones guiadas | Lista completa del diseño |
+| 5 | Las meditaciones | 6 grupos de meditaciones **+ el grupo "Espacio para respirar" con las 22 respiraciones** (decisión 2026-11-20). Cada elemento se abre en una ventana: respiraciones con el reproductor de Hellen; meditaciones con su ficha (video pendiente). Estados: bloqueado · con tu regalo · disponible · próximamente |
 | 7 | Premium | Meditación personalizada + comunidad de WhatsApp |
 | 8 | Planes | Selector mensual/anual **sin JavaScript** (radios nativos + CSS `:has()`), precios desde `config/plans.ts` |
 | 9 | Servicios sueltos | Los del landing: meditación para ti (22 USD), sesión 1 a 1 (55 USD), acompañamiento por WhatsApp |

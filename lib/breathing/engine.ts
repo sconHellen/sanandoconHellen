@@ -123,6 +123,7 @@ export class BreathingEngine {
   private observer: IntersectionObserver | null = null;
   private cleanup: (() => void)[] = [];
   private skippable = false;
+  private destroyed = false;
 
   constructor(
     private els: EngineElements,
@@ -168,11 +169,12 @@ export class BreathingEngine {
   }
 
   destroy() {
+    this.destroyed = true; // the dialog closed: no more resumes, the context is closing
     this.stop(true);
     cancelAnimationFrame(this.idleRaf);
     this.observer?.disconnect();
     this.cleanup.forEach((f) => f());
-    void this.ctx?.close();
+    void this.ctx?.close().catch(() => undefined);
   }
 
   // ---------- selection ----------
@@ -423,10 +425,10 @@ export class BreathingEngine {
   togglePause() {
     if (!this.run || !this.ctx) return;
     if (this.ctx.state === "running") {
-      void this.ctx.suspend();
+      void this.ctx.suspend().catch(() => undefined);
       this.events.onRunState("paused");
     } else {
-      void this.ctx.resume();
+      void this.ctx.resume().catch(() => undefined);
       this.events.onRunState("running");
     }
   }
@@ -441,7 +443,7 @@ export class BreathingEngine {
       this.master.disconnect();
       this.master = this.ctx.createGain();
       this.master.connect(this.ctx.destination);
-      if (this.ctx.state !== "running") void this.ctx.resume();
+      if (!this.destroyed && this.ctx.state !== "running") void this.ctx.resume().catch(() => undefined);
     }
     this.setVolume();
     void this.wake?.release().catch(() => undefined);
