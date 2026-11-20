@@ -199,10 +199,25 @@ export class BreathingEngine {
 
   // ---------- audio ----------
   private async load(url: string): Promise<AudioBuffer> {
-    const r = await fetch(url, { credentials: "same-origin" });
+    let r: Response;
+    try {
+      r = await fetch(url, { credentials: "same-origin" });
+    } catch (e) {
+      // Network/CORS/CSP failure after the redirect to storage: the browser console shows the reason.
+      console.warn(`[respirar] no se pudo descargar ${url} (revisa CORS del bucket o la red)`, e);
+      throw e;
+    }
     if (r.status === 403) throw new LockedError();
-    if (!r.ok) throw new Error(`audio ${r.status}`);
-    return await this.ctx!.decodeAudioData(await r.arrayBuffer());
+    if (!r.ok) {
+      console.warn(`[respirar] ${url} respondió ${r.status} (${r.url})`);
+      throw new Error(`audio ${r.status}`);
+    }
+    try {
+      return await this.ctx!.decodeAudioData(await r.arrayBuffer());
+    } catch (e) {
+      console.warn(`[respirar] ${url} no es un audio válido`, e);
+      throw e;
+    }
   }
 
   private async ensureAudio() {

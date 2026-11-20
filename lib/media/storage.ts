@@ -29,7 +29,16 @@ export async function deliverMedia(key: string): Promise<MediaDelivery | null> {
   if (provider === "r2") {
     const host = r2Host();
     const { R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET } = process.env;
-    if (!host || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) return null;
+    if (!host || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) {
+      const missing = [
+        !host && "R2_ACCOUNT_ID (o R2_JURISDICTION con valor raro)",
+        !R2_ACCESS_KEY_ID && "R2_ACCESS_KEY_ID",
+        !R2_SECRET_ACCESS_KEY && "R2_SECRET_ACCESS_KEY",
+        !R2_BUCKET && "R2_BUCKET",
+      ].filter(Boolean);
+      console.error(`[media] R2 not configured; missing: ${missing.join(", ")}`);
+      return null;
+    }
     const url = presignUrl({
       method: "GET",
       host,
@@ -53,5 +62,6 @@ export async function deliverMedia(key: string): Promise<MediaDelivery | null> {
       return null;
     }
   }
+  console.error(`[media] VIDEO_PROVIDER is "${process.env.VIDEO_PROVIDER ?? ""}" (expected "r2" on Vercel)`);
   return null;
 }
