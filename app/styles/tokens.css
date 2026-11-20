@@ -54,6 +54,14 @@
   --footer-small: #c9b8e3;
   --footer-border: #54466e;
 
+  /* ---- Ritual (breathing player): night stage, identical in both themes ---- */
+  --ritual-night: #0f1424;
+  --ritual-dusk: #171e33;
+  --ritual-mist: #2b3552;
+  --ritual-linen: #f4efe6;
+  --ritual-haze: #aab3c9;
+  --ritual-warn: #f3b38f;
+
   /* ---- Semantic roles ---- */
   --btn-primary-bg: #4b3b6b;
   --btn-primary-fg: #fbf7f0;

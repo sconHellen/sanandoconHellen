@@ -1,0 +1,385 @@
+/* Same layout as Hellen's reference player; fonts and tokens from the project identity.
+   --sage is the per-technique accent (set inline), exactly like the reference. */
+.wrap {
+  --sage: #9fd4ef;
+  display: grid;
+  gap: 28px;
+  padding: clamp(16px, 3vw, 32px);
+  border-radius: var(--radius-panel-sm);
+  background: var(--ritual-night);
+  color: var(--ritual-linen);
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color-scheme: dark;
+}
+
+.player {
+  display: grid;
+  gap: 18px;
+  scroll-margin-top: 6rem;
+}
+
+/* ---- Stage ---- */
+.stage {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  border-radius: var(--radius-card);
+  background: var(--ritual-dusk);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.55);
+}
+
+@media (max-width: 640px) {
+  .stage { aspect-ratio: 4 / 5; }
+}
+
+.stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.center > div {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.phase {
+  max-width: 12ch;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4.4vw, 48px);
+  line-height: 1.05;
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgb(0 0 0 / 0.6);
+}
+
+.count {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 8vw, 92px);
+  line-height: 0.95;
+  color: var(--sage);
+  font-variant-numeric: tabular-nums lining-nums;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.5);
+  transition: color 1.2s;
+}
+
+.side {
+  min-height: 18px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ritual-haze);
+}
+
+.meta {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ritual-haze);
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding-inline: 12px;
+}
+
+.go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 28px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--ritual-linen);
+  color: var(--ritual-night);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+}
+
+.go:hover { color: var(--ritual-night); }
+.go[disabled] { opacity: 0.75; cursor: progress; }
+
+.ghost {
+  min-height: var(--tap-min);
+  padding: 0 18px;
+  border: 1px solid rgb(244 239 230 / 0.35);
+  border-radius: var(--radius-pill);
+  background: rgb(15 20 36 / 0.45);
+  color: var(--ritual-linen);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+/* ---- Info + controls ---- */
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .panel { grid-template-columns: 1fr; }
+}
+
+.info {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.info p { max-width: 60ch; }
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sage);
+  transition: color 1.2s;
+}
+
+.name {
+  margin: 2px 0 0;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 38px);
+  line-height: 1.05;
+  color: var(--ritual-linen);
+}
+
+.rhythm {
+  color: var(--ritual-haze);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.fact {
+  padding-top: 12px;
+  border-top: 1px solid var(--ritual-mist);
+  font-size: 14px;
+}
+
+.fact b {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ritual-haze);
+}
+
+.warn {
+  padding-left: 10px;
+  border-left: 2px solid var(--ritual-warn);
+  font-size: 13px;
+  color: var(--ritual-warn);
+}
+
+.controls {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.lab {
+  width: 72px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ritual-haze);
+}
+
+.chip {
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--ritual-mist);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ritual-haze);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--sage);
+  background: color-mix(in srgb, var(--sage) 18%, transparent);
+  color: var(--ritual-linen);
+}
+
+@media (max-width: 479px) {
+  .chip { min-height: var(--tap-min); }
+}
+
+.sel {
+  flex: 1 1 200px;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 36px;
+  padding: 7px 14px;
+  border: 1px solid var(--ritual-mist);
+  border-radius: var(--radius-pill);
+  background: var(--ritual-dusk);
+  color: var(--ritual-linen);
+  font: inherit;
+  font-size: 14px;
+}
+
+.vol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ritual-haze);
+}
+
+.vol input {
+  width: 110px;
+  accent-color: var(--sage);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--ritual-haze);
+}
+
+.wrap :focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
+}
+
+/* ---- Library ---- */
+.lib h3 {
+  margin: 0 0 4px;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(26px, 3vw, 32px);
+  color: var(--ritual-linen);
+}
+
+.sub {
+  margin-bottom: 16px;
+  max-width: 54ch;
+  color: var(--ritual-haze);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  gap: 10px;
+}
+
+.card {
+  --c: #9fd4ef;
+  --t: #0a1e38;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--ritual-mist);
+  border-radius: 16px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--t) 70%, var(--ritual-dusk)), var(--ritual-dusk) 75%);
+  color: var(--ritual-linen);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+
+.card:hover { border-color: color-mix(in srgb, var(--c) 50%, var(--ritual-mist)); }
+
+.card[aria-current="true"] {
+  border-color: var(--c);
+  box-shadow: 0 0 0 1px var(--c), 0 0 26px color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+}
+
+.n {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.r {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ritual-haze);
+  font-variant-numeric: tabular-nums;
+}
+
+.p {
+  font-size: 13px;
+  color: var(--ritual-haze);
+}
+
+.tag {
+  flex: none;
+  padding: 1px 7px;
+  border: 1px solid var(--ritual-mist);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--ritual-haze);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrap * { transition: none !important; }
+}

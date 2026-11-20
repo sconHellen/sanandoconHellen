@@ -1,13 +1,15 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { GIFT_EVENT, SELECT_EVENT } from "@/components/breathing/BreathingPlayer";
 import { requestGift, type GiftState } from "@/app/(marketing)/actions";
 import buttons from "@/components/Button.module.css";
 import { LockIcon, PlayIcon } from "@/components/icons";
 import styles from "./GiftSection.module.css";
 
-const GIFTS = [
+const GIFTS: { kind: string; title: string; text: string; cta: string; breathingId?: string }[] = [
   {
+    breathingId: "cuadrada",
     kind: "Respiración",
     title: "Respiración cuadrada",
     text: "Inhala, sostén, exhala y descansa en cuatro tiempos iguales. Trae orden y calma cuando hay presión.",
@@ -24,9 +26,15 @@ const GIFTS = [
 const initial: GiftState = { status: "idle" };
 
 /** Gift cards + email form. Works without JavaScript (progressive enhancement via Server Action). */
-export function GiftSection() {
+export function GiftSection({ initialUnlocked = false }: { initialUnlocked?: boolean }) {
   const [state, formAction, pending] = useActionState(requestGift, initial);
-  const unlocked = state.status === "success";
+  const justUnlocked = state.status === "success";
+  const unlocked = initialUnlocked || justUnlocked;
+
+  // Tell the breathing player that the free technique is now open.
+  useEffect(() => {
+    if (justUnlocked) window.dispatchEvent(new Event(GIFT_EVENT));
+  }, [justUnlocked]);
   const errors = state.status === "error" ? state.errors ?? {} : {};
 
   return (
@@ -37,7 +45,15 @@ export function GiftSection() {
             <span className="eyebrow">{g.kind}</span>
             <h3>{g.title}</h3>
             <p>{g.text}</p>
-            {unlocked ? (
+            {unlocked && g.breathingId ? (
+              <a
+                className={`${buttons.primary} ${buttons.small} ${styles.cta}`}
+                href="#respirar"
+                onClick={() => window.dispatchEvent(new CustomEvent(SELECT_EVENT, { detail: g.breathingId }))}
+              >
+                <PlayIcon /> {g.cta}
+              </a>
+            ) : unlocked ? (
               <span className={`${buttons.primary} ${buttons.small} ${styles.cta}`} aria-disabled="true">
                 <PlayIcon /> {g.cta} <span className={styles.pending}>[PENDIENTE: video]</span>
               </span>
@@ -52,7 +68,7 @@ export function GiftSection() {
 
       {unlocked ? (
         <p className={styles.success} role="status">
-          {state.name ? `¡Listo, ${state.name}!` : "¡Listo!"} Ya puedes escuchar tus dos regalos.
+          {state.name ? `¡Listo, ${state.name}!` : "¡Listo!"} Ya puedes disfrutar tus dos regalos.
           {/* Only promise the email once sending is implemented (needs EMAIL_API_KEY / EMAIL_FROM). */}
           {state.emailSent ? " También te los enviamos a tu correo." : null}
         </p>

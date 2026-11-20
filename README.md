@@ -7,6 +7,7 @@ Landing público + app de miembros de meditaciones. Next.js 16 · React 19 · Ty
 - Dependencias justificadas: [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md)
 - Decisiones confirmadas: [`docs/DECISIONS.md`](docs/DECISIONS.md)
 - Puesta en marcha en Vercel: [`docs/VERCEL.md`](docs/VERCEL.md)
+- Audios y videos (Cloudflare R2): [`docs/MEDIA.md`](docs/MEDIA.md)
 
 ## Desarrollo
 

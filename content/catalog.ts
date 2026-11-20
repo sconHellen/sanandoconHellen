@@ -16,10 +16,6 @@ export interface CatalogGroup {
   items: CatalogItem[];
 }
 
-export interface BreathingItem extends CatalogItem {
-  purpose: string;
-}
-
 const item = (slug: string, title: string, availability: Availability = "locked"): CatalogItem => ({ slug, title, availability });
 
 export const MEDITATION_GROUPS: CatalogGroup[] = [
@@ -64,34 +60,4 @@ export const MEDITATION_GROUPS: CatalogGroup[] = [
   { slug: "dormir", title: "Dormir", items: [item("soltar-el-dia-y-dormir", "Soltar el día y dormir")] },
 ];
 
-const breath = (slug: string, title: string, purpose: string, free = false): BreathingItem => ({
-  slug,
-  title,
-  purpose,
-  availability: free ? "free" : "locked",
-});
-
-export const BREATHING: BreathingItem[] = [
-  breath("respiracion-cuadrada", "Respiración cuadrada", "Orden y calma bajo presión", true),
-  breath("respiracion-4-7-8", "Respiración 4-7-8", "Para dormir y apagar la mente"),
-  breath("espacio-vacio", "Espacio vacío", "Para mirar hacia adentro"),
-  breath("la-vela", "La vela", "Bajar el estrés del momento"),
-  breath("tres-inhalaciones", "Tres inhalaciones", "Soltar la tensión"),
-  breath("el-zumbido", "El zumbido", "Calmar el sistema nervioso"),
-  breath("suspiro-que-abre-el-pecho", "Suspiro que abre el pecho", "Alegría y ligereza"),
-  breath("respiracion-completa", "Respiración completa", "Energía y presencia"),
-  breath("respiracion-coherente", "Respiración coherente", "Equilibrio"),
-  breath("respiracion-alterna", "Respiración alterna", "Claridad mental"),
-  breath("suspiro-ciclico", "Suspiro cíclico", "Bajar la ansiedad rápido"),
-  breath("respiracion-abdominal", "Respiración abdominal", "Volver al cuerpo"),
-  breath("respiracion-igual", "Respiración igual", "Para empezar a practicar"),
-  breath("exhalacion-doble", "Exhalación doble", "Relajación profunda"),
-  breath("triangulo", "Triángulo", "Enfoque rápido"),
-  breath("contar-del-1-al-10", "Contar del 1 al 10", "Concentración"),
-  breath("cinco-dedos", "Cinco dedos", "Para niños y momentos de ansiedad"),
-  breath("respiracion-del-oceano", "Respiración del océano", "Concentración y calor interno"),
-  breath("respiracion-del-leon", "Respiración del león", "Soltar el enojo y la tensión de la cara"),
-  breath("respiracion-refrescante", "Respiración refrescante", "Calor, enojo y sofocos"),
-  breath("buteyko", "Buteyko", "Respirar por la nariz con calma"),
-  breath("el-fuelle", "El fuelle", "Activarte y despertar"),
-];
+// Breathing techniques live in content/breathing.ts (player data, single source of truth).

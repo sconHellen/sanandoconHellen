@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": "22.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,11 +14,13 @@
     "test": "node --test --experimental-strip-types --no-warnings \"tests/unit/**/*.test.ts\"",
     "test:visual": "playwright test --trace off",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "media:prepare": "node --experimental-strip-types --no-warnings scripts/media/prepare.ts",
+    "media:upload": "node --experimental-strip-types --no-warnings scripts/media/upload.ts"
   },
   "dependencies": {
     "drizzle-orm": "0.45.4",
-    "next": "16.4.3",
+    "next": "16.4.5",
     "postgres": "3.4.9",
     "react": "19.3.1",
     "react-dom": "19.3.1"

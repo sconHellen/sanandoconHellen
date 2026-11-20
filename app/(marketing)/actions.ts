@@ -1,7 +1,8 @@
 "use server";
 
 import { createHash } from "node:crypto";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { GIFT_COOKIE } from "@/lib/media/viewer";
 import { rateLimit } from "@/lib/rate-limit";
 import { saveSignup } from "@/lib/signups/store";
 import { validateGiftSignup, type SignupErrors } from "@/lib/signups/validate";
@@ -45,6 +46,14 @@ export async function requestGift(_prev: GiftState, formData: FormData): Promise
     console.error("gift signup failed", error);
     return { status: "error", errors: { form: "Algo salió mal. Inténtalo de nuevo en un momento." } };
   }
+  // Unlocks the free gift content (square breathing) in this browser.
+  (await cookies()).set(GIFT_COOKIE, "1", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+  });
   // [PENDIENTE: enviar el correo con el regalo cuando esté configurado el proveedor de correo]
   return { status: "success", name: result.data.name, emailSent: false };
 }

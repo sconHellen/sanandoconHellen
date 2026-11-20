@@ -6,7 +6,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * never 'unsafe-inline'. Inline style *attributes* are allowed because
  * framework components (e.g. next/image) emit them; style *elements* need the nonce.
  */
-export function buildCsp(nonce: string, isDev: boolean): string {
+export function buildCsp(nonce: string, isDev: boolean, mediaHost: string | null = null): string {
   const directives = [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ""}`,
@@ -14,7 +14,8 @@ export function buildCsp(nonce: string, isDev: boolean): string {
     "style-src-attr 'unsafe-inline'",
     "img-src 'self' blob: data:",
     "font-src 'self'",
-    "connect-src 'self'",
+    // Audio is fetched from short-lived signed URLs on the media storage host.
+    `connect-src 'self'${mediaHost ? ` https://${mediaHost}` : ""}`,
     "media-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
@@ -27,7 +28,8 @@ export function buildCsp(nonce: string, isDev: boolean): string {
 
 export function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-  const csp = buildCsp(nonce, process.env.NODE_ENV === "development");
+  const mediaHost = process.env.R2_ACCOUNT_ID ? `${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com` : null;
+  const csp = buildCsp(nonce, process.env.NODE_ENV === "development", mediaHost);
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);

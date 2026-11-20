@@ -32,7 +32,8 @@ for (const page of PAGES) {
         expect(headingFont).toMatch(/Cormorant/i);
 
         await tab.evaluate(() => document.fonts.ready);
-        await expect(tab).toHaveScreenshot(`${page.name}-${theme}-${width}.png`, { fullPage: true });
+        // The breathing stage is a live canvas (twinkling stars): masked to keep snapshots stable.
+        await expect(tab).toHaveScreenshot(`${page.name}-${theme}-${width}.png`, { fullPage: true, mask: [tab.locator("canvas")] });
         await context.close();
       });
     }
