@@ -14,7 +14,9 @@
     "test": "node --test --experimental-strip-types --no-warnings \"tests/unit/**/*.test.ts\"",
     "test:visual": "playwright test --trace off",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "media:prepare": "node --experimental-strip-types --no-warnings scripts/media/prepare.ts",
+    "media:upload": "node --experimental-strip-types --no-warnings scripts/media/upload.ts"
   },
   "dependencies": {
     "drizzle-orm": "0.45.4",

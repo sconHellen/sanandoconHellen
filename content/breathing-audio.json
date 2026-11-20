@@ -1,0 +1,187 @@
+{
+  "generatedFrom": {
+    "intros": "intros-v5.mp3",
+    "words": "palabras-v3.mp3"
+  },
+  "intros": {
+    "478": {
+      "clip": [
+        0.526,
+        22.336
+      ]
+    },
+    "cuadrada": {
+      "clip": [
+        0.529,
+        20.339
+      ]
+    },
+    "vacio": {
+      "clip": [
+        0.539,
+        21.229
+      ]
+    },
+    "vela": {
+      "clip": [
+        0.529,
+        21.649
+      ]
+    },
+    "tres": {
+      "clip": [
+        0.53,
+        20.19
+      ]
+    },
+    "zumbido": {
+      "clip": [
+        0.535,
+        23.585
+      ]
+    },
+    "suspiro": {
+      "clip": [
+        0.533,
+        19.363
+      ]
+    },
+    "completa": {
+      "clip": [
+        0.544,
+        24.414
+      ]
+    },
+    "coherente": {
+      "clip": [
+        0.526,
+        18.046
+      ]
+    },
+    "alterna": {
+      "clip": [
+        0.533,
+        24.463
+      ]
+    },
+    "ciclico": {
+      "clip": [
+        0.549,
+        24.919
+      ]
+    },
+    "abdominal": {
+      "clip": [
+        0.536,
+        23.576
+      ]
+    },
+    "igual": {
+      "clip": [
+        0.55,
+        19.26
+      ]
+    },
+    "doble": {
+      "clip": [
+        0.545,
+        21.405
+      ]
+    },
+    "triangulo": {
+      "clip": [
+        0.548,
+        18.678
+      ]
+    },
+    "contar": {
+      "clip": [
+        0.538,
+        22.138
+      ]
+    },
+    "dedos": {
+      "clip": [
+        0.549,
+        22.679
+      ]
+    },
+    "ujjayi": {
+      "clip": [
+        0.542,
+        23.132
+      ]
+    },
+    "leon": {
+      "clip": [
+        0.551,
+        22.391
+      ]
+    },
+    "sitali": {
+      "clip": [
+        0.541,
+        21.401
+      ]
+    },
+    "buteyko": {
+      "clip": [
+        0.544,
+        19.264
+      ]
+    },
+    "fuelle": {
+      "clip": [
+        0.549,
+        21.029
+      ]
+    }
+  },
+  "close": {
+    "clip": [
+      0.537,
+      10.327
+    ]
+  },
+  "files": {
+    "originales/intros-v5.mp3": "50dd6de44ecd9afe3160f866127133f2c81ad4cf3b5181c6d8a7c2c525bae53b",
+    "originales/palabras-v3.mp3": "810a053ca8898ad9a17df3a2ca9bb5b22c4463c7311085f53fcf8cd5c029aa22",
+    "respiraciones/palabras.mp3": "810a053ca8898ad9a17df3a2ca9bb5b22c4463c7311085f53fcf8cd5c029aa22",
+    "respiraciones/intros/cuadrada.mp3": "f94738f24c7e551bac70cdc4621e3b6eb1e5e0af459c5388b17e5ea7a360db82",
+    "respiraciones/intros/478.mp3": "f18cb18a8c64585ba02d8f8b408b53c7c24adac601f50175a0894c925bdb6f22",
+    "respiraciones/intros/vacio.mp3": "3c5f8ef11c16497990be799e7613d5c7bff19299d8a9c5df2a6468527f26a5cf",
+    "respiraciones/intros/vela.mp3": "bdcbabe60205ee6b95b949d01937dfba7bb3014e8163302a5408e4817495af5b",
+    "respiraciones/intros/tres.mp3": "03060721f4c764f36603a8f7e67a6e33a7a3bdaf0417e909d4ca4234c5e3c4e6",
+    "respiraciones/intros/zumbido.mp3": "0b38edb9492de9e9d05d8f183202a6abc42724e02ccf792d1bf3fdb2b81af2be",
+    "respiraciones/intros/suspiro.mp3": "35bf226faad386fb688a396d606d90e7d41f42d35c9747882e8deffaf61441a3",
+    "respiraciones/intros/completa.mp3": "3c477168facc3640b760874a4ad0284ddf328a96b82590a4602940a5016e0d09",
+    "respiraciones/intros/coherente.mp3": "223c00e82c0ac4875f5a36abd7e76d7819ce80c1619aa7f64c04429644257452",
+    "respiraciones/intros/alterna.mp3": "973ed1964d7d295dcb6152b9989fb726d3c086510157eecaf1ed268f6804b02f",
+    "respiraciones/intros/ciclico.mp3": "b2e72943f3da4acd88bac1518566eeadc2a2f9e23a5782eea328e1ec86f1940b",
+    "respiraciones/intros/abdominal.mp3": "7bb7b251c7049796ad853beec2a893e6c9e62deb8d2bd781b7e3470e80b5f9df",
+    "respiraciones/intros/igual.mp3": "cbfc7fc42330b9a8eba0dcccf5eb25814a3ab0bf11b67f482c1fdbed5d837f38",
+    "respiraciones/intros/doble.mp3": "a76be7b4b3520d01456d8cb50b824500d061836d39654e89283c4cc5f1ba8274",
+    "respiraciones/intros/triangulo.mp3": "9b534e3f4f6a65d08beface06daeac8ce3a827e199ce5cfd16809011ed2b10bc",
+    "respiraciones/intros/contar.mp3": "ded0213d8ffff5453d90cd96593cc6a635a78c9cab9003c857bdca170b5411cb",
+    "respiraciones/intros/dedos.mp3": "75f766f040a34a962eb9d7b6f425a1ff1bd6bb81f9351c53a547e5a7a346a667",
+    "respiraciones/intros/ujjayi.mp3": "cba1de6e49887346f06137a5696550c9cda4ecf3989f751a64fadb3c8d6bbdd0",
+    "respiraciones/intros/leon.mp3": "933d8b4310113aa40b51cbdd83f39275cd905ecd4e2eea2a17e819603b472a30",
+    "respiraciones/intros/sitali.mp3": "c25b32401c946bb2e3c6fcac16d41dddbcab98e1101e1b4bdaf7f28860113c68",
+    "respiraciones/intros/buteyko.mp3": "404e2d77da972b844b9507ed9be1cf6091402fdbd85dcb249370523d58eda51c",
+    "respiraciones/intros/fuelle.mp3": "2ab00ff04cfdb0eb51f6975976d50e70610787562a227f78c2cdb94173ce2433",
+    "respiraciones/cierre.mp3": "03666a5a821db788e9b6476323a1d895b4df9677059c6c5a8d4d1c247bbc3b4a",
+    "respiraciones/fondos/rio-sereno.mp3": "4a54a558409d280ca1dd3b464d241d10c94e3aebe23494b90ab8d764706c5777",
+    "respiraciones/fondos/sueno-de-seda.mp3": "ccd728054e67b57c2381bcd9f6208a9e2f084e051539216f038e432b84718482",
+    "respiraciones/fondos/silencio-que-abraza.mp3": "1e48d1273df93c70f46a1c05730b09a47bda66fe9fc0dd2c6ddcf8a6670b6969",
+    "respiraciones/fondos/pies-en-la-tierra.mp3": "94213142eb5ec5ab38a9e8da213328c8f17e416ac50a4caba0dac70be97b4c51",
+    "respiraciones/fondos/voces-que-acompanan.mp3": "a603609c1865e4ccbbf564d65ecd556dcf12270cf862d7e1dbf2f71be2631477",
+    "respiraciones/fondos/raiz-tibia.mp3": "c0419e35ecdb5da83cc3541a54ffbef83d67d664f78b3840b20ec2f8c32e1f31",
+    "respiraciones/fondos/lago-dorado.mp3": "c519ff5b6b7dbd4a8453a9ab01cc94a34bc868a5c4929c410997e83ea5425910",
+    "respiraciones/fondos/muelle-al-atardecer.mp3": "68169cdfb42812ac303eae656a936bfeac9004922e25ed80bed683e869492cc3",
+    "respiraciones/fondos/casa-que-se-apaga.mp3": "384cd9c1f40ec11012e611d74f5d20f765a415fc2f80d236c13e72e9b8004218",
+    "respiraciones/fondos/luz-de-despegue.mp3": "9277938719aa3e032360a4d27d1c05c39eb465c012e46350d981a9f9bd803a08",
+    "respiraciones/fondos/manana-que-baila.mp3": "a59648872df9ef2da6ccca14828997069e79f97502ac1704500e01a39aaf208f",
+    "respiraciones/fondos/despues-de-la-tormenta.mp3": "c92c128e81c6e1219ec10a6ecd3ef6e53910831047ff571ccf9089ff755ae7c2",
+    "respiraciones/fondos/cicatriz-de-oro.mp3": "abc4d700265128772d6e5bcdf72fa96d97427e94193d8ad275e2174082e7e959"
+  }
+}

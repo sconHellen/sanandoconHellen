@@ -12,3 +12,5 @@ tests/visual/__screenshots__/*-actual*
 next-env.d.ts
 .DS_Store
 preview/
+media-out/
+media-local/
