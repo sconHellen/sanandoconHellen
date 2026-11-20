@@ -63,6 +63,9 @@ El navegador descarga los audios directamente desde R2, así que el bucket debe 
 | `R2_ACCESS_KEY_ID` | Access Key ID |
 | `R2_SECRET_ACCESS_KEY` | Secret Access Key |
 | `R2_BUCKET` | `sch-media` |
+| `R2_JURISDICTION` | **Solo si** el bucket se creó con jurisdicción (p. ej. EU): `eu`. Si no, no la crees. |
+
+¿Cómo saberlo? Cloudflare → R2 → `sch-media` → **Settings** → **S3 API**: si la dirección es `https://<cuenta>.eu.r2.cloudflarestorage.com/sch-media`, el bucket tiene jurisdicción EU.
 
 Después: **Redeploy** de Production (y de la Preview que quieras probar).
 
@@ -91,6 +94,7 @@ Después: **Redeploy** de Production (y de la Preview que quieras probar).
    R2_ACCESS_KEY_ID=...
    R2_SECRET_ACCESS_KEY=...
    R2_BUCKET=sch-media
+   R2_JURISDICTION=eu        # solo si el bucket tiene jurisdicción EU
    ```
 
 4. Sube:
@@ -100,6 +104,7 @@ Después: **Redeploy** de Production (y de la Preview que quieras probar).
    ```
 
    Verás una línea `✓` por archivo y al final **`Subidos 39 de 39 archivos a sch-media`**.
+   Si algo está mal configurado, el script se detiene en el primer error y explica qué revisar (por ejemplo `NoSuchBucket` = nombre o jurisdicción del bucket). Los cortes de red se reintentan solos.
 5. En Cloudflare → `sch-media` → **Objects** deben aparecer las carpetas `respiraciones/` y `originales/`.
 
 ## Paso 6 · Comprobar en el sitio

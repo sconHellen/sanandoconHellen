@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { r2HostFromEnv } from "@/lib/media/r2";
 
 /**
  * Builds a strict, per-request Content-Security-Policy.
@@ -28,7 +29,7 @@ export function buildCsp(nonce: string, isDev: boolean, mediaHost: string | null
 
 export function proxy(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-  const mediaHost = process.env.R2_ACCOUNT_ID ? `${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com` : null;
+  const mediaHost = r2HostFromEnv();
   const csp = buildCsp(nonce, process.env.NODE_ENV === "development", mediaHost);
 
   const requestHeaders = new Headers(request.headers);
