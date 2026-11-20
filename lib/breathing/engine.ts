@@ -106,7 +106,8 @@ export class BreathingEngine {
   private raf = 0;
   private idleRaf = 0;
   private wake: WakeLockSentinel | null = null;
-  private visible = true;
+  /** Nothing is drawn until the stage scrolls into view (keeps page load light). */
+  private visible = false;
   private reducedMotion = false;
   // drawing state
   private g: CanvasRenderingContext2D;
@@ -148,7 +149,7 @@ export class BreathingEngine {
     this.reducedMotion = mq.matches;
     const onResize = () => {
       this.fit();
-      if (!this.run) this.draw(0);
+      if (!this.run && this.visible) this.draw(0);
     };
     window.addEventListener("resize", onResize);
     this.cleanup.push(() => window.removeEventListener("resize", onResize));
@@ -187,7 +188,7 @@ export class BreathingEngine {
     this.els.rounds.textContent = "Ronda 0";
     this.els.left.textContent = fmt(this.settings().mins * 60);
     this.size = 0.5;
-    if (!this.run) this.draw(0);
+    if (!this.run && this.visible) this.draw(0);
   }
 
   setMinutes(mins: number) {
@@ -591,9 +592,9 @@ export class BreathingEngine {
   /** Idle animation: only while visible, and a single still frame with reduced motion. */
   ambient() {
     cancelAnimationFrame(this.idleRaf);
-    if (this.run) return;
+    if (this.run || !this.visible) return;
     this.draw(0);
-    if (this.reducedMotion || !this.visible) return;
+    if (this.reducedMotion) return;
     this.idleRaf = requestAnimationFrame(() => this.ambient());
   }
 
