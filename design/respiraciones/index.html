@@ -1,0 +1,378 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Espacio para respirar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Mismo lenguaje que los videos de meditación: escenario nocturno con luz, polvo de luz y círculo luminoso; controles e información debajo. */
+:root{
+  --night:#0f1424; --dusk:#171e33; --mist:#2b3552; --linen:#f4efe6; --haze:#aab3c9;
+  --sage:#9fd4ef; /* acento: cambia con cada respiración */
+  --display:"Instrument Serif","Iowan Old Style",Georgia,serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--night);color:var(--linen);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.wrap{max-width:1080px;margin:0 auto;display:grid;gap:28px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.6vw,46px);margin:0;line-height:1.05}
+h1 em{font-style:normal;color:var(--sage);transition:color 1.2s}
+.sub{color:var(--haze);margin:0;max-width:54ch}
+.player{display:grid;gap:18px}
+.stage{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:16/9;max-width:100%;background:var(--dusk);box-shadow:0 30px 80px #0009}
+@media (max-width:640px){.stage{aspect-ratio:4/5}}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.center{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.center>div{text-align:center;display:grid;gap:4px;justify-items:center}
+.phase{font-family:var(--display);font-size:clamp(28px,4.4vw,48px);line-height:1.05;max-width:12ch;text-wrap:balance;text-shadow:0 2px 18px #0009}
+.count{font-family:var(--display);font-size:clamp(48px,8vw,92px);line-height:.95;color:var(--sage);font-variant-numeric:tabular-nums;text-shadow:0 2px 24px #0008;transition:color 1.2s}
+.side{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--haze);min-height:18px}
+.meta{position:absolute;top:14px;left:18px;right:18px;display:flex;justify-content:space-between;font-size:13px;color:var(--haze);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:760px){.panel{grid-template-columns:1fr}}
+.info{display:grid;gap:12px;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--sage);transition:color 1.2s}
+.info h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.6vw,38px);margin:2px 0 0;line-height:1.05}
+.rhythm{font-variant-numeric:tabular-nums;color:var(--haze);letter-spacing:.06em}
+.info p{margin:0;max-width:60ch}
+.fact{border-top:1px solid var(--mist);padding-top:12px;font-size:14px;color:var(--linen)}
+.fact b{display:block;font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--haze);margin-bottom:4px}
+.warn{font-size:13px;color:#f3b38f;border-left:2px solid #f3b38f;padding-left:10px}
+.controls{display:grid;gap:12px;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row .lab{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--haze);width:72px}
+.chip{font:inherit;font-size:14px;border:1px solid var(--mist);background:transparent;color:var(--haze);border-radius:999px;padding:6px 14px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--sage);color:var(--linen);background:color-mix(in srgb,var(--sage) 18%,transparent)}
+.chip:focus-visible,.go:focus-visible,.ghost:focus-visible,.card:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+.go{font:inherit;font-weight:600;font-size:16px;border:0;border-radius:999px;padding:13px 28px;background:var(--linen);color:var(--night);cursor:pointer;box-shadow:0 10px 30px #0007}
+.ghost{font:inherit;font-size:14px;border:1px solid rgba(244,239,230,.35);background:rgba(15,20,36,.45);color:var(--linen);border-radius:999px;padding:11px 18px;cursor:pointer;backdrop-filter:blur(4px)}
+.actions{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:10px;z-index:2}
+.sel{font:inherit;font-size:14px;color:var(--linen);background:var(--dusk);border:1px solid var(--mist);border-radius:999px;padding:7px 14px;max-width:100%;min-width:0;flex:1 1 200px}
+.sel:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+.hint{margin:0;font-size:13px;color:var(--haze)}
+.vol{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--haze)}
+.vol input{accent-color:var(--sage);width:110px}
+.lib h3{font-family:var(--display);font-weight:400;font-size:clamp(26px,3vw,32px);margin:0 0 4px}
+.lib .sub{margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.card{--c:#9fd4ef;--t:#0a1e38;text-align:left;font:inherit;color:var(--linen);background:linear-gradient(160deg,color-mix(in srgb,var(--t) 70%,var(--dusk)),var(--dusk) 75%);border:1px solid var(--mist);border-radius:16px;padding:14px 16px;cursor:pointer;display:grid;gap:4px;align-content:start;min-width:0;transition:border-color .4s, box-shadow .4s}
+.card:hover{border-color:color-mix(in srgb,var(--c) 50%,var(--mist))}
+.card .dot{width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.card .top{display:flex;align-items:center;gap:8px}
+.card .n{font-family:var(--display);font-size:20px;line-height:1.1;flex:1}
+.card .r{font-size:13px;color:var(--haze);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.card .p{font-size:13px;color:var(--haze)}
+.card[aria-current="true"]{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 0 26px color-mix(in srgb,var(--c) 30%,transparent)}
+.tag{font-size:11px;color:var(--haze);border:1px solid var(--mist);border-radius:999px;padding:1px 7px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Espacio para <em>respirar</em></h1>
+    <p class="sub">Elige una respiración, ajusta la duración y sigue el círculo: crece al inhalar, se queda quieto al sostener y se encoge al exhalar, al ritmo exacto de los números.</p>
+  </header>
+
+  <section class="player" aria-label="Reproductor">
+    <div class="stage">
+      <canvas id="cv" aria-hidden="true"></canvas>
+      <div class="meta"><span id="left">5:00</span><span id="rounds">Ronda 0</span></div>
+      <div class="actions"><button class="ghost" id="skip" hidden>Saltar intro</button><button class="go" id="go">Empezar</button><button class="ghost" id="stop" hidden>Terminar</button></div>
+      <div class="center"><div>
+        <span class="side" id="side"></span>
+        <span class="phase" id="phase">Lista para empezar</span>
+        <span class="count" id="count">·</span>
+      </div></div>
+    </div>
+    <div class="panel">
+      <div class="info">
+        <div class="eyebrow" id="purpose">Orden y calma</div>
+        <h2 id="name">Respiración cuadrada</h2>
+        <div class="rhythm" id="rhythm">4 · 4 · 4 · 4</div>
+        <p id="how"></p>
+        <div class="fact"><b>Dato curioso</b><span id="fact"></span></div>
+        <p class="warn" id="warn" hidden></p>
+      </div>
+      <div class="controls">
+        <div class="row" role="group" aria-label="Duración"><span class="lab">Duración</span>
+          <button class="chip" data-min="3" aria-pressed="false">3 min</button>
+          <button class="chip" data-min="5" aria-pressed="true">5 min</button>
+          <button class="chip" data-min="10" aria-pressed="false">10 min</button></div>
+        <div class="row" role="group" aria-label="Guía"><span class="lab">Guía</span>
+          <button class="chip" data-guide="voz" aria-pressed="true">Voz y campana</button>
+          <button class="chip" data-guide="campana" aria-pressed="false">Solo campana</button>
+          <button class="chip" data-guide="nada" aria-pressed="false">Silencio</button></div>
+        <div class="row" role="group" aria-label="Introducción"><span class="lab">Intro</span>
+          <button class="chip" data-intro="on" aria-pressed="true">Con explicación</button>
+          <button class="chip" data-intro="off" aria-pressed="false">Directo a respirar</button></div>
+        <div class="row" role="group" aria-label="Números"><span class="lab">Números</span>
+          <button class="chip" data-num="off" aria-pressed="true">Solo en pantalla</button>
+          <button class="chip" data-num="on" aria-pressed="false">Contar en voz alta</button></div>
+        <div class="row"><label class="lab" for="bgsel">Fondo</label>
+          <select id="bgsel" class="sel"></select>
+          <label class="vol" for="bgv">Volumen<input id="bgv" type="range" min="0" max="1" step="0.01" value="0.5"></label></div>
+        <p class="hint" id="sughint"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lib" aria-label="Respiraciones">
+    <h3>Las respiraciones</h3>
+    <p class="sub">Veintidós técnicas, de las más calmantes a las más activadoras. Cada una empieza con una explicación hablada.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+</div>
+
+<script>
+// ---------- clips del audio de palabras (segundos) ----------
+const W={inhala:[0.00,1.03],sosten:[3.06,4.32],exhala:[5.73,7.12],pausa:[8.47,9.32],tomaaire:[11.12,12.33],suelta:[14.23,15.34],sueltalento:[16.56,18.65],sueltadespacio:[20.09,22.51],sopla:[24.35,25.32],zumbido:[26.71,27.92],suspira:[29.52,30.77],vientre:[32.39,33.48],costillas:[35.18,36.50],pecho:[38.02,38.81],inhizq:[40.58,42.50],exhder:[44.28,46.32],inhder:[48.10,50.06],exhizq:[51.78,53.98],n1:[55.65,56.36],n2:[58.06,59.19],n3:[60.72,61.69],n4:[63.25,64.23],n5:[65.93,67.10],n6:[68.81,70.07],n7:[71.62,72.76],n8:[74.45,75.39],muybien:[77.10,78.27],unavez:[80.00,81.45],ultima:[83.09,84.07],unpoco:[85.81,87.21],n9:[88.86,89.91],n10:[91.60,92.59],ruge:[116.00,117.54],inhsuave:[96.80,98.20],sube:[99.94,100.96],baja:[102.65,103.68],porboca:[105.33,106.57],pornariz:[108.25,109.61],soplafuerte:[111.12,112.66]};
+const INTRO=[[1.0,20.81],[22.81,44.62],[46.62,67.31],[69.31,90.43],[92.43,112.09],[114.09,137.14],[139.14,157.97],[159.97,183.84],[185.84,203.36],[205.36,229.29],[231.29,255.66],[257.66,280.7],[282.7,301.41],[303.41,324.27],[326.27,344.4],[346.4,368.0],[370.0,392.13],[394.13,416.72],[418.72,440.56],[442.56,463.42],[465.42,484.14],[486.14,506.62]];
+const CLOSE=[508.62, 518.41];
+// ---------- respiraciones ----------
+// fases: [tipo, segundos, clip, etiqueta, tamaño destino, extra]
+const I=(d,cue='inhala',lab='Inhala',to=1,x={})=>({k:'in',d,cue,lab,to,...x});
+const H=(d,cue='sosten',lab='Sostén',x={})=>({k:'hold',d,cue,lab,...x});
+const O=(d,cue='exhala',lab='Exhala',to=.3,x={})=>({k:'out',d,cue,lab,to,...x});
+const Pz=(d,cue='pausa',lab='Pausa',x={})=>({k:'pause',d,cue,lab,...x});
+const B=[
+ {id:'cuadrada',n:'Respiración cuadrada',r:'4 · 4 · 4 · 4',h:205,p:'Orden y calma bajo presión',intro:0,
+  how:'Inhala en cuatro, sostén cuatro, exhala en cuatro y quédate sin aire otros cuatro, como los cuatro lados de un cuadrado.',
+  f:'Los Navy SEALs y muchos cuerpos de policía la usan para mantener la calma en situaciones de mucho estrés; por eso también se le llama «respiración táctica».',
+  ph:[I(4),H(4),O(4),Pz(4)]},
+ {id:'478',n:'Respiración 4 · 7 · 8',r:'4 · 7 · 8',h:255,p:'Para dormir y apagar la mente',intro:1,
+  how:'Inhala por la nariz en cuatro, sostén siete y suelta despacio por la boca en ocho. Si sostener siete es mucho, hazlo más corto.',
+  f:'La popularizó el médico estadounidense Andrew Weil, inspirado en el pranayama, el arte de la respiración del yoga.',
+  ph:[I(4),H(7),O(8)]},
+ {id:'vacio',n:'Espacio vacío',r:'4 · 6 · 4',h:280,p:'Introspección',intro:2,
+  how:'Inhala en cuatro, exhala en seis y, antes de volver a respirar, quédate cuatro tiempos en calma, sin aire.',
+  f:'La pausa con los pulmones vacíos es uno de los momentos de mayor quietud del cuerpo: no hay movimiento de aire ni esfuerzo muscular.',
+  ph:[I(4),O(6),Pz(4)]},
+ {id:'vela',n:'La vela',r:'3 · 5',h:30,p:'Para el estrés del momento',intro:3,
+  how:'Toma aire por la nariz en tres tiempos y suéltalo por la boca en cinco, con los labios casi juntos, como si soplaras una vela sin apagarla.',
+  f:'Es la «respiración con labios fruncidos» que se enseña en rehabilitación pulmonar para respirar con menos esfuerzo.',
+  ph:[I(3,'tomaaire','Toma aire'),O(5,'sopla','Sopla la vela')]},
+ {id:'tres',n:'Tres inhalaciones',r:'1½ · 1½ · 1½ · 6 · 2',h:15,p:'Soltar la tensión del cuerpo',intro:4,
+  how:'Toma aire por la nariz en tres partes: un poquito, un poquito más y completamente. Luego suéltalo lento por la boca.',
+  f:'Es una versión extendida del suspiro natural: sin darte cuenta, tu cuerpo suspira varias veces cada hora para reabrir los pulmones.',
+  ph:[I(1.5,'n1','Un poquito',.55,{nonum:1}),I(1.5,'n2','Un poquito más',.78,{nonum:1}),I(1.5,'n3','Hasta llenarte',1,{nonum:1}),O(6,'sueltalento','Suelta lento'),Pz(2,null,'Descansa')]},
+ {id:'zumbido',n:'Respiración del zumbido',r:'4 · 6 mmm',h:45,p:'Calma el sistema nervioso',intro:5,
+  how:'Inhala por la nariz en cuatro y suelta el aire con la boca cerrada, haciendo un zumbido suave como el de una abeja.',
+  f:'En yoga se llama Bhramari, «la abeja». Un estudio sueco encontró que tararear multiplica unas quince veces el óxido nítrico en la nariz.',
+  ph:[I(4),O(6,'zumbido','Zumbido · mmm',.3,{hum:1})]},
+ {id:'suspiro',n:'Suspiro que abre el pecho',r:'4 · 6',h:340,p:'Alegría y ligereza',intro:6,
+  how:'Toma aire profundo por la nariz abriendo el pecho y suéltalo por la boca con un suspiro largo, dejando caer los hombros.',
+  f:'Suspirar es un reflejo: el cerebro lo activa solo para reabrir los pequeños sacos de aire de los pulmones que se van cerrando.',
+  ph:[I(4,'tomaaire','Toma aire'),O(6,'suspira','Suspira')]},
+ {id:'completa',n:'Respiración completa',r:'2 · 2 · 2 · 6',h:95,p:'Energía y presencia',intro:7,
+  how:'Llena el cuerpo de aire en tres partes, de abajo hacia arriba: vientre, costillas y pecho. Después suelta el aire despacio.',
+  f:'Es una de las respiraciones clásicas del yoga; se compara con llenar un vaso de agua desde el fondo hasta el borde.',
+  ph:[I(2,'vientre','Vientre',.5),I(2,'costillas','Costillas',.75),I(2,'pecho','Pecho',1),O(6,'sueltadespacio','Suelta despacio')]},
+ {id:'coherente',n:'Respiración coherente',r:'5 · 5',h:175,p:'Equilibrio del cuerpo y la mente',intro:8,
+  how:'Inhala en cinco y exhala en cinco, de forma suave y continua, como una ola que llega y se va.',
+  f:'Un estudio publicado en el BMJ en 2001 encontró que rezar el rosario o repetir un mantra lleva la respiración a unas seis por minuto, el mismo ritmo de esta técnica.',
+  ph:[I(5),O(5)]},
+ {id:'alterna',n:'Respiración alterna',r:'4 · 6 · 4 · 6',h:225,p:'Claridad mental',intro:9,
+  how:'Tapa la fosa derecha con el pulgar e inhala por la izquierda; tapa la izquierda y exhala por la derecha. Inhala por la derecha, cambia y exhala por la izquierda.',
+  f:'Tu nariz alterna sola el lado por el que entra más aire cada pocas horas; se llama ciclo nasal.',
+  ph:[I(4,'inhizq','Inhala',1,{side:'Izquierda'}),O(6,'exhder','Exhala',.3,{side:'Derecha'}),I(4,'inhder','Inhala',1,{side:'Derecha'}),O(6,'exhizq','Exhala',.3,{side:'Izquierda'})]},
+ {id:'ciclico',n:'Suspiro cíclico',r:'3 + 2 · 6',h:320,p:'Bajar la ansiedad rápido',intro:10,
+  how:'Inhala por la nariz, toma un poquito más de aire sin soltar y luego exhala largo y lento por la boca.',
+  f:'En un estudio de Stanford (2023), cinco minutos al día de esta respiración mejoraron el ánimo más que la meditación.',
+  ph:[I(3,'inhala','Inhala',.75),I(2,'unpoco','Un poco más',1,{nonum:1}),O(6,'sueltalento','Suelta lento')]},
+ {id:'abdominal',n:'Respiración abdominal',r:'4 · 6',h:120,p:'Volver al cuerpo',intro:11,
+  how:'Pon una mano en el vientre. Al inhalar, el vientre sube; al exhalar, baja. El pecho casi no se mueve.',
+  f:'Los bebés respiran así de forma natural; con el estrés, muchos adultos pasan a respirar sobre todo con el pecho.',
+  ph:[I(4,'inhala','Inhala',1,{side:'El vientre sube'}),O(6,'exhala','Exhala',.3,{side:'El vientre baja'})]},
+ {id:'igual',n:'Respiración igual',r:'4 · 4',h:190,p:'Para empezar a practicar',intro:12,
+  how:'Inhala en cuatro y exhala en cuatro, por la nariz, sin pausas. La más sencilla de todas.',
+  f:'En yoga se llama Sama Vritti, «movimiento igual», y suele ser la primera respiración que se enseña.',
+  ph:[I(4),O(4)]},
+ {id:'doble',n:'Exhalación doble',r:'4 · 8',h:265,p:'Relajación profunda',intro:13,
+  how:'Inhala en cuatro y exhala el doble de largo, en ocho, como si dejaras salir el aire por una pajilla.',
+  f:'Cuando la exhalación es más larga que la inhalación, el corazón late un poco más lento: es el freno natural del sistema nervioso.',
+  ph:[I(4),O(8)]},
+ {id:'triangulo',n:'Respiración triángulo',r:'3 · 3 · 3',h:55,p:'Enfoque rápido',intro:14,
+  how:'Inhala en tres, sostén tres y exhala en tres, como los tres lados de un triángulo.',
+  f:'Es la versión corta de la cuadrada, útil cuando tienes poco tiempo, por ejemplo antes de hablar en público.',
+  ph:[I(3),H(3),O(3)]},
+ {id:'contar',n:'Contar del 1 al 10',r:'4 · 6 × 10',h:150,p:'Concentración',intro:15,
+  how:'Respira con calma y cuenta cada exhalación, del uno al diez. Si te distraes, vuelve a empezar desde uno.',
+  f:'Es una práctica tradicional del zen para principiantes; perder la cuenta es parte del ejercicio.',
+  ph:[I(4,'inhala','Inhala',1,{nonum:1}),O(6,'exhala','Exhala',.3,{nonum:1,countBreath:1})]},
+ {id:'dedos',n:'Cinco dedos',r:'4 · 4',h:35,p:'Para niños y momentos de ansiedad',intro:16,
+  how:'Recorre el contorno de una mano con el índice de la otra: sube por un dedo al inhalar y baja al exhalar.',
+  f:'Se usa mucho en escuelas porque une el tacto, la vista y la respiración; cinco dedos son cinco respiraciones.',
+  ph:[I(4,'sube','Sube el dedo'),O(4,'baja','Baja el dedo',.3,{finger:1})]},
+ {id:'ujjayi',n:'Respiración del océano',r:'5 · 6',h:195,p:'Concentración y calor interno',intro:17,
+  how:'Respira por la nariz cerrando un poco la garganta, como si empañaras un espejo con la boca cerrada. Suena como el mar.',
+  f:'En yoga se llama Ujjayi, «la victoriosa». Su sonido suave ayuda a mantener la atención en cada respiración.',
+  ph:[I(5),O(6)]},
+ {id:'leon',n:'Respiración del león',r:'4 · 5 · 4',h:10,p:'Soltar enojo y tensión de la cara',intro:18,
+  how:'Inhala por la nariz. Al exhalar, abre bien la boca, saca la lengua hacia la barbilla y suelta el aire con fuerza, con un sonido largo: jaaa.',
+  f:'Viene de Simhasana, la «postura del león» del yoga; relaja la mandíbula y la cara, donde se acumula mucha tensión.',
+  ph:[I(4,'tomaaire','Toma aire'),O(5,'ruge','Saca la lengua · jaaa'),Pz(4,null,'Descansa')]},
+ {id:'sitali',n:'Respiración refrescante',r:'4 · 2 · 6',h:185,p:'Para el calor y el enojo',intro:19,
+  how:'Inhala por la boca con la lengua enrollada como un tubo, sostén un momento y exhala por la nariz. Si no puedes enrollarla, inhala entre los dientes.',
+  f:'En yoga se llama Sitali. No todas las personas pueden enrollar la lengua; por eso existe la versión entre los dientes, Sitkari.',
+  ph:[I(4,'porboca','Inhala por la boca'),H(2),O(6,'pornariz','Exhala por la nariz')]},
+ {id:'buteyko',n:'Respiración reducida',r:'3 · 4 · 4',h:160,p:'Calma y respiración nasal',intro:20,
+  how:'Respira solo por la nariz, con inhalaciones pequeñas y suaves, y haz una pausa tranquila después de exhalar. Menos aire, más calma.',
+  f:'Se inspira en el método del médico ucraniano Konstantin Buteyko, que lo desarrolló en los años cincuenta.',
+  ph:[I(3,'inhsuave','Inhala suave',.65),O(4,'exhala','Exhala',.3),Pz(4)]},
+ {id:'fuelle',n:'Respiración de fuego',r:'20 soplos · 4 · 8 · 6',h:5,p:'Activar y despertar',intro:21,
+  how:'Haz veinte exhalaciones cortas y fuertes por la nariz, metiendo el vientre; la inhalación entra sola. Después toma aire, sostén y suelta despacio.',
+  f:'En yoga se llama Kapalabhati, «cráneo brillante». Es energizante, por eso se practica de día y no antes de dormir.',
+  warn:'No se recomienda en el embarazo, con presión alta, problemas del corazón o ansiedad intensa. Si te mareas, detente y respira normal.',
+  ph:[...Array.from({length:20},(_,i)=>({k:'pump',d:1.2,cue:i===0?'soplafuerte':null,lab:'Sopla fuerte',to:.55})),I(4,'tomaaire','Toma aire'),H(8),O(6,'sueltadespacio','Suelta despacio'),Pz(4)]},
+];
+const PAL={
+ oceano:{a:'#9fd4ef',top:[8,22,44],bot:[32,78,118],gl:'rgba(150,210,240,A)',t:'#0e2a48'},
+ noche:{a:'#c9b2ff',top:[16,10,36],bot:[58,38,98],gl:'rgba(200,178,255,A)',t:'#26184a'},
+ salvia:{a:'#f0d6aa',top:[22,36,30],bot:[84,112,88],gl:'rgba(240,214,170,A)',t:'#1f3a2c'},
+ ambar:{a:'#ffc46b',top:[30,18,10],bot:[112,64,30],gl:'rgba(255,205,140,A)',t:'#3e2410'},
+ rosa:{a:'#ffb8cf',top:[34,14,30],bot:[118,62,92],gl:'rgba(255,190,214,A)',t:'#40182f'},
+ aurora:{a:'#a8ecd8',top:[8,28,32],bot:[36,104,104],gl:'rgba(170,240,220,A)',t:'#0f3434'},
+ fuego:{a:'#ffa878',top:[34,10,8],bot:[140,56,30],gl:'rgba(255,170,120,A)',t:'#45150c'}};
+const PMAP={cuadrada:'oceano','478':'noche',vacio:'noche',vela:'ambar',tres:'salvia',zumbido:'ambar',suspiro:'rosa',completa:'aurora',coherente:'oceano',alterna:'aurora',ciclico:'rosa',abdominal:'salvia',igual:'oceano',doble:'noche',triangulo:'ambar',contar:'salvia',dedos:'rosa',ujjayi:'oceano',leon:'fuego',sitali:'aurora',buteyko:'salvia',fuelle:'fuego'};
+const palOf=b=>PAL[PMAP[b.id]];
+const SONGS=[{id:'rio',n:'Río sereno',f:'fondos/rio-sereno.mp3'},{id:'seda',n:'Sueño de seda',f:'fondos/sueno-de-seda.mp3'},{id:'silencio',n:'Silencio que abraza',f:'fondos/silencio-que-abraza.mp3'},{id:'tierra',n:'Pies en la tierra',f:'fondos/pies-en-la-tierra.mp3'},{id:'voces',n:'Voces que acompañan',f:'fondos/voces-que-acompanan.mp3'},{id:'raiz',n:'Raíz tibia',f:'fondos/raiz-tibia.mp3'},{id:'lago',n:'Lago dorado',f:'fondos/lago-dorado.mp3'},{id:'muelle',n:'Muelle al atardecer',f:'fondos/muelle-al-atardecer.mp3'},{id:'casa',n:'Casa que se apaga',f:'fondos/casa-que-se-apaga.mp3'},{id:'despegue',n:'Luz de despegue',f:'fondos/luz-de-despegue.mp3',energia:1},{id:'manana',n:'Mañana que baila',f:'fondos/manana-que-baila.mp3',energia:1},{id:'tormenta',n:'Después de la tormenta',f:'fondos/despues-de-la-tormenta.mp3'},{id:'oro',n:'Cicatriz de oro',f:'fondos/cicatriz-de-oro.mp3'}];
+// respiraciones para activarse: solo aquí aparecen las canciones con energía
+const ACTIVA={suspiro:1,completa:1,fuelle:1};
+const AMBAS={rio:1};
+const SUG={cuadrada:'rio','478':'seda',vacio:'silencio',vela:'tierra',tres:'tierra',zumbido:'voces',suspiro:'manana',completa:'despegue',coherente:'rio',alterna:'lago',ciclico:'raiz',abdominal:'tierra',igual:'rio',doble:'casa',triangulo:'voces',contar:'muelle',dedos:'raiz',ujjayi:'lago',leon:'oro',sitali:'silencio',buteyko:'seda',fuelle:'manana'};
+// ---------- estado ----------
+const $=id=>document.getElementById(id);
+let cur=B[0],mins=5,guide='voz',bgOn=true,introOn=true,countAloud=false,bgChoice='rio',bgBufs={},bgCur=null,bgTimer=0,ctx=null,bufW=null,bufI=null,bufF=null,bgSrc=null,bgGain=null,master=null,run=null,raf=0,wake=null;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const NUM=['','n1','n2','n3','n4','n5','n6','n7','n8','n9','n10'];
+function cycleLen(b){return b.ph.reduce((s,p)=>s+p.d,0)}
+// ---------- tarjetas ----------
+const grid=$('grid');
+B.forEach(b=>{const c=document.createElement('button');c.className='card';c.style.setProperty('--c',palOf(b).a);c.style.setProperty('--t',palOf(b).t);c.dataset.id=b.id;
+  c.innerHTML=`<span class="top"><span class="dot"></span><span class="n">${b.n}</span></span><span class="r">${b.r}</span><span class="p">${b.p}</span>`;
+  c.onclick=()=>{select(b.id);document.querySelector('.player').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});};grid.appendChild(c);});
+function select(id){if(run)stop(true);cur=B.find(b=>b.id===id)||B[0];store.set('resp',cur.id);
+  document.documentElement.style.setProperty('--sage',palOf(cur).a);P0=P1;P1=palOf(cur);palT=performance.now()/1000;
+  $('name').textContent=cur.n;$('rhythm').textContent=cur.r;$('purpose').textContent=cur.p;$('how').textContent=cur.how;$('fact').textContent=cur.f;
+  bgChoice=SUG[cur.id]||'rio';fillBg();
+  $('warn').hidden=!cur.warn;$('warn').textContent=cur.warn||'';
+  document.querySelectorAll('.card').forEach(c=>c.setAttribute('aria-current',c.dataset.id===cur.id?'true':'false'));
+  $('phase').textContent='Lista para empezar';$('count').textContent='·';$('side').textContent='';$('rounds').textContent='Ronda 0';$('left').textContent=fmt(mins*60);size=.5;}
+function fmt(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+// ---------- chips ----------
+document.querySelectorAll('[data-min]').forEach(b=>b.onclick=()=>{mins=+b.dataset.min;document.querySelectorAll('[data-min]').forEach(x=>x.setAttribute('aria-pressed',x===b));if(!run)$('left').textContent=fmt(mins*60);});
+document.querySelectorAll('[data-guide]').forEach(b=>b.onclick=()=>{guide=b.dataset.guide;document.querySelectorAll('[data-guide]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+document.querySelectorAll('[data-num]').forEach(b=>b.onclick=()=>{countAloud=b.dataset.num==='on';store.set('num',countAloud?'on':'off');document.querySelectorAll('[data-num]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+document.querySelectorAll('[data-intro]').forEach(b=>b.onclick=()=>{introOn=b.dataset.intro==='on';store.set('intro',introOn?'on':'off');document.querySelectorAll('[data-intro]').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+function fillBg(){const sel=$('bgsel'),sg=SUG[cur.id]||'rio';sel.innerHTML='';
+  const act=!!ACTIVA[cur.id];
+  SONGS.filter(s=>act?(s.energia||AMBAS[s.id]):!s.energia).forEach(s=>{const o=document.createElement('option');o.value=s.id;o.textContent=s.n+(s.id===sg?'  ★ sugerida':'');sel.appendChild(o);});
+  const o=document.createElement('option');o.value='off';o.textContent='Sin fondo';sel.appendChild(o);sel.value=bgChoice;
+  $('sughint').textContent='Sugerida para esta respiración: '+(SONGS.find(s=>s.id===sg)||SONGS[0]).n+'. '+(act?'Como es una respiración para activarte, aquí aparecen las canciones con más energía.':'Como es una respiración para calmarte o soltar, aquí solo aparecen canciones tranquilas.');}
+$('bgsel').onchange=()=>{bgChoice=$('bgsel').value;bgOn=bgChoice!=='off';if(run)playBg();};
+$('bgv').oninput=()=>setBg();
+// ---------- audio ----------
+async function load(url){const r=await fetch(url);const a=await r.arrayBuffer();return await ctx.decodeAudioData(a);}
+async function ensureAudio(){if(ctx)return;const AC=window.AudioContext||window.webkitAudioContext;ctx=new AC();master=ctx.createGain();master.connect(ctx.destination);
+  bgGain=ctx.createGain();bgGain.gain.value=0;bgGain.connect(ctx.destination);
+  [bufW,bufI]=await Promise.all([load('palabras-v3.mp3'),load('intros-v5.mp3')]);}
+function clip(buf,seg,when,gain=1){if(!buf||!seg)return;const s=ctx.createBufferSource();s.buffer=buf;const g=ctx.createGain();g.gain.value=gain;s.connect(g);g.connect(master);
+  const off=Math.max(0,seg[0]-.04),dur=seg[1]-seg[0]+.1;s.start(when,off,dur);return s;}
+function bell(when,kind){if(guide==='nada')return;const f={in:528,hold:440,out:396,pause:352,pump:660}[kind]||440;
+  [1,2.01].forEach((m,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f*m;
+    g.gain.setValueAtTime(0,when);g.gain.linearRampToValueAtTime((kind==='pump'?.05:.12)/(i+1),when+.01);g.gain.exponentialRampToValueAtTime(.0001,when+(kind==='pump'?.35:1.6));
+    o.connect(g);g.connect(master);o.start(when);o.stop(when+1.7);});}
+function setBg(){if(!ctx||!bgGain)return;const v=(bgChoice!=='off'&&run)?(+$('bgv').value)*.9:0;bgGain.gain.setTargetAtTime(v,ctx.currentTime,.6);}
+// cada canción se repite con un cruce suave de 6 segundos
+function stopBg(){clearInterval(bgTimer);if(bgCur){const t=ctx.currentTime;bgCur.forEach(x=>{try{x.g.gain.cancelScheduledValues(t);x.g.gain.setTargetAtTime(0,t,.5);x.s.stop(t+3)}catch(e){}});}bgCur=null;}
+async function playBg(){if(!ctx)return;stopBg();setBg();const id=bgChoice;if(id==='off')return;const song=SONGS.find(s=>s.id===id);if(!song)return;
+  if(!bgBufs[id]){try{bgBufs[id]=await load(song.f)}catch(e){return}}if(bgChoice!==id||!run)return;
+  const buf=bgBufs[id],XF=6,loop=id==='bosque';const list=[];bgCur=list;
+  const one=(when)=>{const s=ctx.createBufferSource();s.buffer=buf;const g=ctx.createGain();s.connect(g);g.connect(bgGain);
+    if(loop){s.loop=true;g.gain.value=1;s.start(when);list.push({s,g});return Infinity;}
+    g.gain.setValueAtTime(0,when);g.gain.linearRampToValueAtTime(1,when+XF);const end=when+buf.duration;g.gain.setValueAtTime(1,end-XF);g.gain.linearRampToValueAtTime(0,end);
+    s.start(when);s.stop(end+.1);list.push({s,g});return end-XF;};
+  let next=one(ctx.currentTime+.1);
+  if(next!==Infinity)bgTimer=setInterval(()=>{if(bgCur!==list)return;if(ctx.currentTime>next-3){next=one(next);if(list.length>3)list.shift();}},1000);}
+// ---------- plan de la sesión ----------
+function plan(){const pre=(guide==='voz'&&introOn&&cur.intro!==null)?(INTRO[cur.intro][1]-INTRO[cur.intro][0])+1.5:5;
+  const cl=cycleLen(cur);const n=Math.max(1,Math.floor(mins*60/cl));const segs=[];let t=pre,breath=0,finger=0;
+  for(let r=0;r<n;r++){cur.ph.forEach((p,i)=>{const s={...p,t0:t,round:r+1};if(p.countBreath){breath=breath%10+1;s.breath=breath;}if(p.finger){finger=finger%5+1;}if(p.k==='in'&&cur.id==='dedos')s.fingerNo=finger%5+1;segs.push(s);t+=p.d;});}
+  return {pre,segs,end:t,rounds:n};}
+function schedule(){const now=ctx.currentTime,ahead=now+.6;
+  while(run.next<run.p.segs.length){const s=run.p.segs[run.next],at=run.t0+s.t0;if(at>ahead)break;
+    if(at>=now-.05){bell(at,s.k);try{navigator.vibrate&&navigator.vibrate(s.k==='pump'?15:40)}catch(e){}
+      if(guide==='voz'){let cue=s.cue;if(s.countBreath)cue=NUM[s.breath];
+        if(s.round===run.p.rounds&&s===run.firstOfLast&&cur.ph.length>1)clip(bufW,W.ultima,at-1.3);
+        if(cue)clip(bufW,W[cue],at);
+        const long=cue&&W[cue]&&(W[cue][1]-W[cue][0])>1.15;
+        if(countAloud&&!s.nonum&&s.k!=='pump')for(let c=long?3:2;c<=Math.min(10,s.d);c++)clip(bufW,W[NUM[c]],at+c-1);}}
+    run.next++;}
+  // cierre
+  if(!run.closed&&run.t0+run.p.end<ahead+1){run.closed=true;if(guide==='voz')clip(bufI,CLOSE,run.t0+run.p.end+.6);}}
+// ---------- dibujo ----------
+const cv=$('cv'),g=cv.getContext('2d');let size=.5,CW=0,CH=0,U=0,P0=PAL.oceano,P1=PAL.oceano,palT=0;
+function fit(){const r=cv.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);CW=cv.width;CH=cv.height;U=Math.min(CW,CH);}
+addEventListener('resize',fit);
+const rnd=(a=>()=>(a=(a*16807)%2147483647)/2147483647)(7);
+const stars=Array.from({length:110},()=>({x:rnd(),y:rnd(),s:rnd()*1.6+.4,tw:rnd()*6}));
+const motes=Array.from({length:46},()=>({x:rnd(),y:rnd(),s:rnd()*2+.6,v:rnd()*.6+.3,ph:rnd()*6}));
+const mixn=(a,b,m)=>a+(b-a)*m;
+function glow(x,y,r,col,a){if(r<=0||a<=0)return;const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,col.replace('A',a));gr.addColorStop(1,col.replace('A',0));g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,7);g.fill();}
+function lerpCol(a,b,m){return 'rgb('+[0,1,2].map(i=>Math.round(mixn(a[i],b[i],m))).join(',')+')';}
+function draw(t){if(!CW)fit();const T=performance.now()/1000;const m=Math.min(1,(T-palT)/1.5);const P=m>=1?P1:P0;
+  const sk=g.createLinearGradient(0,0,0,CH);sk.addColorStop(0,lerpCol(P0.top,P1.top,m));sk.addColorStop(1,lerpCol(P0.bot,P1.bot,m));g.fillStyle=sk;g.fillRect(0,0,CW,CH);
+  stars.forEach(st=>{g.fillStyle=`rgba(241,233,222,${.5*(.3+.35*Math.sin(T*.8+st.tw))})`;g.fillRect(st.x*CW,st.y*CH*.8,st.s,st.s);});
+  const gl=P1.gl,cx=CW/2,cy=CH/2,R=U*.4;
+  g.fillStyle=gl.replace('A',.35);motes.forEach(mo=>{const y=((mo.y-T*mo.v*.012)%1+1)%1;const x=mo.x*CW+Math.sin(T*.4+mo.ph)*8;g.beginPath();g.arc(x,y*CH,mo.s,0,7);g.fill();});
+  // guía exterior
+  g.lineWidth=Math.max(1,U*.003);g.strokeStyle='rgba(244,239,230,.14)';g.beginPath();g.arc(cx,cy,R,0,7);g.stroke();
+  const r=R*size;
+  glow(cx,cy,r*2.3,gl,.22+.25*size);
+  glow(cx,cy,r*1.15,gl,.35);
+  g.fillStyle=gl.replace('A',.14+.16*size);g.beginPath();g.arc(cx,cy,r,0,7);g.fill();
+  g.lineWidth=Math.max(1.5,U*.004);g.strokeStyle='rgba(250,245,236,.8)';g.beginPath();g.arc(cx,cy,r,0,7);g.stroke();
+  if(run&&run.seg){const s=run.seg,q=Math.min(1,(t-s.t0)/s.d);
+    g.lineWidth=Math.max(2,U*.006);g.lineCap='round';g.strokeStyle=P1.a;g.shadowColor=P1.a;g.shadowBlur=U*.02;g.beginPath();g.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+q*Math.PI*2);g.stroke();g.shadowBlur=0;
+    if(s.k==='hold'||s.k==='pause'){g.setLineDash([U*.006,U*.018]);g.strokeStyle=gl.replace('A',.7);g.lineWidth=Math.max(1,U*.003);g.beginPath();g.arc(cx,cy,r+U*.03+Math.sin(T*1.5)*U*.005,0,7);g.stroke();g.setLineDash([]);}
+    if(s.hum){for(let i=0;i<3;i++){const k=((T*.9+i/3)%1);g.strokeStyle=gl.replace('A',(1-k)*.55);g.lineWidth=Math.max(1,U*.003);g.beginPath();g.arc(cx,cy,r+k*R*.35,0,7);g.stroke();}}
+    if(s.side==='Izquierda'||s.side==='Derecha'){const x=s.side==='Izquierda'?cx-R*1.15:cx+R*1.15;glow(x,cy,U*.06,gl,.8);g.fillStyle=P1.a;g.beginPath();g.arc(x,cy,U*.012,0,7);g.fill();}}}
+let idle=0;function ambient(){if(!run)draw(0);idle=requestAnimationFrame(ambient);}
+const ease=x=>.5-.5*Math.cos(Math.PI*Math.min(1,Math.max(0,x)));
+function frame(){if(!run)return;const t=ctx.currentTime-run.t0;schedule();
+  const segs=run.p.segs;while(run.i<segs.length-1&&t>=segs[run.i+1].t0)run.i++;
+  if(t<0||t<run.p.pre){const left=Math.ceil(run.p.pre-Math.max(0,t));run.seg=null;$('phase').textContent=run.introSrc&&!run.skipped?'Escucha la explicación':'Prepárate';$('count').textContent=left<=5?left:'·';$('side').textContent='';size=.5+.03*Math.sin(t*2);}
+  else if(t<run.p.end){if(!$('skip').hidden)$('skip').hidden=true;const s=segs[run.i];if(run.seg!==s){run.from=size;run.seg=s;}
+    const q=(t-s.t0)/s.d;if(s.k==='in'||s.k==='out'||s.k==='pump'){const to=s.to;size=s.k==='pump'?(q<.35?run.from+( .4-run.from)*ease(q/.35):.4+(.55-.4)*ease((q-.35)/.65)):run.from+(to-run.from)*ease(q);}
+    $('phase').textContent=s.lab;$('count').textContent=s.countBreath?s.breath:(s.nonum?'·':Math.min(s.d,Math.floor(t-s.t0)+1));
+    $('side').textContent=s.side||(s.fingerNo?('Dedo '+s.fingerNo+' de 5'):'');$('rounds').textContent='Ronda '+s.round+' de '+run.p.rounds;}
+  else{run.seg=null;size+=(.3-size)*.03;$('phase').textContent='Muy bien';$('count').textContent='·';$('side').textContent='Nota cómo te sientes';
+    if(t>run.p.end+12){stop(false);return;}}
+  $('left').textContent=fmt(Math.max(0,run.p.end-t));draw(t);raf=requestAnimationFrame(frame);}
+// ---------- controles ----------
+async function start(){$('go').disabled=true;$('go').textContent='Cargando…';
+  try{await ensureAudio();}catch(e){$('go').disabled=false;$('go').textContent='Empezar';$('phase').textContent='No se pudo cargar el audio';return;}
+  if(ctx.state!=='running')await ctx.resume();
+  const p=plan();const t0=ctx.currentTime+.3;run={p,t0,next:0,i:0,seg:null,from:size,closed:false};
+  const lastRound=p.segs.filter(s=>s.round===p.rounds);run.firstOfLast=lastRound[0];
+  if(guide==='voz'&&introOn&&cur.intro!==null){run.introSrc=clip(bufI,INTRO[cur.intro],t0);$('skip').hidden=false;}
+  playBg();try{wake=await navigator.wakeLock.request('screen')}catch(e){}
+  $('go').disabled=false;$('go').textContent='Pausar';$('stop').hidden=false;cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);}
+function pause(){if(!run)return;if(ctx.state==='running'){ctx.suspend();$('go').textContent='Continuar';}else{ctx.resume();$('go').textContent='Pausar';}}
+function stop(silent){if(!run)return;cancelAnimationFrame(raf);run=null;$('skip').hidden=true;stopBg();master.disconnect();master=ctx.createGain();master.connect(ctx.destination);if(ctx.state!=='running')ctx.resume();setBg();
+  try{wake&&wake.release()}catch(e){}wake=null;$('go').textContent='Empezar';$('stop').hidden=true;if(!silent){$('phase').textContent='Gracias por darte este momento';$('count').textContent='·';}}
+$('go').onclick=()=>{if(!run)start();else pause();};
+$('stop').onclick=()=>{stop(false);setBg();};
+$('skip').onclick=()=>{if(!run||!run.introSrc)return;try{run.introSrc.stop()}catch(e){}run.skipped=true;$('skip').hidden=true;
+  const t=ctx.currentTime-run.t0,left=run.p.pre-t;if(left>3)run.t0-=left-3;};
+if(store.get('num')==='on'){countAloud=true;document.querySelectorAll('[data-num]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.num==='on'));}
+if(store.get('intro')==='off'){introOn=false;document.querySelectorAll('[data-intro]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.intro==='off'));}
+document.addEventListener('visibilitychange',async()=>{if(!document.hidden&&run&&!wake){try{wake=await navigator.wakeLock.request('screen')}catch(e){}}});
+select(store.get('resp')||'cuadrada');P0=P1;fit();ambient();
+</script>
+
+</body></html>
