@@ -114,7 +114,17 @@ En la Preview o en Production, después del Redeploy:
 - [ ] Sin dejar el correo: la Respiración cuadrada muestra **"Ábrela con tu regalo gratis"**; las demás, **"Ábrela con un plan"**.
 - [ ] Deja el correo en el regalo → **Respirar ahora** → **Empezar**: se oye la explicación, luego "Inhala", la campana y "Río sereno" de fondo.
 - [ ] **Saltar intro**, **Pausar**, **Continuar** y **Terminar** funcionan.
-- [ ] Si no suena: abre las herramientas del navegador (F12) → **Consola**. Un error de *CORS* = falta el paso 2; un 503 en `/api/media/...` = faltan variables del paso 4.
+- [ ] Si no suena: abre las herramientas del navegador (F12) → **Consola** (los mensajes del reproductor empiezan con `[respirar]`) y Vercel → **Logs** (los del servidor empiezan con `[media]`).
+
+### Problemas que ya nos pasaron
+
+| Síntoma | Causa | Solución |
+|---|---|---|
+| Consola: *blocked by CORS policy* **y** `400 (Bad Request)` en `…r2.cloudflarestorage.com` | El 400 es la causa real; R2 no añade CORS a sus errores. Pasó con `R2_BUCKET=sch_bucket` (guion bajo) cuando el bucket es `sch-bucket`: R2 no admite `_` en nombres de bucket | Escribir a mano el nombre exacto en `R2_BUCKET` (Vercel, los tres entornos) y **Redeploy** |
+| Consola: *blocked by CORS policy* sin 400 | Falta la política CORS del bucket (paso 2), o no se pulsó **Save** | Paso 2 |
+| `NoSuchBucket` al subir o 404 en R2 | El bucket tiene jurisdicción EU y falta `R2_JURISDICTION=eu` | Agregarla en `.env.local` y en Vercel |
+| `/api/media/...` responde 503 | Faltan variables R2 o `VIDEO_PROVIDER` no es `r2`; los Logs dicen cuál (`[media] …`) | Paso 4 |
+| Ver el detalle de un error de R2 | El navegador lo oculta cuando hay CORS | F12 → Network → clic derecho en la línea roja → **Open in new tab** (antes de 5 min) |
 
 ---
 
