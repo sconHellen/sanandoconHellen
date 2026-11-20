@@ -7,6 +7,7 @@ import { GiftSection } from "@/components/landing/GiftSection";
 import { Plans } from "@/components/landing/Plans";
 import { SERVICES, formatUsd } from "@/config/plans";
 import { Catalog } from "@/components/landing/Catalog";
+import { BREATHINGS } from "@/content/breathing";
 import { getViewerAccess } from "@/lib/media/viewer";
 import { FAQ } from "@/content/faq";
 import { landingStructuredData } from "@/content/structured-data";
@@ -129,9 +130,27 @@ export default async function HomePage() {
             eyebrow="Todo lo que te espera"
             id="catalogo-titulo"
             title="Las meditaciones"
-            text="Toca cualquiera para conocerla. Las que tienen candado se abren con tu regalo o con cualquiera de los planes."
+            text="Las que tienen candado se abren con tu regalo o con cualquiera de los planes."
           />
-          <Catalog initialAccess={access} />
+          <Catalog initialAccess={access} show="meditations" />
+        </div>
+      </section>
+
+      {/* Breathing */}
+      <section id="respiraciones" className={styles.band} aria-labelledby="respiraciones-titulo">
+        <div className="container">
+          <SectionHead
+            eyebrow="Espacio para respirar"
+            id="respiraciones-titulo"
+            title={`${BREATHINGS.length} respiraciones guiadas`}
+            text="De 3, 5 o 10 minutos, con un círculo que respira contigo y mi voz guiándote."
+          />
+          <Catalog initialAccess={access} show="breathings" />
+          <div className={styles.centerCta}>
+            <a className={buttons.primary} href="#planes">
+              Abrir todo con un plan
+            </a>
+          </div>
         </div>
       </section>
 

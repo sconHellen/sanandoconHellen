@@ -21,8 +21,10 @@ Registro de decisiones tomadas por la dueña del proyecto. Donde difieran del br
 | 2026-11-20 | Cuenta de Cloudflare | Se usa la cuenta personal mientras se formaliza la empresa; migración documentada en `docs/MEDIA.md`. | — |
 | 2026-11-20 | Catálogo con ventana (modal) | Las 22 respiraciones pasan a ser **un grupo más dentro de "Las meditaciones"**. Cada meditación o respiración se abre en una **ventana** con su reproductor (el de respiración con el formato de Hellen). Sin correo: todo bloqueado. Con el regalo: solo lo del regalo disponible. Con suscripción: todo. Se quita la sección separada "22 respiraciones guiadas" y el reproductor siempre visible. | Sustituye a la decisión "reproductor en la misma página". |
 | 2026-11-20 | Contenido del regalo | **Respiración cuadrada** + **"Gratitud antes de abrir los ojos"** (video; se activa cuando llegue). | — |
+| 2026-11-20 | Respiraciones: sección propia | Corrección de la decisión anterior: las 22 respiraciones **no son meditaciones**. Vuelven a su sección propia "Espacio para respirar" (después de "Las meditaciones"). Se mantiene la ventana y los estados por acceso en ambas secciones. | — |
 
 ## Abiertas
+
 
 
 

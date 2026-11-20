@@ -26,16 +26,7 @@
   padding: 0;
 }
 
-.groupLead {
-  color: var(--text-muted);
-  max-width: 60ch;
-}
-
-/* The breathing group spans the whole row; its 22 items flow in columns. */
-.breathingGroup {
-  grid-column: 1 / -1;
-}
-
+/* The 22 breathings flow in columns inside one card. */
 .breathingList {
   display: grid;
   column-gap: var(--space-6);

@@ -17,8 +17,6 @@ const BreathingPlayer = dynamic(() => import("@/components/breathing/BreathingPl
   loading: () => <p className={styles.loading}>Preparando tu espacio…</p>,
 });
 
-export const BREATHING_GROUP_TITLE = "Espacio para respirar";
-
 function Badge({ state }: { state: ItemState }) {
   if (state === "available")
     return (
@@ -46,10 +44,12 @@ interface Opened {
 }
 
 /**
- * "Las meditaciones": the six meditation groups plus the 22 breathings as one more group.
- * Every item opens in a dialog. Locked items still open, to show what they are and how to get them.
+ * Landing catalogue lists. `show="meditations"`: the six meditation groups.
+ * `show="breathings"`: the 22 breathings ("Espacio para respirar", its own section).
+ * Every item opens in a dialog; locked items still open, to show what they are and how to get them.
  */
-export function Catalog({ initialAccess }: { initialAccess: ViewerAccess }) {
+export function Catalog({ initialAccess, show }: { initialAccess: ViewerAccess; show: "meditations" | "breathings" }) {
+  const ownKind: CatalogKind = show === "breathings" ? "breathing" : "meditation";
   const [access, setAccess] = useState(initialAccess);
   const [opened, setOpened] = useState<Opened | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -65,14 +65,17 @@ export function Catalog({ initialAccess }: { initialAccess: ViewerAccess }) {
 
   useEffect(() => {
     const onGift = () => setAccess((a) => ({ ...a, gift: true }));
-    const onOpen = (e: Event) => setOpened((e as CustomEvent<OpenItemDetail>).detail);
+    const onOpen = (e: Event) => {
+      const detail = (e as CustomEvent<OpenItemDetail>).detail;
+      if (detail.kind === ownKind) setOpened(detail); // each list opens only its own items
+    };
     window.addEventListener(GIFT_EVENT, onGift);
     window.addEventListener(OPEN_ITEM_EVENT, onOpen);
     return () => {
       window.removeEventListener(GIFT_EVENT, onGift);
       window.removeEventListener(OPEN_ITEM_EVENT, onOpen);
     };
-  }, []);
+  }, [ownKind]);
 
   const row = (kind: CatalogKind, id: string, title: string, state: ItemState, sub?: string) => (
     <li key={id}>
@@ -105,24 +108,22 @@ export function Catalog({ initialAccess }: { initialAccess: ViewerAccess }) {
 
   return (
     <>
-      <div className={styles.groups}>
-        {MEDITATION_GROUPS.map((group) => (
-          <article key={group.slug} className={styles.group}>
-            <h3>{group.title}</h3>
-            <ul>{group.items.map((it) => row("meditation", it.slug, it.title, meditationState(it.availability, access)))}</ul>
-          </article>
-        ))}
-        <article className={`${styles.group} ${styles.breathingGroup}`}>
-          <h3>{BREATHING_GROUP_TITLE}</h3>
-          <p className={styles.groupLead}>
-            {BREATHINGS.length} respiraciones guiadas de 3, 5 o 10 minutos, con un círculo que respira contigo y mi voz
-            guiándote.
-          </p>
+      {show === "meditations" ? (
+        <div className={styles.groups}>
+          {MEDITATION_GROUPS.map((group) => (
+            <article key={group.slug} className={styles.group}>
+              <h3>{group.title}</h3>
+              <ul>{group.items.map((it) => row("meditation", it.slug, it.title, meditationState(it.availability, access)))}</ul>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.group}>
           <ul className={styles.breathingList}>
             {BREATHINGS.map((b) => row("breathing", b.id, b.n, breathingState(b.id, access), b.p))}
           </ul>
-        </article>
-      </div>
+        </div>
+      )}
 
       <dialog
         ref={dialogRef}

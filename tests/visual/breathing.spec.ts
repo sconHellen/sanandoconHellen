@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import { asNewVisitor } from "./helpers";
 
-const catalog = (page: Page) => page.locator("#que-incluye");
+const catalog = (page: Page) => page.locator("#que-incluye, #respiraciones");
 const item = (page: Page, name: string) => catalog(page).getByRole("button", { name: new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) });
 const dialog = (page: Page) => page.getByRole("dialog");
 
@@ -15,16 +15,17 @@ async function unlockGift(page: Page) {
 }
 
 test.describe("catalogue with dialogs", () => {
-  test("the breathings are one more group inside 'Las meditaciones'", async ({ page }) => {
+  test("breathings have their own section, separate from the meditations", async ({ page }) => {
     await page.goto("/");
-    const groups = await catalog(page).locator("article h3").allInnerTexts();
-    expect(groups).toEqual(["Sanar heridas", "Propósito y nueva vida", "Amor", "Mañanas cortas", "Calma y estrés", "Dormir", "Espacio para respirar"]);
-    const breathing = catalog(page).locator("article", { hasText: "Espacio para respirar" });
+    const groups = await page.locator("#que-incluye article h3").allInnerTexts();
+    expect(groups).toEqual(["Sanar heridas", "Propósito y nueva vida", "Amor", "Mañanas cortas", "Calma y estrés", "Dormir"]);
+    const breathing = page.locator("#respiraciones");
+    await expect(breathing.getByRole("heading", { name: "22 respiraciones guiadas" })).toBeVisible();
     await expect(breathing.locator("li")).toHaveCount(22);
     for (const name of ["Respiración reducida", "Respiración de fuego", "Respiración triángulo", "Respiración del zumbido"]) {
       await expect(breathing.getByText(name, { exact: true })).toBeVisible();
     }
-    await expect(page.locator("#respirar")).toHaveCount(0); // no always-visible player any more
+    await expect(page.locator("#respirar")).toHaveCount(0); // no always-visible player
   });
 
   test("without the gift everything is locked; gift items say so", async ({ page }) => {

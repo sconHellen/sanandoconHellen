@@ -9,6 +9,7 @@ test.describe("landing", () => {
       "Empieza gratis: una respiración y una meditación",
       "Hola, soy Hellen",
       "Las meditaciones",
+      "22 respiraciones guiadas",
       "Una meditación hecha para ti, y una comunidad que te acompaña",
       "Elige cómo quieres acompañarte",
       "Solo una meditación, una sesión o un acompañamiento",
