@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { asNewVisitor } from "./helpers";
 
 test.describe("landing", () => {
   test("sections follow the brief order", async ({ page }) => {
@@ -28,6 +29,7 @@ test.describe("landing", () => {
   });
 
   test("gift form validates, then unlocks the gifts", async ({ page }) => {
+    await asNewVisitor(page.context());
     await page.goto("/#regalo");
     await page.getByLabel("Tu correo").fill("no-es-correo");
     await page.getByRole("button", { name: "Quiero mi regalo" }).click();
@@ -44,6 +46,7 @@ test.describe("landing", () => {
 
   test("gift form works without JavaScript", async ({ browser, baseURL }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
+    await asNewVisitor(context);
     const page = await context.newPage();
     await page.goto(`${baseURL}/`);
     await page.getByLabel("Tu correo").fill(`sinjs+${Date.now()}@correo.com`);

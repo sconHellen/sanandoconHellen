@@ -1,9 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
+import { asNewVisitor } from "./helpers";
 
-const player = (page: Page) => page.locator("#respirar");
-const card = (page: Page, name: string) => page.locator("button", { hasText: name }).filter({ has: page.locator("span") }).first();
+const catalog = (page: Page) => page.locator("#que-incluye, #respiraciones");
+const item = (page: Page, name: string) => catalog(page).getByRole("button", { name: new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) });
+const dialog = (page: Page) => page.getByRole("dialog");
 
 async function unlockGift(page: Page) {
+  await asNewVisitor(page.context());
   await page.goto("/#regalo");
   await page.getByLabel("Tu correo").fill(`respira+${Date.now()}@correo.com`);
   await page.getByLabel(/Acepto recibir el regalo/).check();
@@ -11,86 +14,119 @@ async function unlockGift(page: Page) {
   await expect(page.getByRole("status")).toContainText("¡Listo");
 }
 
-test.describe("breathing player", () => {
-  test("renders the 22 techniques with the new names and the square one selected", async ({ page }) => {
+test.describe("catalogue with dialogs", () => {
+  test("breathings have their own section, separate from the meditations", async ({ page }) => {
     await page.goto("/");
-    const lib = page.getByRole("region", { name: "Respiraciones", exact: true });
-    await expect(lib.locator("button")).toHaveCount(22);
+    const groups = await page.locator("#que-incluye article h3").allInnerTexts();
+    expect(groups).toEqual(["Sanar heridas", "Propósito y nueva vida", "Amor", "Mañanas cortas", "Calma y estrés", "Dormir"]);
+    const breathing = page.locator("#respiraciones");
+    await expect(breathing.getByRole("heading", { name: "22 respiraciones guiadas" })).toBeVisible();
+    await expect(breathing.locator("li")).toHaveCount(22);
     for (const name of ["Respiración reducida", "Respiración de fuego", "Respiración triángulo", "Respiración del zumbido"]) {
-      await expect(lib.getByText(name, { exact: true })).toBeVisible();
+      await expect(breathing.getByText(name, { exact: true })).toBeVisible();
     }
-    await expect(player(page).getByRole("heading", { name: "Respiración cuadrada" })).toBeVisible();
-    await expect(player(page).getByText("Lista para empezar")).toBeVisible();
+    await expect(page.locator("#respirar")).toHaveCount(0); // no always-visible player
   });
 
-  test("anonymous visitors are invited to the gift or a plan", async ({ page }) => {
+  test("without the gift everything is locked; gift items say so", async ({ page }) => {
     await page.goto("/");
-    await expect(player(page).getByRole("link", { name: "Ábrela con tu regalo gratis" })).toHaveAttribute("href", "#regalo");
-    await page.getByRole("region", { name: "Respiraciones", exact: true }).getByText("Respiración 4 · 7 · 8", { exact: true }).click();
-    await expect(player(page).getByRole("heading", { name: "Respiración 4 · 7 · 8" })).toBeVisible();
-    await expect(player(page).getByText(/Andrew Weil/)).toBeVisible();
-    await expect(player(page).getByRole("link", { name: "Ábrela con un plan" })).toHaveAttribute("href", "#planes");
+    await expect(catalog(page).getByText("Disponible")).toHaveCount(0);
+    await expect(item(page, "Respiración cuadrada")).toContainText("Con tu regalo");
+    await expect(item(page, "Gratitud antes de abrir los ojos")).toContainText("Con tu regalo");
+    await expect(item(page, "Sanando a mamá").getByRole("img", { name: "Bloqueada" })).toBeVisible();
+  });
+
+  test("a locked breathing opens in a dialog with its details and a plan link that closes it", async ({ page }) => {
+    await page.goto("/");
+    await item(page, "Respiración 4 · 7 · 8").click();
+    await expect(dialog(page)).toBeVisible();
+    await expect(dialog(page).getByRole("heading", { name: "Respiración 4 · 7 · 8" })).toBeVisible();
+    await expect(dialog(page).getByText(/Andrew Weil/)).toBeVisible();
+    await dialog(page).getByRole("link", { name: "Ábrela con un plan" }).click();
+    await expect(dialog(page)).toBeHidden();
+    await expect(page).toHaveURL(/#planes$/);
+  });
+
+  test("the dialog closes with Escape and with the close button", async ({ page }) => {
+    await page.goto("/");
+    await item(page, "La vela").click();
+    await expect(dialog(page)).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(dialog(page)).toBeHidden();
+    await item(page, "La vela").click();
+    await dialog(page).getByRole("button", { name: "Cerrar" }).click();
+    await expect(dialog(page)).toBeHidden();
   });
 
   test("the fire breathing shows its safety warning", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("region", { name: "Respiraciones", exact: true }).getByText("Respiración de fuego", { exact: true }).click();
-    await expect(player(page).getByText(/No se recomienda en el embarazo/)).toBeVisible();
+    await item(page, "Respiración de fuego").click();
+    await expect(dialog(page).getByText(/No se recomienda en el embarazo/)).toBeVisible();
   });
 
-  test("chips and background list follow the reference rules", async ({ page }) => {
+  test("player controls follow the reference rules", async ({ page }) => {
     await page.goto("/");
-    const p = player(page);
-    await p.getByRole("button", { name: "10 min" }).click();
-    await expect(p.getByRole("button", { name: "10 min" })).toHaveAttribute("aria-pressed", "true");
-    await expect(p.getByText("10:00")).toBeVisible();
-    await p.getByRole("button", { name: "Silencio" }).click();
-    await expect(p.getByRole("button", { name: "Silencio" })).toHaveAttribute("aria-pressed", "true");
-    // Calming technique: no energetic songs listed.
-    await expect(p.locator("#bgsel option", { hasText: "Mañana que baila" })).toHaveCount(0);
-    await page.getByRole("region", { name: "Respiraciones", exact: true }).getByText("Suspiro que abre el pecho", { exact: true }).click();
-    await expect(p.locator("#bgsel option", { hasText: "Mañana que baila" })).toHaveCount(1);
+    await item(page, "Respiración cuadrada").click();
+    const d = dialog(page);
+    await d.getByRole("button", { name: "10 min" }).click();
+    await expect(d.getByRole("button", { name: "10 min" })).toHaveAttribute("aria-pressed", "true");
+    await expect(d.getByText("10:00")).toBeVisible();
+    await expect(d.locator("#bgsel option", { hasText: "Mañana que baila" })).toHaveCount(0); // calming: no energetic songs
+    await page.keyboard.press("Escape");
+    await item(page, "Suspiro que abre el pecho").click();
+    await expect(d.locator("#bgsel option", { hasText: "Mañana que baila" })).toHaveCount(1);
   });
 
   test("media access is enforced by the server", async ({ page, request }) => {
     expect((await request.get("/api/media/respiraciones/palabras")).status()).toBe(403);
     expect((await request.get("/api/media/respiraciones/originales/intros-v5.mp3")).status()).toBe(404);
     expect((await request.get("/api/media/respiraciones/intro/no-existe")).status()).toBe(404);
-
     await unlockGift(page);
-    const api = page.request;
     for (const path of ["palabras", "cierre", "intro/cuadrada", "fondo/rio"]) {
-      const res = await api.get(`/api/media/respiraciones/${path}`);
+      const res = await page.request.get(`/api/media/respiraciones/${path}`);
       expect(res.status(), path).toBe(200);
       expect(res.headers()["content-type"]).toBe("audio/mpeg");
       expect(res.headers()["cache-control"]).toContain("no-store");
     }
-    expect((await api.get("/api/media/respiraciones/intro/478")).status()).toBe(403);
-    expect((await api.get("/api/media/respiraciones/fondo/seda")).status()).toBe(403);
+    expect((await page.request.get("/api/media/respiraciones/intro/478")).status()).toBe(403);
+    expect((await page.request.get("/api/media/respiraciones/fondo/seda")).status()).toBe(403);
   });
 
-  test("after the gift, the square breathing runs: intro, skip, stop", async ({ page }) => {
+  test("with the gift only the gift items open; the square breathing plays in the dialog", async ({ page }) => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await unlockGift(page);
-    const p = player(page);
-    await page.getByRole("link", { name: /Respirar ahora/ }).click();
-    await p.getByRole("button", { name: "Empezar" }).click();
-    await expect(p.getByText("Escucha la explicación")).toBeVisible({ timeout: 10_000 });
-    await p.getByRole("button", { name: "Saltar intro" }).click();
-    await expect(p.getByText("Inhala", { exact: true })).toBeVisible({ timeout: 10_000 });
-    await expect(p.getByText(/Ronda 1 de \d+/)).toBeVisible();
-    await p.getByRole("button", { name: "Pausar" }).click();
-    await expect(p.getByRole("button", { name: "Continuar" })).toBeVisible();
-    await p.getByRole("button", { name: "Terminar" }).click();
-    await expect(p.getByText("Gracias por darte este momento")).toBeVisible();
+    await expect(item(page, "Respiración cuadrada")).toContainText("Disponible");
+    await expect(item(page, "Gratitud antes de abrir los ojos")).toContainText("Disponible");
+    await expect(catalog(page).getByText("Disponible")).toHaveCount(2);
+
+    await page.getByRole("button", { name: /Respirar ahora/ }).click();
+    const d = dialog(page);
+    await expect(d.getByRole("heading", { name: "Respiración cuadrada" })).toBeVisible();
+    await d.getByRole("button", { name: "Empezar" }).click();
+    await expect(d.getByText("Escucha la explicación")).toBeVisible({ timeout: 10_000 });
+    await d.getByRole("button", { name: "Saltar intro" }).click();
+    await expect(d.getByText("Inhala", { exact: true })).toBeVisible({ timeout: 10_000 });
+    await expect(d.getByText(/Ronda 1 de \d+/)).toBeVisible();
+    await d.getByRole("button", { name: "Pausar" }).click();
+    await expect(d.getByRole("button", { name: "Continuar" })).toBeVisible();
+    await d.getByRole("button", { name: "Terminar" }).click();
+    await expect(d.getByText("Gracias por darte este momento")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(d).toBeHidden();
     expect(errors).toEqual([]);
+  });
+
+  test("the gift meditation opens and announces its video", async ({ page }) => {
+    await unlockGift(page);
+    await item(page, "Gratitud antes de abrir los ojos").click();
+    await expect(dialog(page).getByText(/El video llega muy pronto/)).toBeVisible();
   });
 
   test("a returning visitor keeps the gift unlocked", async ({ page }) => {
     await unlockGift(page);
     await page.reload();
-    await expect(player(page).getByRole("button", { name: "Empezar" })).toBeVisible();
+    await expect(item(page, "Respiración cuadrada")).toContainText("Disponible");
     await expect(page.getByText("Se abre con tu correo")).toHaveCount(0);
   });
 });
