@@ -65,6 +65,18 @@ Guía paso a paso para dejar el sitio funcionando en Vercel con dos entornos:
 
 > Así un formulario o un webhook de pruebas **nunca** puede escribir en la base real (brief §4.3).
 
+### Si Vercel agregó un prefijo a las variables
+
+Al conectar una segunda base Neon, Vercel puede pedir (o poner) un **prefijo**: las variables quedan como `SCHPROD_DATABASE_URL` en lugar de `DATABASE_URL`. El sitio solo lee `DATABASE_URL`, así que en ese caso (nos pasó en Production, 2026-11-20):
+
+1. Copia el valor de `SCHPROD_DATABASE_URL`.
+2. **Add Environment Variable** → `DATABASE_URL` = ese valor, **solo en Production** (marcar *Sensitive*).
+3. **Redeploy** de Production.
+
+No borres las `SCHPROD_…` (las administra la integración). Si se cambia la contraseña de `sch-produccion` en Neon, hay que actualizar también esta copia.
+
+Síntoma si falta: el regalo muestra *"Algo salió mal"* y en **Logs** aparece `[signup] gift signup failed: Error: DATABASE_URL is not set`.
+
 ### Comprobar que cada entorno usa su base (obligatorio)
 
 Ya nos pasó que Production escribía en `sch-pruebas` porque al conectar esa base quedó marcado *Production*. Para comprobarlo:
