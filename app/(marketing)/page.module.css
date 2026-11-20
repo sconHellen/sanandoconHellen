@@ -251,49 +251,6 @@
   color: var(--text-soft);
 }
 
-/* ---------- Breathing ---------- */
-.breaths {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: 1fr;
-}
-
-.breathItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-3);
-  padding: 16px 20px;
-  background: var(--surface);
-  border: var(--border-width) solid var(--border);
-  border-radius: var(--radius-card-sm);
-}
-
-.breathText {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.itemTitle {
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.itemTitleFree {
-  font-weight: 700;
-  color: var(--text-strong);
-}
-
-.purpose {
-  font-size: var(--fs-meta);
-  color: var(--text-soft);
-}
-
 /* ---------- Premium & services ---------- */
 .twoCards,
 .services {
@@ -368,13 +325,11 @@
 
 /* ---------- Breakpoints ---------- */
 @media (min-width: 768px) {
-  .groups,
-  .breaths {
+  .groups {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
   .groups { grid-template-columns: repeat(3, 1fr); }
-  .breaths { grid-template-columns: repeat(3, 1fr); }
 }

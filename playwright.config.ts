@@ -11,6 +11,8 @@ export default defineConfig({
   use: { baseURL: `http://localhost:${PORT}`, trace: "off" },
   webServer: {
     command: `npx next start -p ${PORT}`,
+    // Breathing audio served from tiny silent fixtures (no real media in tests).
+    env: { VIDEO_PROVIDER: "local", MEDIA_LOCAL_DIR: "tests/fixtures/media" },
     url: `http://localhost:${PORT}`,
     // Always start a fresh server: a stale one (other env vars) would give misleading results.
     reuseExistingServer: false,

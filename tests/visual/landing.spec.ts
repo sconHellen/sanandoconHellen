@@ -49,7 +49,7 @@ test.describe("landing", () => {
     await page.getByLabel("Tu correo").fill(`sinjs+${Date.now()}@correo.com`);
     await page.getByLabel(/Acepto recibir el regalo/).check();
     await page.getByRole("button", { name: "Quiero mi regalo" }).click();
-    await expect(page.getByText("Ya puedes escuchar tus dos regalos")).toBeVisible();
+    await expect(page.getByText("Ya puedes disfrutar tus dos regalos")).toBeVisible();
     await expect(page.getByText("te los enviamos a tu correo")).toHaveCount(0);
     await context.close();
   });

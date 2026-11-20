@@ -73,6 +73,13 @@ const PAIRS: Pair[] = [
   ["--footer-text", "--footer-bg", 4.5],
   ["--footer-heading", "--footer-bg", 4.5],
   ["--footer-small", "--footer-bg", 4.5],
+  // Ritual player (same in both themes).
+  ["--ritual-linen", "--ritual-night", 4.5],
+  ["--ritual-linen", "--ritual-dusk", 4.5],
+  ["--ritual-haze", "--ritual-night", 4.5],
+  ["--ritual-haze", "--ritual-dusk", 4.5],
+  ["--ritual-warn", "--ritual-night", 4.5],
+  ["--ritual-night", "--ritual-linen", 4.5], // "Empezar" button
   // Large text (>= 24px): the italic accent in the hero title.
   ["--accent", "--bg", 3],
   // Non-text UI (WCAG 1.4.11): focus indicator and input borders' text.

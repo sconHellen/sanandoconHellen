@@ -6,7 +6,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { GiftSection } from "@/components/landing/GiftSection";
 import { Plans } from "@/components/landing/Plans";
 import { SERVICES, formatUsd } from "@/config/plans";
-import { BREATHING, MEDITATION_GROUPS, type Availability } from "@/content/catalog";
+import { BreathingPlayer } from "@/components/breathing/BreathingPlayer";
+import { BREATHINGS } from "@/content/breathing";
+import { MEDITATION_GROUPS, type Availability } from "@/content/catalog";
+import { getViewerAccess } from "@/lib/media/viewer";
 import { FAQ } from "@/content/faq";
 import { landingStructuredData } from "@/content/structured-data";
 import portrait from "@/public/images/hellen-retrato.jpg";
@@ -56,7 +59,8 @@ function SectionHead({ eyebrow, title, id, text }: { eyebrow: string; title: str
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const access = await getViewerAccess();
   return (
     <>
       <JsonLd data={landingStructuredData()} />
@@ -95,7 +99,7 @@ export default function HomePage() {
             title="Empieza gratis: una respiración y una meditación"
             text="Déjame tu correo y te abro las dos ahora mismo."
           />
-          <GiftSection />
+          <GiftSection initialUnlocked={access.gift} />
           <div className={styles.centerCta}>
             <p>¿Ya quieres todas las meditaciones y respiraciones?</p>
             <a className={buttons.outline} href="#planes">
@@ -163,20 +167,10 @@ export default function HomePage() {
           <SectionHead
             eyebrow="Espacio para respirar"
             id="respiraciones-titulo"
-            title={`${BREATHING.length} respiraciones guiadas`}
+            title={`${BREATHINGS.length} respiraciones guiadas`}
             text="De 3, 5 o 10 minutos, con un círculo que respira contigo y mi voz guiándote."
           />
-          <ul className={styles.breaths}>
-            {BREATHING.map((b) => (
-              <li key={b.slug} className={styles.breathItem}>
-                <span className={styles.breathText}>
-                  <span className={b.availability === "free" ? styles.itemTitleFree : styles.itemTitle}>{b.title}</span>
-                  <span className={styles.purpose}>{b.purpose}</span>
-                </span>
-                <Status availability={b.availability} />
-              </li>
-            ))}
-          </ul>
+          <BreathingPlayer initialAccess={access} />
           <div className={styles.centerCta}>
             <a className={buttons.primary} href="#planes">
               Abrir todo con un plan
