@@ -1,6 +1,7 @@
 import "server-only";
 import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
+import { r2HostFromEnv } from "./r2";
 import { presignUrl } from "./sigv4";
 
 /**
@@ -20,8 +21,7 @@ export function mediaProvider(): "r2" | "local" | null {
 }
 
 export function r2Host(): string | null {
-  const account = process.env.R2_ACCOUNT_ID;
-  return account ? `${account}.r2.cloudflarestorage.com` : null;
+  return r2HostFromEnv();
 }
 
 export async function deliverMedia(key: string): Promise<MediaDelivery | null> {
