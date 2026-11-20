@@ -16,8 +16,12 @@ Registro de decisiones tomadas por la dueña del proyecto. Donde difieran del br
 | 2026-11-20 | Nombres de las respiraciones | Se usan los **nombres nuevos** del reproductor en todo el sitio (p. ej. "Respiración reducida", "Respiración de fuego"). | Se actualiza `content/catalog.ts`. |
 | 2026-11-20 | "Dato curioso" de cada respiración | Se publican tal como están. Son información, no promesas médicas; el aviso "no sustituye la atención médica o psicológica" ya está en el sitio y se reforzará en el marketing. | — |
 | 2026-11-20 | Almacenamiento de audio (y luego video) | Almacenamiento de archivos con enlaces firmados; preferencia: **Cloudflare R2**. No en la base de datos ni en Google Drive. | La base guarda solo los datos de cada audio. |
+| 2026-11-20 | Explicaciones del reproductor | Se **separan sin pérdida** (copia exacta de los bloques MP3, misma calidad), para que nadie descargue las 22 al practicar una. El original se guarda como copia maestra privada. | `npm run media:prepare`; ver `docs/MEDIA.md`. |
+| 2026-11-20 | Qué abre el regalo en el reproductor | Respiración cuadrada completa (explicación, palabras, cierre) y su fondo sugerido "Río sereno". Todo lo demás, con un plan. | Reglas en `lib/media/breathing-assets.ts`. |
+| 2026-11-20 | Cuenta de Cloudflare | Se usa la cuenta personal mientras se formaliza la empresa; migración documentada en `docs/MEDIA.md`. | — |
 
 ## Abiertas
+
 
 
 - Confirmación final de la biografía.

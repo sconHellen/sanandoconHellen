@@ -22,6 +22,8 @@ Regla del proyecto: cada dependencia se justifica aquí. Versiones fijadas exact
 
 Las pruebas unitarias usan el ejecutor nativo `node:test`: **cero dependencias** extra (sin Jest ni Vitest).
 
+**Sin SDK para R2/S3:** la firma de enlaces (AWS SigV4) está en `lib/media/sigv4.ts` con `node:crypto` (≈ 50 líneas, verificada contra el ejemplo oficial de AWS). Alternativa descartada: `@aws-sdk/client-s3` + `@aws-sdk/s3-request-presigner` (decenas de paquetes para dos operaciones: firmar GET y PUT). Tampoco se usa ffmpeg en el producto: el corte MP3 sin pérdida está en `lib/media/mp3.ts`.
+
 ## Auditoría (`npm audit`)
 
 - 4 avisos *moderate* en `esbuild` ≤ 0.24.2, arrastrado por `drizzle-kit` (vía `@esbuild-kit/*`). Afecta solo al **servidor de desarrollo de esbuild**, que no usamos; `drizzle-kit` es dependencia de desarrollo y no llega a producción. `npm audit fix --force` bajaría `drizzle-kit` a 0.18 (rompe). Se revisa en cada actualización de `drizzle-kit`.
