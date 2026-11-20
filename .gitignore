@@ -11,3 +11,4 @@ tests/visual/__screenshots__/*-actual*
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+preview/
