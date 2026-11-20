@@ -14,7 +14,7 @@ export type MediaDelivery = { kind: "redirect"; url: string } | { kind: "bytes";
 const SIGNED_URL_SECONDS = 300;
 
 export function mediaProvider(): "r2" | "local" | null {
-  const p = process.env.VIDEO_PROVIDER;
+  const p = process.env.VIDEO_PROVIDER?.trim().toLowerCase();
   if (p === "r2") return "r2";
   if (p === "local" || (!p && !process.env.VERCEL_ENV)) return "local";
   return null; // misconfigured deployment: refuse rather than guess
@@ -28,8 +28,21 @@ export async function deliverMedia(key: string): Promise<MediaDelivery | null> {
   const provider = mediaProvider();
   if (provider === "r2") {
     const host = r2Host();
-    const { R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET } = process.env;
-    if (!host || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) return null;
+    // Trim: values pasted into the Vercel dashboard often carry a trailing space or newline,
+    // which makes R2 reject the request (400). The upload script trims them the same way.
+    const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID?.trim();
+    const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY?.trim();
+    const R2_BUCKET = process.env.R2_BUCKET?.trim();
+    if (!host || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY || !R2_BUCKET) {
+      const missing = [
+        !host && "R2_ACCOUNT_ID (o R2_JURISDICTION con valor raro)",
+        !R2_ACCESS_KEY_ID && "R2_ACCESS_KEY_ID",
+        !R2_SECRET_ACCESS_KEY && "R2_SECRET_ACCESS_KEY",
+        !R2_BUCKET && "R2_BUCKET",
+      ].filter(Boolean);
+      console.error(`[media] R2 not configured; missing: ${missing.join(", ")}`);
+      return null;
+    }
     const url = presignUrl({
       method: "GET",
       host,
@@ -53,5 +66,6 @@ export async function deliverMedia(key: string): Promise<MediaDelivery | null> {
       return null;
     }
   }
+  console.error(`[media] VIDEO_PROVIDER is "${process.env.VIDEO_PROVIDER ?? ""}" (expected "r2" on Vercel)`);
   return null;
 }
