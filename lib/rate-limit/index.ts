@@ -27,7 +27,7 @@ async function hitUpstash(key: string, windowSec: number): Promise<number> {
     ]),
     cache: "no-store",
   });
-  if (!res.ok) throw new Error(`rate limit backend error ${res.status}`);
+  if (!res.ok) throw new Error(`Upstash HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const data = (await res.json()) as [{ result: number }, unknown];
   return data[0].result;
 }
@@ -46,8 +46,20 @@ function hitMemory(key: string, windowSec: number): number {
 export async function rateLimit(key: string, limit: number, windowSec: number): Promise<RateLimitResult> {
   const useUpstash = Boolean(backendUrl() && backendToken());
   if (!useUpstash && process.env.VERCEL_ENV === "production") {
-    throw new Error("Rate limit backend (RATE_LIMIT_URL/TOKEN or Upstash integration) must be set in production");
+    // Misconfiguration: log loudly but never block real people because of it.
+    console.error("[rate-limit] backend not configured in production (KV_REST_API_URL/TOKEN missing); request allowed");
+    return { allowed: true, remaining: limit };
   }
-  const count = useUpstash ? await hitUpstash(`rl:${key}`, windowSec) : hitMemory(key, windowSec);
-  return { allowed: count <= limit, remaining: Math.max(0, limit - count) };
+  if (!useUpstash) {
+    const count = hitMemory(key, windowSec);
+    return { allowed: count <= limit, remaining: Math.max(0, limit - count) };
+  }
+  try {
+    const count = await hitUpstash(`rl:${key}`, windowSec);
+    return { allowed: count <= limit, remaining: Math.max(0, limit - count) };
+  } catch (error) {
+    // Rate limiting is defence in depth: if Upstash is down or misconfigured, fail open and log.
+    console.error("[rate-limit] backend error; request allowed:", error instanceof Error ? error.message : error);
+    return { allowed: true, remaining: limit };
+  }
 }

@@ -43,7 +43,7 @@ export async function requestGift(_prev: GiftState, formData: FormData): Promise
   try {
     await saveSignup("gift", result.data.email, result.data.name || null);
   } catch (error) {
-    console.error("gift signup failed", error);
+    console.error("[signup] gift signup failed:", error instanceof Error ? `${error.name}: ${error.message}` : error);
     return { status: "error", errors: { form: "Algo salió mal. Inténtalo de nuevo en un momento." } };
   }
   // Unlocks the free gift content (square breathing) in this browser.
